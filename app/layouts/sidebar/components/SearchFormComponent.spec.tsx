@@ -45,7 +45,7 @@ describe("SearchFormComponent コンポーネント", () => {
     expect(spinnerElement).toBeInTheDocument();
     expect(spinnerElement).toHaveAttribute("hidden");
 
-    const formElement = screen.getByRole("search");
+    const formElement = screen.getByRole("form");
     expect(formElement).toHaveAttribute("id", "search-form");
   });
 
