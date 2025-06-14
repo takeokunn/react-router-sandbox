@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, type MockInstance } from "vitest";
 import { action } from "./action"; // 対象のaction関数
 import * as dataFunctions from "../../data"; // updateContactをモックするため
 import { redirect as mockRedirect } from "react-router";
@@ -26,12 +26,11 @@ vi.mock("../../data", async () => {
 vi.mock("tiny-invariant");
 
 describe("編集コンタクトアクション (app/routes/edit-contact/action.tsx)", () => {
-  let updateContactSpy: vi.SpyInstance;
+  let updateContactSpy: MockInstance;
 
   beforeEach(() => {
     vi.resetAllMocks();
-    // updateContactのspyをセットアップ
-    updateContactSpy = vi.spyOn(dataFunctions, "updateContact").mockResolvedValue(undefined);
+    updateContactSpy = vi.spyOn(dataFunctions, "updateContact").mockResolvedValue(null);
   });
 
   const mockContactId = "contact-abc-123";
