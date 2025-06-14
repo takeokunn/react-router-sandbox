@@ -4,38 +4,43 @@ import { MemoryRouter, Outlet } from "react-router";
 import Layout from "./layout";
 import type { ContactMutation } from "../../data";
 
-const mockSidebarHeader = vi.fn(() => <div data-testid="sidebar-header-mock">SidebarHeader</div>);
-const mockSearchFormComponent = vi.fn(
-  ({ currentQuery, onQueryChange, onSubmit, isSearching, initialQuery }) => (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        onSubmit(e);
-      }}
-      data-testid="search-form-mock"
-    >
-      <input
-        type="search"
-        value={currentQuery}
-        onChange={(e) => onQueryChange(e.target.value)}
-        data-testid="search-input-mock"
-        data-is-searching={String(isSearching)}
-        data-initial-query={initialQuery || ""}
-      />
-      <button type="submit">Search</button>
-    </form>
-  ),
-);
-const mockNewContactButton = vi.fn(() => <div data-testid="new-contact-button-mock">NewContactButton</div>);
-const mockContactNavList = vi.fn(({ contacts, navigationState }) => (
-  <div
-    data-testid="contact-nav-list-mock"
-    data-contacts-length={contacts.length}
-    data-nav-state={navigationState}
-  >
-    ContactNavList
-  </div>
-));
+// Hoist mock function definitions
+const componentMocks = vi.hoisted(() => {
+  return {
+    mockSidebarHeader: vi.fn(() => <div data-testid="sidebar-header-mock">SidebarHeader</div>),
+    mockSearchFormComponent: vi.fn(
+      ({ currentQuery, onQueryChange, onSubmit, isSearching, initialQuery }) => (
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            onSubmit(e);
+          }}
+          data-testid="search-form-mock"
+        >
+          <input
+            type="search"
+            value={currentQuery}
+            onChange={(e) => onQueryChange(e.target.value)}
+            data-testid="search-input-mock"
+            data-is-searching={String(isSearching)}
+            data-initial-query={initialQuery || ""}
+          />
+          <button type="submit">Search</button>
+        </form>
+      ),
+    ),
+    mockNewContactButton: vi.fn(() => <div data-testid="new-contact-button-mock">NewContactButton</div>),
+    mockContactNavList: vi.fn(({ contacts, navigationState }) => (
+      <div
+        data-testid="contact-nav-list-mock"
+        data-contacts-length={contacts.length}
+        data-nav-state={navigationState}
+      >
+        ContactNavList
+      </div>
+    )),
+  };
+});
 
 const mockUseLoaderData = vi.fn();
 const mockUseNavigation = vi.fn();
@@ -52,10 +57,10 @@ vi.mock("react-router", async () => {
   };
 });
 
-vi.mock("./components/SidebarHeader", () => ({ SidebarHeader: mockSidebarHeader }));
-vi.mock("./components/SearchFormComponent", () => ({ SearchFormComponent: mockSearchFormComponent }));
-vi.mock("./components/NewContactButton", () => ({ NewContactButton: mockNewContactButton }));
-vi.mock("./components/ContactNavList", () => ({ ContactNavList: mockContactNavList }));
+vi.mock("./components/SidebarHeader", () => ({ SidebarHeader: componentMocks.mockSidebarHeader }));
+vi.mock("./components/SearchFormComponent", () => ({ SearchFormComponent: componentMocks.mockSearchFormComponent }));
+vi.mock("./components/NewContactButton", () => ({ NewContactButton: componentMocks.mockNewContactButton }));
+vi.mock("./components/ContactNavList", () => ({ ContactNavList: componentMocks.mockContactNavList }));
 
 describe("SidebarLayout コンポーネント (app/layouts/sidebar/layout.tsx)", () => {
   const initialContacts: ContactMutation[] = [
