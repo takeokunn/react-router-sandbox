@@ -1,4 +1,3 @@
-import { Form } from "react-router";
 import type React from "react";
 
 type Props = {
@@ -8,16 +7,16 @@ type Props = {
 export function ContactActions({ onDeleteSubmit }: Props) {
   return (
     <>
-      <Form action="edit">
+      <form action="edit">
         <button type="submit">Edit</button>
-      </Form>
-      <Form
+      </form>
+      <form
         action="destroy"
         method="post"
         onSubmit={onDeleteSubmit}
       >
         <button type="submit">Delete</button>
-      </Form>
+      </form>
     </>
   );
 }

@@ -1,5 +1,3 @@
-import { Form } from "react-router";
-
 export type SearchFormComponentProps = {
   initialQuery: string | null;
   isSearching: boolean;
@@ -15,7 +13,7 @@ export function SearchFormComponent({
   onSubmit,
 }: SearchFormComponentProps) {
   return (
-    <Form id="search-form" role="search" onChange={onSubmit}>
+    <form id="search-form" role="search" onChange={onSubmit}>
       <input
         aria-label="Search contacts"
         className={isSearching ? "loading" : ""}
@@ -27,6 +25,6 @@ export function SearchFormComponent({
         value={currentQuery}
       />
       <div aria-hidden hidden={!isSearching} id="search-spinner" data-testid="search-spinner" />
-    </Form>
+    </form>
   );
 }

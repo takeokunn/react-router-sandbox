@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router";
 import { ContactActions } from "./ContactActions";
 
 describe("ContactActions Component", () => {
@@ -39,12 +39,12 @@ describe("ContactActions Component", () => {
   it("calls onDeleteSubmit when Delete form is submitted", () => {
     const deleteButton = screen.getByRole("button", { name: "Delete" });
     const form = deleteButton.closest("form");
-    
+
     expect(form).not.toBeNull();
     if (form) {
       fireEvent.submit(form);
     }
-    
+
     expect(mockOnDeleteSubmit).toHaveBeenCalledTimes(1);
   });
 });

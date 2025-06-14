@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router";
 import { SearchFormComponent, type SearchFormComponentProps } from "./SearchFormComponent";
 
 describe("SearchFormComponent コンポーネント", () => {
@@ -20,12 +20,10 @@ describe("SearchFormComponent コンポーネント", () => {
   beforeEach(() => {
     mockOnQueryChange = vi.fn();
     mockOnSubmit = vi.fn((event: React.FormEvent<HTMLFormElement>) => {
-      // The form's onChange calls onSubmit, so prevent default if needed,
-      // though in a test environment it might not matter as much.
-      event.preventDefault(); 
+      event.preventDefault();
     });
     defaultProps = {
-      initialQuery: "", // This prop is in the component but not used in the provided code.
+      initialQuery: "",
       isSearching: false,
       currentQuery: "",
       onQueryChange: mockOnQueryChange,
@@ -43,7 +41,7 @@ describe("SearchFormComponent コンポーネント", () => {
     expect(inputElement).toHaveValue("");
     expect(inputElement).not.toHaveClass("loading");
 
-    const spinnerElement = screen.getByTestId("search-spinner"); // Assuming you add data-testid="search-spinner"
+    const spinnerElement = screen.getByTestId("search-spinner");
     expect(spinnerElement).toBeInTheDocument();
     expect(spinnerElement).toHaveAttribute("hidden");
 
