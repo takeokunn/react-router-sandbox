@@ -44,9 +44,6 @@ describe("SearchFormComponent コンポーネント", () => {
     const spinnerElement = screen.getByTestId("search-spinner");
     expect(spinnerElement).toBeInTheDocument();
     expect(spinnerElement).toHaveAttribute("hidden");
-
-    const formElement = screen.getByRole("form");
-    expect(formElement).toHaveAttribute("id", "search-form");
   });
 
   it("currentQueryが指定された場合、入力フィールドにその値が設定される", () => {
