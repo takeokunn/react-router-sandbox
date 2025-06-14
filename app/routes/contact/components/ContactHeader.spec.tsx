@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect, vi, beforeEach } from "vitest";
 import { MemoryRouter } from "react-router";
-import { ContactHeader } from "./ContactHeader";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ContactRecord } from "../../../data";
+import { ContactHeader } from "./ContactHeader";
 
 vi.mock("./Favorite", () => ({
   Favorite: ({ isFavorite }: { isFavorite: boolean }) => (
@@ -18,10 +18,7 @@ describe("ContactHeader コンポーネント", () => {
     last: "Yamada",
   };
 
-  const renderInRouter = (
-    contact: Pick<ContactRecord, "first" | "last">,
-    isFavorite: boolean,
-  ) => {
+  const renderInRouter = (contact: Pick<ContactRecord, "first" | "last">, isFavorite: boolean) => {
     render(
       <MemoryRouter>
         <ContactHeader contact={contact} isFavorite={isFavorite} />

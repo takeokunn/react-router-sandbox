@@ -11,11 +11,7 @@ export function ContactTwitter({ contact }: Props) {
 
   return (
     <p>
-      <a
-        target="_blank"
-        href={`https://twitter.com/${contact.twitter}`}
-        rel="noopener noreferrer"
-      >
+      <a target="_blank" href={`https://twitter.com/${contact.twitter}`} rel="noopener noreferrer">
         {contact.twitter}
       </a>
     </p>

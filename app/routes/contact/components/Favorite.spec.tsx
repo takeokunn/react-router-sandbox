@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import { Favorite } from "./Favorite";
 
 describe("Favorite コンポーネント", () => {
@@ -27,7 +27,9 @@ describe("Favorite コンポーネント", () => {
     });
 
     it("「★」ボタンを表示する", () => {
-      const button = screen.getByRole("button", { name: "Remove from favorites" });
+      const button = screen.getByRole("button", {
+        name: "Remove from favorites",
+      });
       expect(button.textContent).toBe("★");
     });
 

@@ -1,10 +1,10 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { ErrorBoundary } from "./ErrorBoundary";
 import { isRouteErrorResponse } from "react-router";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { ErrorBoundary } from "./ErrorBoundary";
 
 vi.mock("react-router", () => ({
-  isRouteErrorResponse: vi.fn()
+  isRouteErrorResponse: vi.fn(),
 }));
 
 describe("ErrorBoundary", () => {

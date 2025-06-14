@@ -7,7 +7,7 @@ export default function EditContact() {
   const navigate = useNavigate();
 
   return (
-    <form key={contact.id} id="contact-form" method="post" role="form">
+    <form key={contact.id} id="contact-form" method="post">
       <p>
         <span>Name</span>
         <input
@@ -17,22 +17,11 @@ export default function EditContact() {
           placeholder="First"
           type="text"
         />
-        <input
-          aria-label="Last name"
-          defaultValue={contact.last ?? ""}
-          name="last"
-          placeholder="Last"
-          type="text"
-        />
+        <input aria-label="Last name" defaultValue={contact.last ?? ""} name="last" placeholder="Last" type="text" />
       </p>
       <label>
         <span>Twitter</span>
-        <input
-          defaultValue={contact.twitter ?? ""}
-          name="twitter"
-          placeholder="@jack"
-          type="text"
-        />
+        <input defaultValue={contact.twitter ?? ""} name="twitter" placeholder="@jack" type="text" />
       </label>
       <label>
         <span>Avatar URL</span>
@@ -46,15 +35,13 @@ export default function EditContact() {
       </label>
       <label>
         <span>Notes</span>
-        <textarea
-          defaultValue={contact.notes ?? ""}
-          name="notes"
-          rows={6}
-        />
+        <textarea defaultValue={contact.notes ?? ""} name="notes" rows={6} />
       </label>
       <p>
         <button type="submit">Save</button>
-        <button onClick={() => navigate(-1)} type="button">Cancel</button>
+        <button onClick={() => navigate(-1)} type="button">
+          Cancel
+        </button>
       </p>
     </form>
   );

@@ -1,11 +1,11 @@
+import { useEffect, useState } from "react";
 import { Outlet, useLoaderData, useNavigation, useSubmit } from "react-router";
 import type { FormProps, NavigateOptions } from "react-router";
-import { useEffect, useState } from "react";
-import type { TLoader } from "./loader";
-import { SidebarHeader } from "./components/SidebarHeader";
-import { SearchFormComponent } from "./components/SearchFormComponent";
-import { NewContactButton } from "./components/NewContactButton";
 import { ContactNavList } from "./components/ContactNavList";
+import { NewContactButton } from "./components/NewContactButton";
+import { SearchFormComponent } from "./components/SearchFormComponent";
+import { SidebarHeader } from "./components/SidebarHeader";
+import type { TLoader } from "./loader";
 
 export default function Layout() {
   const { contacts, q } = useLoaderData<Awaited<ReturnType<TLoader>>>();
@@ -13,9 +13,8 @@ export default function Layout() {
   const submit = useSubmit();
 
   const [query, setQuery] = useState<string>(q || "");
-  const isSearching: boolean = navigation.location === undefined
-    ? false
-    : new URLSearchParams(navigation.location.search).has("q");
+  const isSearching: boolean =
+    navigation.location === undefined ? false : new URLSearchParams(navigation.location.search).has("q");
 
   useEffect(() => {
     setQuery(q || "");
@@ -23,7 +22,9 @@ export default function Layout() {
 
   const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     const isFirstSearch = q === null;
-    submit(event.currentTarget, { replace: !isFirstSearch } as NavigateOptions & {
+    submit(event.currentTarget, {
+      replace: !isFirstSearch,
+    } as NavigateOptions & {
       formData: FormProps["encType"] extends "multipart/form-data" ? FormData : URLSearchParams;
     });
   };

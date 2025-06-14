@@ -6,4 +6,4 @@ export async function loader({ params }: Route.LoaderArgs) {
   return { contact };
 }
 
-export type TLoader = typeof loader
+export type TLoader = typeof loader;

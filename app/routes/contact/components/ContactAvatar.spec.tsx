@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import { ContactAvatar } from "./ContactAvatar";
 
 type ContactAvatarProps = Parameters<typeof ContactAvatar>[0]["contact"];
@@ -10,7 +10,11 @@ describe("ContactAvatar コンポーネント", () => {
   };
 
   it("アバターURLが指定されている場合、正しいsrcとalt属性で画像を表示する", () => {
-    const contact: ContactAvatarProps = { first: "John", last: "Doe", avatar: "https://example.com/avatar.jpg" };
+    const contact: ContactAvatarProps = {
+      first: "John",
+      last: "Doe",
+      avatar: "https://example.com/avatar.jpg",
+    };
     renderComponent(contact);
     const imgElement = screen.getByRole("img") as HTMLImageElement;
     expect(imgElement).toBeInTheDocument();
@@ -28,7 +32,7 @@ describe("ContactAvatar コンポーネント", () => {
   });
 
   it("アバターURLがなく、名前もない場合、altテキストは「Avatar」になる", () => {
-    const contact: ContactAvatarProps = { };
+    const contact: ContactAvatarProps = {};
     renderComponent(contact);
     const imgElement = screen.getByRole("img") as HTMLImageElement;
     expect(imgElement).toBeInTheDocument();
@@ -37,15 +41,21 @@ describe("ContactAvatar コンポーネント", () => {
   });
 
   it("名のみが指定されている場合、altテキストは「Avatar」になる", () => {
-    const contact: ContactAvatarProps = { first: "John", avatar: "https://example.com/avatar.jpg" };
+    const contact: ContactAvatarProps = {
+      first: "John",
+      avatar: "https://example.com/avatar.jpg",
+    };
     renderComponent(contact);
     const imgElement = screen.getByRole("img") as HTMLImageElement;
-    console.log(imgElement.alt)
+    console.log(imgElement.alt);
     expect(imgElement.alt).toBe("Avatar");
   });
 
   it("姓のみが指定されている場合、altテキストは「Avatar」になる", () => {
-    const contact: ContactAvatarProps = { last: "Doe", avatar: "https://example.com/avatar.jpg" };
+    const contact: ContactAvatarProps = {
+      last: "Doe",
+      avatar: "https://example.com/avatar.jpg",
+    };
     renderComponent(contact);
     const imgElement = screen.getByRole("img") as HTMLImageElement;
     expect(imgElement.alt).toBe("Avatar");

@@ -1,14 +1,14 @@
-import { describe, it, expect, vi, beforeEach, afterEach, type MockInstance } from "vitest";
-import { loader } from "./loader";
+import { type MockInstance, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import * as data from "../../data";
 import type { ContactRecord } from "../../data";
 import type { Route } from "./+types";
+import { loader } from "./loader";
 
 describe("EditContact ローダー", () => {
   let getContactSpy: MockInstance;
 
   beforeEach(() => {
-    getContactSpy = vi.spyOn(data, 'getContact');
+    getContactSpy = vi.spyOn(data, "getContact");
   });
 
   afterEach(() => {
@@ -32,7 +32,11 @@ describe("EditContact ローダー", () => {
     const request = new Request("http://localhost/contacts/123/edit") as any;
     const context = {} as any;
 
-    const result = await loader({ params: mockParams, request, context } as Route.LoaderArgs);
+    const result = await loader({
+      params: mockParams,
+      request,
+      context,
+    } as Route.LoaderArgs);
 
     expect(getContactSpy).toHaveBeenCalledWith("123");
     expect(result).toEqual({ contact: mockContactData });
@@ -46,7 +50,11 @@ describe("EditContact ローダー", () => {
     const context = {} as any;
 
     try {
-      await loader({ params: mockParams, request, context } as Route.LoaderArgs);
+      await loader({
+        params: mockParams,
+        request,
+        context,
+      } as Route.LoaderArgs);
       // Should not reach here
       expect(true).toBe(false);
     } catch (error) {

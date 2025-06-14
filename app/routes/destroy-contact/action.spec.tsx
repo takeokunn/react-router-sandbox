@@ -1,8 +1,8 @@
-import { describe, it, expect, vi, beforeEach, afterEach, type MockInstance } from "vitest";
-import { action } from "./action";
+import * as router from "react-router";
+import { type MockInstance, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import * as data from "../../data";
 import type { Route } from "./+types";
-import * as router from "react-router";
+import { action } from "./action";
 
 vi.mock("react-router", async () => {
   const actual = await vi.importActual<typeof import("react-router")>("react-router");

@@ -1,8 +1,8 @@
-import { describe, it, expect, vi, beforeEach, type MockInstance } from "vitest";
-import { action } from "./action"; // 対象のaction関数
-import * as dataFunctions from "../../data"; // updateContactをモックするため
 import { redirect as mockRedirect } from "react-router";
 import invariant from "tiny-invariant"; // invariantの動作をテストするため
+import { type MockInstance, beforeEach, describe, expect, it, vi } from "vitest";
+import * as dataFunctions from "../../data"; // updateContactをモックするため
+import { action } from "./action"; // 対象のaction関数
 
 // react-routerのredirectをモック
 vi.mock("react-router", async () => {
@@ -49,7 +49,10 @@ describe("編集コンタクトアクション (app/routes/edit-contact/action.t
 
     // updateContactが正しい引数で呼び出されたことを確認
     expect(updateContactSpy).toHaveBeenCalledTimes(1);
-    expect(updateContactSpy).toHaveBeenCalledWith(mockContactId, { first: "Taro", last: "Yamada" });
+    expect(updateContactSpy).toHaveBeenCalledWith(mockContactId, {
+      first: "Taro",
+      last: "Yamada",
+    });
 
     // redirectが正しいパスで呼び出されたことを確認
     expect(mockRedirect).toHaveBeenCalledTimes(1);
@@ -80,7 +83,10 @@ describe("編集コンタクトアクション (app/routes/edit-contact/action.t
 
     // updateContactが呼び出されたことを確認 (エラーをスローする前に)
     expect(updateContactSpy).toHaveBeenCalledTimes(1);
-    expect(updateContactSpy).toHaveBeenCalledWith(mockContactId, { first: "Taro", last: "Yamada" });
+    expect(updateContactSpy).toHaveBeenCalledWith(mockContactId, {
+      first: "Taro",
+      last: "Yamada",
+    });
 
     // redirectが呼び出されないことを確認
     expect(mockRedirect).not.toHaveBeenCalled();

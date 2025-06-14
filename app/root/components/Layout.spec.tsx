@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { Layout } from "./Layout";
 
 vi.mock("react-router", async () => {
@@ -18,7 +18,7 @@ describe("Layout コンポーネント", () => {
     render(
       <Layout>
         <div>{testChildText}</div>
-      </Layout>
+      </Layout>,
     );
   });
 

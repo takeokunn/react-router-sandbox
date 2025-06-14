@@ -1,7 +1,7 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { loader } from "./loader";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import * as dataFunctions from "../data";
 import type { ContactRecord } from "../data";
+import { loader } from "./loader";
 
 vi.mock("../data", async () => {
   const actual = await vi.importActual("../data");
@@ -13,14 +13,23 @@ vi.mock("../data", async () => {
 
 describe("ルートローダー (app/root/loader.ts)", () => {
   beforeEach(() => {
-
     vi.resetAllMocks();
   });
 
   it("getContactsを呼び出し、返されたコンタクトの配列を含むオブジェクトを返すこと", async () => {
     const mockContacts: ContactRecord[] = [
-      { id: "1", first: "Taro", last: "Yamada", createdAt: new Date().toISOString() },
-      { id: "2", first: "Hanako", last: "Suzuki", createdAt: new Date().toISOString() },
+      {
+        id: "1",
+        first: "Taro",
+        last: "Yamada",
+        createdAt: new Date().toISOString(),
+      },
+      {
+        id: "2",
+        first: "Hanako",
+        last: "Suzuki",
+        createdAt: new Date().toISOString(),
+      },
     ];
     const getContactsSpy = vi.spyOn(dataFunctions, "getContacts").mockResolvedValue(mockContacts);
 

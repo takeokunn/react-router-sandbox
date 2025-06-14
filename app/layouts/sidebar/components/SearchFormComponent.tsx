@@ -6,12 +6,7 @@ export type SearchFormComponentProps = {
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 };
 
-export function SearchFormComponent({
-  isSearching,
-  currentQuery,
-  onQueryChange,
-  onSubmit,
-}: SearchFormComponentProps) {
+export function SearchFormComponent({ isSearching, currentQuery, onQueryChange, onSubmit }: SearchFormComponentProps) {
   return (
     <form id="search-form" role="search" onChange={onSubmit}>
       <input

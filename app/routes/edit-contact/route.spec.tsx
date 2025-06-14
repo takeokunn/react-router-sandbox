@@ -1,8 +1,8 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
-import EditContact from "./route";
+import { describe, expect, it, vi } from "vitest";
 import type { ContactRecord } from "../../data";
+import EditContact from "./route";
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                    mock                                   //
@@ -25,7 +25,7 @@ vi.mock("react-router", async () => {
   return {
     ...actual,
     useLoaderData: () => ({ contact: mockContact }),
-    useNavigate: () => mockNavigate
+    useNavigate: () => mockNavigate,
   };
 });
 
@@ -39,7 +39,7 @@ describe("EditContact コンポーネント", () => {
     render(
       <MemoryRouter initialEntries={["/contacts/123/edit"]}>
         <EditContact />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
   });
 

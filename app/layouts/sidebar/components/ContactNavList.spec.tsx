@@ -1,18 +1,15 @@
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
-import { MemoryRouter } from "react-router";
-import { ContactNavList } from "./ContactNavList";
 import type { ContactMutation } from "app/data";
+import { MemoryRouter } from "react-router";
 import type { Navigation } from "react-router";
+import { describe, expect, it } from "vitest";
+import { ContactNavList } from "./ContactNavList";
 
-const renderContactNavList = (
-  contacts: ContactMutation[],
-  navigationState: Navigation['state'] = "idle"
-) => {
+const renderContactNavList = (contacts: ContactMutation[], navigationState: Navigation["state"] = "idle") => {
   return render(
     <MemoryRouter>
       <ContactNavList contacts={contacts} navigationState={navigationState} />
-    </MemoryRouter>
+    </MemoryRouter>,
   );
 };
 
@@ -59,18 +56,14 @@ describe("ContactNavList コンポーネント", () => {
   });
 
   it("お気に入りの連絡先には星（★）を表示する", () => {
-    const favoriteContact: ContactMutation[] = [
-      { id: "5", first: "Fav", last: "User", favorite: true },
-    ];
+    const favoriteContact: ContactMutation[] = [{ id: "5", first: "Fav", last: "User", favorite: true }];
     renderContactNavList(favoriteContact, "idle");
     const link = screen.getByRole("link", { name: /Fav User ★/i });
     expect(link.textContent).toContain("★");
   });
 
   it("お気に入りでない連絡先には星を表示しない", () => {
-    const nonFavoriteContact: ContactMutation[] = [
-      { id: "6", first: "NonFav", last: "User", favorite: false },
-    ];
+    const nonFavoriteContact: ContactMutation[] = [{ id: "6", first: "NonFav", last: "User", favorite: false }];
     renderContactNavList(nonFavoriteContact, "idle");
     const link = screen.getByRole("link", { name: /NonFav User/i });
     expect(link.textContent).not.toContain("★");

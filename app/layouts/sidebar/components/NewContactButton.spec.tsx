@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
 import { MemoryRouter } from "react-router";
+import { describe, expect, it } from "vitest";
 import { NewContactButton } from "./NewContactButton";
 
 describe("NewContactButton コンポーネント", () => {
@@ -8,7 +8,7 @@ describe("NewContactButton コンポーネント", () => {
     render(
       <MemoryRouter>
         <NewContactButton />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
   });
 

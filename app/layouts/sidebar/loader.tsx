@@ -1,5 +1,5 @@
-import { getContacts } from "../../data";
 import type { Route } from "../../+types/root";
+import { getContacts } from "../../data";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const url = new URL(request.url);
@@ -9,4 +9,4 @@ export async function loader({ request }: Route.LoaderArgs) {
   return { contacts, q };
 }
 
-export type TLoader = typeof loader
+export type TLoader = typeof loader;

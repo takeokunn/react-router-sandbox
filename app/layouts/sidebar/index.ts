@@ -1,2 +1,2 @@
 export { default } from "./layout";
-export { loader } from './loader';
+export { loader } from "./loader";

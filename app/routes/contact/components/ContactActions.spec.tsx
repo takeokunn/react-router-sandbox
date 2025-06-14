@@ -1,6 +1,6 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
+import { describe, expect, it, vi } from "vitest";
 import { ContactActions } from "./ContactActions";
 
 describe("ContactActions Component", () => {
@@ -13,7 +13,7 @@ describe("ContactActions Component", () => {
     render(
       <MemoryRouter>
         <ContactActions onDeleteSubmit={mockOnDeleteSubmit} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
   });
 

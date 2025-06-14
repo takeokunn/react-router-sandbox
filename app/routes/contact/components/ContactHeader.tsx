@@ -9,9 +9,13 @@ type Props = {
 export function ContactHeader({ contact, isFavorite }: Props) {
   return (
     <h1>
-      {contact.first || contact.last
-        ? (<>{contact.first} {contact.last}</>)
-        : (<i>No Name</i>)}
+      {contact.first || contact.last ? (
+        <>
+          {contact.first} {contact.last}
+        </>
+      ) : (
+        <i>No Name</i>
+      )}
       <Favorite isFavorite={isFavorite} />
     </h1>
   );

@@ -1,14 +1,14 @@
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
-import Home from "./route";
 import { MemoryRouter } from "react-router";
+import { describe, expect, it } from "vitest";
+import Home from "./route";
 
 describe("Home コンポーネント", () => {
   beforeEach(() => {
     render(
       <MemoryRouter>
         <Home />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
   });
 

@@ -8,5 +8,5 @@ export default [
     route("contacts/:contactId/edit", "routes/edit-contact/index.ts"),
     route("contacts/:contactId/destroy", "routes/destroy-contact/index.ts"),
   ]),
-  route("about", "routes/about/index.ts")
+  route("about", "routes/about/index.ts"),
 ] satisfies RouteConfig;

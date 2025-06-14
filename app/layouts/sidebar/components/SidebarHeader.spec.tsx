@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
 import { MemoryRouter } from "react-router";
+import { describe, expect, it } from "vitest";
 import { SidebarHeader } from "./SidebarHeader";
 
 describe("SidebarHeader コンポーネント", () => {
@@ -8,7 +8,7 @@ describe("SidebarHeader コンポーネント", () => {
     render(
       <MemoryRouter>
         <SidebarHeader />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
   });
 
@@ -25,7 +25,9 @@ describe("SidebarHeader コンポーネント", () => {
   });
 
   it("リンクが正しい宛先（'about'）を指している", () => {
-    const linkElement = screen.getByRole("link", {name: /React Router Contacts/i});
+    const linkElement = screen.getByRole("link", {
+      name: /React Router Contacts/i,
+    });
     expect(linkElement).toHaveAttribute("href", "/about");
   });
 });

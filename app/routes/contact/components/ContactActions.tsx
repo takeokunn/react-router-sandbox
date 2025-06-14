@@ -10,11 +10,7 @@ export function ContactActions({ onDeleteSubmit }: Props) {
       <form action="edit">
         <button type="submit">Edit</button>
       </form>
-      <form
-        action="destroy"
-        method="post"
-        onSubmit={onDeleteSubmit}
-      >
+      <form action="destroy" method="post" onSubmit={onDeleteSubmit}>
         <button type="submit">Delete</button>
       </form>
     </>

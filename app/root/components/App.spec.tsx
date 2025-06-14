@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
-import { MemoryRouter, Routes, Route } from "react-router";
+import { MemoryRouter, Route, Routes } from "react-router";
+import { describe, expect, it } from "vitest";
 import App from "./App";
 
 function ChildRouteComponent() {
@@ -16,7 +16,7 @@ describe("App コンポーネント", () => {
             <Route index element={<ChildRouteComponent />} />
           </Route>
         </Routes>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(screen.getByText("子ルートのコンテンツ")).toBeInTheDocument();

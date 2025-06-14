@@ -23,7 +23,7 @@ type ErrorDisplayInfo = {
  * @param error - ErrorBoundaryによってキャッチされたエラーオブジェクト。
  * @returns メッセージ、詳細、およびオプションのスタックトレースを含むオブジェクト。
  */
-function getErrorDisplayInfo(error: Route.ErrorBoundaryProps['error']): ErrorDisplayInfo {
+function getErrorDisplayInfo(error: Route.ErrorBoundaryProps["error"]): ErrorDisplayInfo {
   if (isRouteErrorResponse(error)) {
     const message = error.status === 404 ? "404" : "Error";
     const details =

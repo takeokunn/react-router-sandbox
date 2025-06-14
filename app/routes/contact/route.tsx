@@ -1,10 +1,10 @@
 import { useLoaderData } from "react-router";
-import type { TLoader } from "./loader";
+import { ContactActions } from "./components/ContactActions";
 import { ContactAvatar } from "./components/ContactAvatar";
 import { ContactHeader } from "./components/ContactHeader";
-import { ContactTwitter } from "./components/ContactTwitter";
 import { ContactNotes } from "./components/ContactNotes";
-import { ContactActions } from "./components/ContactActions";
+import { ContactTwitter } from "./components/ContactTwitter";
+import type { TLoader } from "./loader";
 
 export default function Contact() {
   const { contact } = useLoaderData<TLoader>();
@@ -28,10 +28,7 @@ export default function Contact() {
       </div>
 
       <div>
-        <ContactHeader
-          contact={contact}
-          isFavorite={currentFavorite}
-        />
+        <ContactHeader contact={contact} isFavorite={currentFavorite} />
         <ContactTwitter contact={contact} />
         <ContactNotes contact={contact} />
         <div>

@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import { ContactTwitter } from "./ContactTwitter";
 
-type ContactTwitterProps = Parameters<typeof ContactTwitter>[0]['contact'];
+type ContactTwitterProps = Parameters<typeof ContactTwitter>[0]["contact"];
 
 describe("ContactTwitter コンポーネント", () => {
   const renderComponent = (contactProps: ContactTwitterProps) => {
@@ -27,7 +27,7 @@ describe("ContactTwitter コンポーネント", () => {
   });
 
   it("Twitter ハンドルが存在しない場合、何も表示しない", () => {
-    const contact: ContactTwitterProps = { };
+    const contact: ContactTwitterProps = {};
     const { container } = renderComponent(contact);
     expect(container.firstChild).toBeNull();
   });

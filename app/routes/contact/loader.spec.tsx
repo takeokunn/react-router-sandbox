@@ -1,8 +1,8 @@
-import { describe, it, expect, vi, beforeEach, type MockInstance } from "vitest";
-import { loader } from "./loader";
+import { type MockInstance, beforeEach, describe, expect, it, vi } from "vitest";
 import * as dataFunctions from "../../data";
 import type { ContactRecord } from "../../data";
 import type { Route } from "./+types";
+import { loader } from "./loader";
 
 vi.mock("../../data", async () => {
   const actual = await vi.importActual("../../data");

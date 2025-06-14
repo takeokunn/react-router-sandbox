@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
 import { MemoryRouter } from "react-router";
+import { describe, expect, it } from "vitest";
 import About from "./route";
 
 describe("About Component", () => {
@@ -8,7 +8,7 @@ describe("About Component", () => {
     render(
       <MemoryRouter>
         <About />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(screen.getByText("About React Router Contacts")).toBeInTheDocument();

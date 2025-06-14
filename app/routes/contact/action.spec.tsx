@@ -1,8 +1,8 @@
-import { describe, it, expect, vi, beforeEach, type MockInstance } from "vitest";
-import { action } from "./action";
+import { type MockInstance, beforeEach, describe, expect, it, vi } from "vitest";
 import * as dataFunctions from "../../data";
-import type { Route } from "./+types";
 import type { ContactRecord } from "../../data";
+import type { Route } from "./+types";
+import { action } from "./action";
 
 vi.mock("../../data", async () => {
   const actual = await vi.importActual("../../data");
@@ -13,7 +13,7 @@ vi.mock("../../data", async () => {
 });
 
 describe("コンタクトアクション (app/routes/contact/action.tsx)", () => {
-  let updateContactSpy: MockInstance
+  let updateContactSpy: MockInstance;
 
   beforeEach(() => {
     vi.resetAllMocks();
@@ -47,7 +47,9 @@ describe("コンタクトアクション (app/routes/contact/action.tsx)", () =>
     const result = await action({ params, request } as Route.ActionArgs);
 
     expect(updateContactSpy).toHaveBeenCalledTimes(1);
-    expect(updateContactSpy).toHaveBeenCalledWith(mockContactId, { favorite: true });
+    expect(updateContactSpy).toHaveBeenCalledWith(mockContactId, {
+      favorite: true,
+    });
     expect(result).toEqual(mockUpdatedContact);
   });
 
@@ -60,7 +62,9 @@ describe("コンタクトアクション (app/routes/contact/action.tsx)", () =>
     const result = await action({ params, request } as Route.ActionArgs);
 
     expect(updateContactSpy).toHaveBeenCalledTimes(1);
-    expect(updateContactSpy).toHaveBeenCalledWith(mockContactId, { favorite: false });
+    expect(updateContactSpy).toHaveBeenCalledWith(mockContactId, {
+      favorite: false,
+    });
     expect(result).toEqual(updatedContactFalse);
   });
 
@@ -73,12 +77,13 @@ describe("コンタクトアクション (app/routes/contact/action.tsx)", () =>
     const result = await action({ params, request } as Route.ActionArgs);
 
     expect(updateContactSpy).toHaveBeenCalledTimes(1);
-    expect(updateContactSpy).toHaveBeenCalledWith(mockContactId, { favorite: false });
+    expect(updateContactSpy).toHaveBeenCalledWith(mockContactId, {
+      favorite: false,
+    });
     expect(result).toEqual(updatedContactNoFavorite);
   });
 
   it("params.contactIdが存在しない場合でも、updateContactがundefinedのIDで呼び出されること", async () => {
-
     const request = createMockRequest("true");
     const params = {};
     updateContactSpy.mockResolvedValue(mockUpdatedContact);
@@ -86,7 +91,9 @@ describe("コンタクトアクション (app/routes/contact/action.tsx)", () =>
     await action({ params, request } as Route.ActionArgs);
 
     expect(updateContactSpy).toHaveBeenCalledTimes(1);
-    expect(updateContactSpy).toHaveBeenCalledWith(undefined, { favorite: true });
+    expect(updateContactSpy).toHaveBeenCalledWith(undefined, {
+      favorite: true,
+    });
   });
 
   it("updateContactがエラーをスローした場合、エラーが伝播すること", async () => {
@@ -98,6 +105,8 @@ describe("コンタクトアクション (app/routes/contact/action.tsx)", () =>
     await expect(action({ params, request } as Route.ActionArgs)).rejects.toThrow(errorMessage);
 
     expect(updateContactSpy).toHaveBeenCalledTimes(1);
-    expect(updateContactSpy).toHaveBeenCalledWith(mockContactId, { favorite: true });
+    expect(updateContactSpy).toHaveBeenCalledWith(mockContactId, {
+      favorite: true,
+    });
   });
 });

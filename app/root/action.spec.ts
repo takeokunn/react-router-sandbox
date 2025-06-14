@@ -1,7 +1,7 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { action } from "./action";
-import * as dataFunctions from "../data";
 import { redirect as mockRedirect } from "react-router";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import * as dataFunctions from "../data";
+import { action } from "./action";
 
 vi.mock("react-router", async () => {
   const actual = await vi.importActual("react-router");
