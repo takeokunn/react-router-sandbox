@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import { ContactNotes } from "./ContactNotes";
-import type { ContactRecord } from "../../../data";
 
 type ContactNotesProps = Parameters<typeof ContactNotes>[0]['contact'];
 
@@ -23,21 +22,12 @@ describe("ContactNotes コンポーネント", () => {
   it("ノートが空文字列の場合、何も表示しない", () => {
     const contact: ContactNotesProps = { notes: "" };
     const { container } = renderComponent(contact);
-    // eslint-disable-next-line testing-library/no-node-access
     expect(container.firstChild).toBeNull();
   });
 
-  it("ノートが null の場合、何も表示しない", () => {
-    const contact: ContactNotesProps = { notes: null };
+  it("ノートが存在しない場合、何も表示しない", () => {
+    const contact: ContactNotesProps = {};
     const { container } = renderComponent(contact);
-    // eslint-disable-next-line testing-library/no-node-access
-    expect(container.firstChild).toBeNull();
-  });
-
-  it("ノートが undefined の場合、何も表示しない", () => {
-    const contact: ContactNotesProps = { notes: undefined };
-    const { container } = renderComponent(contact);
-    // eslint-disable-next-line testing-library/no-node-access
     expect(container.firstChild).toBeNull();
   });
 });

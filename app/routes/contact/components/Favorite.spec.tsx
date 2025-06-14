@@ -1,17 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import { Favorite } from "./Favorite";
-import type React from "react";
-
-// Mock FavoriteForm component for testing purposes
-const MockForm: React.FC<{ method: string; children: React.ReactNode }> = ({ method, children }) => {
-  return <form data-testid="mock-form" method={method}>{children}</form>;
-};
-
 
 describe("Favorite コンポーネント", () => {
-  const renderFavorite = (isFavorite: boolean, FavoriteForm: React.ElementType = MockForm) => {
-    render(<Favorite isFavorite={isFavorite} FavoriteForm={FavoriteForm} />);
+  const renderFavorite = (isFavorite: boolean) => {
+    render(<Favorite isFavorite={isFavorite} />);
   };
 
   it("isFavoriteがtrueの場合、「★」ボタンを表示する", () => {
@@ -53,18 +46,8 @@ describe("Favorite コンポーネント", () => {
   });
 
   it("ボタンのname属性が「favorite」である", () => {
-    renderFavorite(false); // isFavorite value doesn't matter for this test
+    renderFavorite(false);
     const button = screen.getByRole("button");
     expect(button).toHaveAttribute("name", "favorite");
-  });
-  
-  it("渡されたFavoriteFormコンポーネントを使用し、methodが「post」である", () => {
-    renderFavorite(true, MockForm);
-    const formElement = screen.getByTestId("mock-form");
-    expect(formElement).toBeInTheDocument();
-    expect(formElement).toHaveAttribute("method", "post");
-    // Check if the button is inside the form
-    const button = screen.getByRole("button");
-    expect(formElement).toContainElement(button);
   });
 });

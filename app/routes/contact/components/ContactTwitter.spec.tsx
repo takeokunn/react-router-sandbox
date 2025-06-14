@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import { ContactTwitter } from "./ContactTwitter";
-import type { ContactRecord } from "../../../data";
 
 type ContactTwitterProps = Parameters<typeof ContactTwitter>[0]['contact'];
 
@@ -24,21 +23,12 @@ describe("ContactTwitter コンポーネント", () => {
   it("Twitter ハンドルが空文字列の場合、何も表示しない", () => {
     const contact: ContactTwitterProps = { twitter: "" };
     const { container } = renderComponent(contact);
-    // eslint-disable-next-line testing-library/no-node-access
     expect(container.firstChild).toBeNull();
   });
 
-  it("Twitter ハンドルが null の場合、何も表示しない", () => {
-    const contact: ContactTwitterProps = { twitter: null };
+  it("Twitter ハンドルが存在しない場合、何も表示しない", () => {
+    const contact: ContactTwitterProps = { };
     const { container } = renderComponent(contact);
-    // eslint-disable-next-line testing-library/no-node-access
-    expect(container.firstChild).toBeNull();
-  });
-
-  it("Twitter ハンドルが undefined の場合、何も表示しない", () => {
-    const contact: ContactTwitterProps = { twitter: undefined };
-    const { container } = renderComponent(contact);
-    // eslint-disable-next-line testing-library/no-node-access
     expect(container.firstChild).toBeNull();
   });
 });

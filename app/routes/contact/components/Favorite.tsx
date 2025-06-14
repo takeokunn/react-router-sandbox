@@ -1,13 +1,10 @@
-import type React from "react";
-
-type FavoriteProps = {
+type Props = {
   isFavorite: boolean;
-  FavoriteForm: React.ElementType; // Will be fetcher.Form passed from parent
 };
 
-export function Favorite({ isFavorite, FavoriteForm }: FavoriteProps) {
+export function Favorite({ isFavorite }: Props) {
   return (
-    <FavoriteForm method="post">
+    <form method="post">
       <button
         aria-label={
           isFavorite
@@ -19,6 +16,6 @@ export function Favorite({ isFavorite, FavoriteForm }: FavoriteProps) {
       >
         {isFavorite ? "★" : "☆"}
       </button>
-    </FavoriteForm>
+    </form>
   );
 }
