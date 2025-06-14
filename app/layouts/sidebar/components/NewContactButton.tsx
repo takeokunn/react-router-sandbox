@@ -1,7 +1,9 @@
+import { Form } from "react-router";
+
 export function NewContactButton() {
   return (
-    <form method="post">
+    <Form method="post">
       <button type="submit">New</button>
-    </form>
+    </Form>
   );
 }

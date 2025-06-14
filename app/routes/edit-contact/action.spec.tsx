@@ -1,10 +1,9 @@
 import { redirect as mockRedirect } from "react-router";
-import invariant from "tiny-invariant"; // invariantの動作をテストするため
+import invariant from "tiny-invariant";
 import { type MockInstance, beforeEach, describe, expect, it, vi } from "vitest";
-import * as dataFunctions from "../../data"; // updateContactをモックするため
-import { action } from "./action"; // 対象のaction関数
+import * as dataFunctions from "../../data";
+import { action } from "./action";
 
-// react-routerのredirectをモック
 vi.mock("react-router", async () => {
   const actual = await vi.importActual("react-router");
   return {
@@ -13,7 +12,6 @@ vi.mock("react-router", async () => {
   };
 });
 
-// ../../dataモジュールのupdateContactをモック
 vi.mock("../../data", async () => {
   const actual = await vi.importActual("../../data");
   return {
@@ -22,7 +20,6 @@ vi.mock("../../data", async () => {
   };
 });
 
-// tiny-invariantをモック (エラーメッセージを確認するため)
 vi.mock("tiny-invariant");
 
 describe("編集コンタクトアクション (app/routes/edit-contact/action.tsx)", () => {
@@ -47,20 +44,18 @@ describe("編集コンタクトアクション (app/routes/edit-contact/action.t
 
     await action({ params, request: mockRequest });
 
-    // updateContactが正しい引数で呼び出されたことを確認
     expect(updateContactSpy).toHaveBeenCalledTimes(1);
     expect(updateContactSpy).toHaveBeenCalledWith(mockContactId, {
       first: "Taro",
       last: "Yamada",
     });
 
-    // redirectが正しいパスで呼び出されたことを確認
     expect(mockRedirect).toHaveBeenCalledTimes(1);
     expect(mockRedirect).toHaveBeenCalledWith(`/contacts/${mockContactId}`);
   });
 
   it("params.contactIdが存在しない場合: invariantがエラーをスローし、リダイレクトしないこと", async () => {
-    const params = {}; // contactIdなし
+    const params = {};
     (invariant as vi.Mock).mockImplementation((condition, message) => {
       if (!condition) {
         throw new Error(message);
@@ -69,7 +64,6 @@ describe("編集コンタクトアクション (app/routes/edit-contact/action.t
 
     await expect(action({ params, request: mockRequest })).rejects.toThrow("Missing contactId param");
 
-    // updateContactとredirectが呼び出されないことを確認
     expect(updateContactSpy).not.toHaveBeenCalled();
     expect(mockRedirect).not.toHaveBeenCalled();
   });
@@ -81,14 +75,12 @@ describe("編集コンタクトアクション (app/routes/edit-contact/action.t
 
     await expect(action({ params, request: mockRequest })).rejects.toThrow(errorMessage);
 
-    // updateContactが呼び出されたことを確認 (エラーをスローする前に)
     expect(updateContactSpy).toHaveBeenCalledTimes(1);
     expect(updateContactSpy).toHaveBeenCalledWith(mockContactId, {
       first: "Taro",
       last: "Yamada",
     });
 
-    // redirectが呼び出されないことを確認
     expect(mockRedirect).not.toHaveBeenCalled();
   });
 

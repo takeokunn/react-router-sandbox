@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router";
+import { type RouteObject, RouterProvider, createMemoryRouter } from "react-router";
 import { describe, expect, it, vi } from "vitest";
 import { ContactActions } from "./ContactActions";
 
@@ -8,13 +8,25 @@ describe("ContactActions Component", () => {
     event.preventDefault();
   });
 
+  const routes: RouteObject[] = [
+    {
+      path: "/",
+      element: <ContactActions onDeleteSubmit={mockOnDeleteSubmit} />,
+    },
+    {
+      path: "edit",
+      action: () => null,
+    },
+    {
+      path: "destroy",
+      action: () => null,
+    },
+  ];
+  const router = createMemoryRouter(routes, { initialEntries: ["/"] });
+
   beforeEach(() => {
     vi.clearAllMocks();
-    render(
-      <MemoryRouter>
-        <ContactActions onDeleteSubmit={mockOnDeleteSubmit} />
-      </MemoryRouter>,
-    );
+    render(<RouterProvider router={router} />);
   });
 
   it("renders 'Edit' and 'Delete' buttons", () => {
@@ -25,13 +37,13 @@ describe("ContactActions Component", () => {
   it("Edit form has correct action attribute", () => {
     const editButton = screen.getByRole("button", { name: "Edit" });
     const form = editButton.closest("form");
-    expect(form).toHaveAttribute("action", "edit");
+    expect(form).toHaveAttribute("action", "/edit");
   });
 
   it("Delete form has correct action and method attributes", () => {
     const deleteButton = screen.getByRole("button", { name: "Delete" });
     const form = deleteButton.closest("form");
-    expect(form).toHaveAttribute("action", "destroy");
+    expect(form).toHaveAttribute("action", "/destroy");
     expect(form).toHaveAttribute("method", "post");
   });
 

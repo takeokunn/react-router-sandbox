@@ -1,10 +1,12 @@
+import { Form } from "react-router";
+
 type Props = {
   isFavorite: boolean;
 };
 
 export function Favorite({ isFavorite }: Props) {
   return (
-    <form method="post">
+    <Form method="post">
       <button
         type="submit"
         aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
@@ -13,6 +15,6 @@ export function Favorite({ isFavorite }: Props) {
       >
         {isFavorite ? "★" : "☆"}
       </button>
-    </form>
+    </Form>
   );
 }

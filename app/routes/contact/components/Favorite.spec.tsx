@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { createMemoryRouter, RouterProvider, type RouteObject } from "react-router";
+import { type RouteObject, RouterProvider, createMemoryRouter } from "react-router";
 import { beforeEach, describe, expect, it } from "vitest";
 import { Favorite } from "./Favorite";
 
