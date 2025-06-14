@@ -12,7 +12,7 @@ export function ContactAvatar({ contact }: Props) {
   return (
     <img
       alt={altText}
-      key={contact.avatar} // key on avatar URL to force re-render if URL changes
+      key={contact.avatar}
       src={contact.avatar ?? undefined}
     />
   );

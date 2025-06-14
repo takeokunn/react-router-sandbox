@@ -3,7 +3,7 @@ import type { ContactRecord } from "../../../data";
 
 export function Favorite({ contact }: { contact: Pick<ContactRecord, "favorite"> }) {
   const fetcher = useFetcher();
-    const favorite = fetcher.formData
+  const favorite = fetcher.formData
     ? fetcher.formData.get("favorite") === "true"
     : contact.favorite;
 

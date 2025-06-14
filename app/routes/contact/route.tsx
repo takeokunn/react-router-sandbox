@@ -13,9 +13,7 @@ export default function Contact() {
   }
 
   const handleDeleteSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    const response = confirm(
-      "Please confirm you want to delete this record."
-    );
+    const response = confirm("Please confirm you want to delete this record.");
     if (!response) {
       event.preventDefault();
     }
