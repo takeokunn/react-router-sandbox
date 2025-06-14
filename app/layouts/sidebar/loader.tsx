@@ -8,3 +8,5 @@ export async function loader({ request }: Route.LoaderArgs) {
 
   return { contacts, q };
 }
+
+export type TLoader = typeof loader

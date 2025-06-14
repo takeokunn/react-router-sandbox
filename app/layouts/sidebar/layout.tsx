@@ -1,18 +1,8 @@
-import { Form, Link, NavLink, Outlet, useLoaderData, useNavigation, useSubmit, NavLinkProps } from "react-router";
+import { Form, Link, NavLink, Outlet, useLoaderData, useNavigation, useSubmit } from "react-router";
 import type { FormProps, NavigateOptions } from "react-router";
 import { useEffect, useState } from "react";
-import { loader } from "./loader";
-
-// Define a local Contact type based on what's used in this component
-type Contact = {
-  id: string;
-  first?: string | null;
-  last?: string | null;
-  favorite?: boolean | null;
-};
-
-// Infer the return type of the loader for more precise props
-type LoaderData = Awaited<ReturnType<typeof loader>>;
+import type { TLoader } from "./loader";
+import type { ContactMutation } from "app/data";
 
 function SidebarHeader() {
   return (
@@ -62,7 +52,7 @@ function NewContactButton() {
 }
 
 type ContactNavListProps = {
-  contacts: Contact[];
+  contacts: ContactMutation[];
   navigationState: ReturnType<typeof useNavigation>['state'];
 };
 
@@ -99,11 +89,14 @@ function ContactNavList({ contacts, navigationState }: ContactNavListProps) {
 }
 
 export default function Layout() {
-  const { contacts, q } = useLoaderData<LoaderData>();
-  const [query, setQuery] = useState(q || "");
+  const { contacts, q } = useLoaderData<Awaited<ReturnType<TLoader>>>();
   const navigation = useNavigation();
   const submit = useSubmit();
-  const searching = navigation.location && new URLSearchParams(navigation.location.search).has("q");
+
+  const [query, setQuery] = useState<string>(q || "");
+  const isSearching: boolean = navigation.location === undefined
+    ? false
+    : new URLSearchParams(navigation.location.search).has("q");
 
   useEffect(() => {
     setQuery(q || "");
@@ -123,7 +116,7 @@ export default function Layout() {
         <div>
           <SearchFormComponent
             initialQuery={q}
-            isSearching={searching}
+            isSearching={isSearching}
             currentQuery={query}
             onQueryChange={setQuery}
             onSubmit={handleSearchSubmit}
