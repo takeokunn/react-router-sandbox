@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
-import { MemoryRouter } from "react-router-dom"; // Correct import for MemoryRouter
+import { MemoryRouter } from "react-router";
 import { SidebarHeader } from "./SidebarHeader";
 
 describe("SidebarHeader コンポーネント", () => {
