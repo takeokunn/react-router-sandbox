@@ -1,15 +1,20 @@
 import { render, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router";
-import { describe, expect, it } from "vitest";
+import { type RouteObject, RouterProvider, createMemoryRouter } from "react-router";
+import { beforeEach, describe, expect, it } from "vitest";
 import { NewContactButton } from "./NewContactButton";
 
 describe("NewContactButton コンポーネント", () => {
+  const routes: RouteObject[] = [
+    {
+      path: "/",
+      element: <NewContactButton />,
+      action: () => null, // Dummy action for the form
+    },
+  ];
+  const router = createMemoryRouter(routes, { initialEntries: ["/"] });
+
   beforeEach(() => {
-    render(
-      <MemoryRouter>
-        <NewContactButton />
-      </MemoryRouter>,
-    );
+    render(<RouterProvider router={router} />);
   });
 
   it("「新規」ボタンを表示する", () => {
