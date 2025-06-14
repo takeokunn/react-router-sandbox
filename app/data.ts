@@ -464,6 +464,6 @@ for (const contact of [
 ]) {
   fakeContacts.create({
     ...contact,
-    id: `${contact.first!.toLowerCase().split(" ").join("_")}-${contact.last!.toLocaleLowerCase()}`,
+    id: `${contact.first?.toLowerCase().split(" ").join("_")}-${contact.last?.toLocaleLowerCase()}`,
   });
 }
