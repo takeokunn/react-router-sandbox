@@ -51,11 +51,7 @@ describe("ContactNavList コンポーネント", () => {
 
   it("名または姓がない連絡先には「No Name」と表示する", () => {
     const noNameContact: ContactMutation[] = [{ id: "4", favorite: false }];
-    render(
-      <MemoryRouter>
-        <ContactNavList contacts={noNameContact} navigationState="idle" />
-      </MemoryRouter>
-    );
+    renderContactNavList(noNameContact, "idle");
     expect(screen.getByText(/No Name/i)).toBeInTheDocument();
   });
 
@@ -63,11 +59,7 @@ describe("ContactNavList コンポーネント", () => {
     const favoriteContact: ContactMutation[] = [
       { id: "5", first: "Fav", last: "User", favorite: true },
     ];
-    render(
-      <MemoryRouter>
-        <ContactNavList contacts={favoriteContact} navigationState="idle" />
-      </MemoryRouter>
-    );
+    renderContactNavList(favoriteContact, "idle");
     const link = screen.getByRole("link", { name: /Fav User ★/i });
     expect(link.textContent).toContain("★");
   });
@@ -76,31 +68,19 @@ describe("ContactNavList コンポーネント", () => {
     const nonFavoriteContact: ContactMutation[] = [
       { id: "6", first: "NonFav", last: "User", favorite: false },
     ];
-    render(
-      <MemoryRouter>
-        <ContactNavList contacts={nonFavoriteContact} navigationState="idle" />
-      </MemoryRouter>
-    );
+    renderContactNavList(nonFavoriteContact, "idle");
     const link = screen.getByRole("link", { name: /NonFav User/i });
     expect(link.textContent).not.toContain("★");
   });
 
   it("navigationStateが'loading'の場合にNavLinkに'loading'クラスを適用する", () => {
-    render(
-      <MemoryRouter>
-        <ContactNavList contacts={[mockContacts[0]]} navigationState="loading" />
-      </MemoryRouter>
-    );
+    renderContactNavList([mockContacts[0]], "loading");
     const link = screen.getByRole("link", { name: /John Doe ★/i });
     expect(link).toHaveClass("loading");
   });
 
   it("navigationStateが'idle'の場合にNavLinkに'loading'クラスを適用しない", () => {
-    render(
-      <MemoryRouter>
-        <ContactNavList contacts={[mockContacts[0]]} navigationState="idle" />
-      </MemoryRouter>
-    );
+    renderContactNavList([mockContacts[0]], "idle");
     const link = screen.getByRole("link", { name: /John Doe ★/i });
     expect(link).not.toHaveClass("loading");
   });
