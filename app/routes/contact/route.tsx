@@ -1,6 +1,10 @@
-import { Form, useLoaderData } from "react-router";
-import { Favorite } from "./components/Favorite";
+import { useLoaderData } from "react-router";
 import type { TLoader } from "./loader";
+import { ContactAvatar } from "./components/ContactAvatar";
+import { ContactHeader } from "./components/ContactHeader";
+import { ContactTwitter } from "./components/ContactTwitter";
+import { ContactNotes } from "./components/ContactNotes";
+import { ContactActions } from "./components/ContactActions";
 
 export default function Contact() {
   const { contact } = useLoaderData<TLoader>();
@@ -11,48 +15,15 @@ export default function Contact() {
   return (
     <div id="contact">
       <div>
-        <img
-          alt={`${contact.first} ${contact.last} avatar`}
-          key={contact.avatar}
-          src={contact.avatar ?? undefined}
-        />
+        <ContactAvatar contact={contact} />
       </div>
 
       <div>
-        <h1>
-          {contact.first || contact.last
-            ? (<>{contact.first} {contact.last}</>)
-            : (<i>No Name</i>)}
-          <Favorite contact={contact} />
-        </h1>
-
-        {contact.twitter
-          ? (
-            <p>
-              <a href={`https://twitter.com/${contact.twitter}`}>{contact.twitter}</a>
-            </p>
-          )
-          : null}
-
-        {contact.notes ? <p>{contact.notes}</p> : null}
-
+        <ContactHeader contact={contact} />
+        <ContactTwitter contact={contact} />
+        <ContactNotes contact={contact} />
         <div>
-          <Form action="edit">
-            <button type="submit">Edit</button>
-          </Form>
-
-          <Form
-            action="destroy"
-            method="post"
-            onSubmit={(event) => {
-              const response = confirm("Please confirm you want to delete this record.");
-              if (!response) {
-                event.preventDefault();
-              }
-            }}
-          >
-            <button type="submit">Delete</button>
-          </Form>
+          <ContactActions />
         </div>
       </div>
     </div>
