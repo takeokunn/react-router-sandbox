@@ -4,7 +4,6 @@ import { MemoryRouter } from "react-router";
 import { ContactHeader } from "./ContactHeader";
 import type { ContactRecord } from "../../../data";
 
-// Favoriteコンポーネントをモックする
 vi.mock("./Favorite", () => ({
   Favorite: ({ isFavorite }: { isFavorite: boolean }) => (
     <button data-testid="favorite-button" data-isfavorite={String(isFavorite)}>
@@ -52,7 +51,6 @@ describe("ContactHeader コンポーネント", () => {
     it("名と姓が提供されない場合、「No Name」が表示されること", () => {
       renderInRouter({ first: undefined, last: undefined }, false);
       expect(screen.getByRole("heading", { name: /No Name/ })).toBeInTheDocument();
-      // `<i>No Name</i>` なので、getByText("No Name") で取得できる
       expect(screen.getByText("No Name")).toBeInTheDocument();
     });
   });
