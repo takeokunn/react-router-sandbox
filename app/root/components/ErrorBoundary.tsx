@@ -18,13 +18,12 @@ function getErrorDisplayInfo(error: Route.ErrorBoundaryProps['error']): ErrorDis
   }
 
   if (import.meta.env.DEV && error && error instanceof Error) {
-    const message = "Oops!"; // Or derive from error.name if desired
+    const message = "Oops!";
     const details = error.message;
     const stack = error.stack;
     return { message, details, stack };
   }
 
-  // Default case
   return {
     message: "Oops!",
     details: "An unexpected error occurred.",
