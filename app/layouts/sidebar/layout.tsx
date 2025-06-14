@@ -2,7 +2,7 @@ import { Form, Link, NavLink, Outlet, useLoaderData, useNavigation, useSubmit } 
 import { useEffect, useState } from "react";
 import { loader } from "./loader";
 
-export default function SidebarLayout() {
+export default function Layout() {
   const { contacts, q } = useLoaderData<typeof loader>();
   const [query, setQuery] = useState(q || "");
   const navigation = useNavigation();
