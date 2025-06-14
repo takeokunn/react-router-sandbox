@@ -10,8 +10,8 @@ vi.mock("../../data", () => ({
 
 const mockGetContact = getContact as vi.MockedFunction<typeof getContact>;
 
-describe("EditContact Loader", () => {
-  it("should return contact data when getContact finds a contact", async () => {
+describe("EditContact ローダー", () => {
+  it("getContact が連絡先を見つけた場合、連絡先データを返すこと", async () => {
     const mockContactData: ContactRecord = {
       id: "123",
       first: "John",
@@ -34,7 +34,7 @@ describe("EditContact Loader", () => {
     expect(result).toEqual({ contact: mockContactData });
   });
 
-  it("should throw a 404 Response when getContact does not find a contact", async () => {
+  it("getContact が連絡先を見つけられない場合、404レスポンスをスローすること", async () => {
     mockGetContact.mockResolvedValue(null);
 
     const mockParams = { contactId: "404" };
