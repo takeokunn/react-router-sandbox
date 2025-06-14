@@ -12,7 +12,7 @@ vi.mock("react-router", async () => {
   };
 });
 
-describe("DestroyContact Action", () => {
+describe("DestroyContact アクション", () => {
   let deleteContactSpy: MockInstance;
 
   beforeEach(() => {
@@ -21,10 +21,10 @@ describe("DestroyContact Action", () => {
 
   afterEach(() => {
     deleteContactSpy.mockRestore();
-    vi.clearAllMocks(); // router.redirect の呼び出し履歴もクリア
+    vi.clearAllMocks();
   });
 
-  it("should call deleteContact with the correct contactId and redirect to '/'", async () => {
+  it("正しい contactId で deleteContact を呼び出し、'/' にリダイレクトすること", async () => {
     const mockContactId = "test-contact-id";
     const mockParams = { contactId: mockContactId };
 
