@@ -4,7 +4,6 @@ import { MemoryRouter, Outlet } from "react-router";
 import Layout from "./layout";
 import type { ContactMutation } from "../../data";
 
-// Hoist mock function definitions
 const componentMocks = vi.hoisted(() => {
   return {
     mockSidebarHeader: vi.fn(() => <div data-testid="sidebar-header-mock">SidebarHeader</div>),
