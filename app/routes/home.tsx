@@ -1,13 +1,3 @@
-export default function Home() {
-  return (
-    <p id="index-page">
-      This is a demo for React Router.
-      <br />
-      Check out{" "}
-      <a href="https://reactrouter.com">
-        the docs at reactrouter.com
-      </a>
-      .
-    </p>
-  );
-}
+// This file has been refactored.
+// The component is now in app/routes/home/route.tsx
+// It is exported via app/routes/home/index.ts

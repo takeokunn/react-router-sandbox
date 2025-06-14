@@ -1,9 +1,3 @@
-import { redirect } from "react-router";
-import type { Route } from "./+types/destroy-contact";
-
-import { deleteContact } from "../data";
-
-export async function action({ params }: Route.ActionArgs) {
-  await deleteContact(params.contactId);
-  return redirect("/");
-}
+// This file has been refactored.
+// The action is in app/routes/destroy-contact/action.tsx
+// It is exported via app/routes/destroy-contact/index.ts
