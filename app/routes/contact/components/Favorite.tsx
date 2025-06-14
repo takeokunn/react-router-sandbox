@@ -1,25 +1,24 @@
-import { useFetcher } from "react-router";
-import type { ContactRecord } from "../../../data";
+import type React from "react";
 
-export function Favorite({ contact }: { contact: Pick<ContactRecord, "favorite"> }) {
-  const fetcher = useFetcher();
-  const favorite = fetcher.formData
-    ? fetcher.formData.get("favorite") === "true"
-    : contact.favorite;
+type FavoriteProps = {
+  isFavorite: boolean;
+  FavoriteForm: React.ElementType; // Will be fetcher.Form passed from parent
+};
 
+export function Favorite({ isFavorite, FavoriteForm }: FavoriteProps) {
   return (
-    <fetcher.Form method="post">
+    <FavoriteForm method="post">
       <button
         aria-label={
-          favorite
+          isFavorite
             ? "Remove from favorites"
             : "Add to favorites"
         }
         name="favorite"
-        value={favorite ? "false" : "true"}
+        value={isFavorite ? "false" : "true"}
       >
-        {favorite ? "★" : "☆"}
+        {isFavorite ? "★" : "☆"}
       </button>
-    </fetcher.Form>
+    </FavoriteForm>
   );
 }

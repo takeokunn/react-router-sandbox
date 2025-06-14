@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router";
+import { useLoaderData, useFetcher } from "react-router";
 import type { TLoader } from "./loader";
 import { ContactAvatar } from "./components/ContactAvatar";
 import { ContactHeader } from "./components/ContactHeader";
@@ -11,6 +11,11 @@ export default function Contact() {
   if (!contact) {
     throw new Response("Not Found", { status: 404 });
   }
+
+  const fetcher = useFetcher();
+  const currentFavorite = fetcher.formData
+    ? fetcher.formData.get("favorite") === "true"
+    : contact.favorite;
 
   const handleDeleteSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     const response = confirm("Please confirm you want to delete this record.");
@@ -26,7 +31,11 @@ export default function Contact() {
       </div>
 
       <div>
-        <ContactHeader contact={contact} />
+        <ContactHeader
+          contact={contact}
+          isFavorite={currentFavorite}
+          FavoriteForm={fetcher.Form}
+        />
         <ContactTwitter contact={contact} />
         <ContactNotes contact={contact} />
         <div>
