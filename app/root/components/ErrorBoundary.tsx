@@ -1,8 +1,6 @@
 import { isRouteErrorResponse } from "react-router";
-import type { Route } from "../+types/root";
+import type { Route } from "../../+types/root";
 
-// The top most error boundary for the app, rendered when your app throws an error
-// For more information, see https://reactrouter.com/start/framework/route-module#errorboundary
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   let message = "Oops!";
   let details = "An unexpected error occurred.";

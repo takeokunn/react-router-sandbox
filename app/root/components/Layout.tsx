@@ -1,5 +1,5 @@
 import { Scripts, ScrollRestoration } from "react-router";
-import appStylesHref from "../app.css?url";
+import appStylesHref from "../../app.css?url";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
