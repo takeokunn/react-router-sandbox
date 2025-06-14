@@ -8,10 +8,10 @@ type ErrorDisplayInfo = {
 };
 
 /**
- * Determines the appropriate message, details, and stack trace to display for an error.
+ * エラーに対して表示する適切なメッセージ、詳細、およびスタックトレースを決定します。
  *
- * @param error - The error object caught by the ErrorBoundary.
- * @returns An object containing the message, details, and optional stack trace.
+ * @param error - ErrorBoundaryによってキャッチされたエラーオブジェクト。
+ * @returns メッセージ、詳細、およびオプションのスタックトレースを含むオブジェクト。
  */
 function getErrorDisplayInfo(error: Route.ErrorBoundaryProps['error']): ErrorDisplayInfo {
   // Handle errors thrown by React Router (e.g., 404 Not Found)
