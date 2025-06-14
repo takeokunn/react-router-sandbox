@@ -7,7 +7,7 @@ export default function EditContact() {
   const navigate = useNavigate();
 
   return (
-    <form key={contact.id} id="contact-form" method="post">
+    <form key={contact.id} id="contact-form" method="post" aria-label="Edit contact">
       <p>
         <span>Name</span>
         <input
