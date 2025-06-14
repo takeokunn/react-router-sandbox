@@ -7,44 +7,6 @@ describe("Favorite コンポーネント", () => {
     render(<Favorite isFavorite={isFavorite} />);
   };
 
-  it("isFavoriteがtrueの場合、「★」ボタンを表示する", () => {
-    renderFavorite(true);
-    const button = screen.getByRole("button", { name: "Remove from favorites" });
-    expect(button).toBeInTheDocument();
-    expect(button.textContent).toBe("★");
-  });
-
-  it("isFavoriteがfalseの場合、「☆」ボタンを表示する", () => {
-    renderFavorite(false);
-    const button = screen.getByRole("button", { name: "Add to favorites" });
-    expect(button).toBeInTheDocument();
-    expect(button.textContent).toBe("☆");
-  });
-
-  it("isFavoriteがtrueの場合、aria-labelが「Remove from favorites」になる", () => {
-    renderFavorite(true);
-    const button = screen.getByRole("button");
-    expect(button).toHaveAttribute("aria-label", "Remove from favorites");
-  });
-
-  it("isFavoriteがfalseの場合、aria-labelが「Add to favorites」になる", () => {
-    renderFavorite(false);
-    const button = screen.getByRole("button");
-    expect(button).toHaveAttribute("aria-label", "Add to favorites");
-  });
-
-  it("isFavoriteがtrueの場合、ボタンのvalueが「false」になる", () => {
-    renderFavorite(true);
-    const button = screen.getByRole("button");
-    expect(button).toHaveAttribute("value", "false");
-  });
-
-  it("isFavoriteがfalseの場合、ボタンのvalueが「true」になる", () => {
-    renderFavorite(false);
-    const button = screen.getByRole("button");
-    expect(button).toHaveAttribute("value", "true");
-  });
-
   it("ボタンのname属性が「favorite」である", () => {
     renderFavorite(false);
     const button = screen.getByRole("button");
@@ -57,5 +19,47 @@ describe("Favorite コンポーネント", () => {
     const formElement = button.closest("form");
     expect(formElement).toBeInTheDocument();
     expect(formElement).toHaveAttribute("method", "post");
+  });
+
+  describe("isFavoriteがtrueの場合", () => {
+    beforeEach(() => {
+      renderFavorite(true);
+    });
+
+    it("「★」ボタンを表示する", () => {
+      const button = screen.getByRole("button", { name: "Remove from favorites" });
+      expect(button.textContent).toBe("★");
+    });
+
+    it("aria-labelが「Remove from favorites」になる", () => {
+      const button = screen.getByRole("button");
+      expect(button).toHaveAttribute("aria-label", "Remove from favorites");
+    });
+
+    it("ボタンのvalueが「false」になる", () => {
+      const button = screen.getByRole("button");
+      expect(button).toHaveAttribute("value", "false");
+    });
+  });
+
+  describe("isFavoriteがfalseの場合", () => {
+    beforeEach(() => {
+      renderFavorite(false);
+    });
+
+    it("「☆」ボタンを表示する", () => {
+      const button = screen.getByRole("button", { name: "Add to favorites" });
+      expect(button.textContent).toBe("☆");
+    });
+
+    it("aria-labelが「Add to favorites」になる", () => {
+      const button = screen.getByRole("button");
+      expect(button).toHaveAttribute("aria-label", "Add to favorites");
+    });
+
+    it("ボタンのvalueが「true」になる", () => {
+      const button = screen.getByRole("button");
+      expect(button).toHaveAttribute("value", "true");
+    });
   });
 });
