@@ -26,8 +26,18 @@ describe("ルートアクション (app/root/action.ts)", () => {
 
   it("createEmptyContactを呼び出し、返されたコンタクトIDで編集ページにリダイレクトすること", async () => {
     const mockContactId = "new-contact-123";
-    const mockContact = { id: mockContactId };
-    const createEmptyContactSpy = vi.spyOn(dataFunctions, "createEmptyContact").mockResolvedValue(mockContact as any);
+    const mockContact: dataFunctions.ContactRecord = {
+      id: mockContactId,
+      createdAt: new Date().toISOString(),
+      // Add other optional fields from ContactMutation as needed, or leave them undefined
+      first: undefined,
+      last: undefined,
+      avatar: undefined,
+      twitter: undefined,
+      notes: undefined,
+      favorite: undefined,
+    };
+    const createEmptyContactSpy = vi.spyOn(dataFunctions, "createEmptyContact").mockResolvedValue(mockContact);
 
     await action();
 
