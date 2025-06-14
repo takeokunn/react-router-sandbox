@@ -1,32 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router";
 import { ContactNavList } from "./ContactNavList";
 import type { ContactMutation } from "app/data";
-import type { useNavigation } from "react-router";
-
-// Mock react-router's useNavigation to control its state
-vi.mock("react-router", async () => {
-  const actual = await vi.importActual("react-router");
-  return {
-    ...actual,
-    useNavigation: () => ({
-      state: "idle", // Default state, can be overridden in tests
-      location: undefined,
-      formData: undefined,
-      json: undefined,
-      text: undefined,
-      formAction: undefined,
-      formMethod: undefined,
-      formEncType: undefined,
-      submission: undefined,
-      load: vi.fn(),
-      navigate: vi.fn(),
-      fetch: vi.fn(),
-    }),
-  };
-});
-
 
 const mockContacts: ContactMutation[] = [
   { id: "1", first: "John", last: "Doe", favorite: true },

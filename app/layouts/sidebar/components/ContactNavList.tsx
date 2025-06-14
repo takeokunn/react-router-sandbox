@@ -1,9 +1,10 @@
-import { NavLink, useNavigation } from "react-router";
+import { NavLink } from "react-router";
+import type { Navigation } from "react-router";
 import type { ContactMutation } from "app/data";
 
 type Props = {
   contacts: ContactMutation[];
-  navigationState: ReturnType<typeof useNavigation>['state'];
+  navigationState: Navigation['state'];
 };
 
 export function ContactNavList({ contacts, navigationState }: Props) {
@@ -17,13 +18,9 @@ export function ContactNavList({ contacts, navigationState }: Props) {
                 className={navigationState === "loading" ? "loading" : ""}
                 to={`contacts/${contact.id}`}
               >
-                {contact.first || contact.last ? (
-                  <>
-                    {contact.first} {contact.last}
-                  </>
-                ) : (
-                  <i>No Name</i>
-                )}
+                {contact.first || contact.last
+                  ? (<>{contact.first} {contact.last}</>)
+                  : (<i>No Name</i>)}
                 {contact.favorite ? <span>★</span> : null}
               </NavLink>
             </li>
