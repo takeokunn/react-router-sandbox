@@ -26,7 +26,7 @@ export function SearchFormComponent({
         onChange={(event) => onQueryChange(event.currentTarget.value)}
         value={currentQuery}
       />
-      <div aria-hidden hidden={!isSearching} id="search-spinner" />
+      <div aria-hidden hidden={!isSearching} id="search-spinner" data-testid="search-spinner" />
     </Form>
   );
 }

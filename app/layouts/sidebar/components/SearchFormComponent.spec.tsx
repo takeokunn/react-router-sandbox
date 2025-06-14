@@ -1,0 +1,85 @@
+import { render, screen, fireEvent } from "@testing-library/react";
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { MemoryRouter } from "react-router-dom";
+import { SearchFormComponent, type SearchFormComponentProps } from "./SearchFormComponent";
+
+describe("SearchFormComponent コンポーネント", () => {
+  let mockOnQueryChange: ReturnType<typeof vi.fn>;
+  let mockOnSubmit: ReturnType<typeof vi.fn>;
+  let defaultProps: SearchFormComponentProps;
+
+  const renderComponent = (props: Partial<SearchFormComponentProps> = {}) => {
+    const finalProps = { ...defaultProps, ...props };
+    return render(
+      <MemoryRouter>
+        <SearchFormComponent {...finalProps} />
+      </MemoryRouter>
+    );
+  };
+
+  beforeEach(() => {
+    mockOnQueryChange = vi.fn();
+    mockOnSubmit = vi.fn((event: React.FormEvent<HTMLFormElement>) => {
+      // The form's onChange calls onSubmit, so prevent default if needed,
+      // though in a test environment it might not matter as much.
+      event.preventDefault(); 
+    });
+    defaultProps = {
+      initialQuery: "", // This prop is in the component but not used in the provided code.
+      isSearching: false,
+      currentQuery: "",
+      onQueryChange: mockOnQueryChange,
+      onSubmit: mockOnSubmit,
+    };
+    vi.clearAllMocks();
+  });
+
+  it("初期状態で検索入力フィールドと非表示のスピナーが正しく表示される", () => {
+    renderComponent();
+
+    const inputElement = screen.getByPlaceholderText("Search");
+    expect(inputElement).toBeInTheDocument();
+    expect(inputElement).toHaveAttribute("aria-label", "Search contacts");
+    expect(inputElement).toHaveValue("");
+    expect(inputElement).not.toHaveClass("loading");
+
+    const spinnerElement = screen.getByTestId("search-spinner"); // Assuming you add data-testid="search-spinner"
+    expect(spinnerElement).toBeInTheDocument();
+    expect(spinnerElement).toHaveAttribute("hidden");
+
+    const formElement = screen.getByRole("search");
+    expect(formElement).toHaveAttribute("id", "search-form");
+  });
+
+  it("currentQueryが指定された場合、入力フィールドにその値が設定される", () => {
+    renderComponent({ currentQuery: "test query" });
+    const inputElement = screen.getByPlaceholderText("Search");
+    expect(inputElement).toHaveValue("test query");
+  });
+
+  it("isSearchingがtrueの場合、入力フィールドにloadingクラスが適用され、スピナーが表示される", () => {
+    renderComponent({ isSearching: true });
+
+    const inputElement = screen.getByPlaceholderText("Search");
+    expect(inputElement).toHaveClass("loading");
+
+    const spinnerElement = screen.getByTestId("search-spinner");
+    expect(spinnerElement).not.toHaveAttribute("hidden");
+  });
+
+  it("入力フィールドへの入力時にonQueryChangeが呼び出される", () => {
+    renderComponent();
+    const inputElement = screen.getByPlaceholderText("Search");
+    fireEvent.change(inputElement, { target: { value: "new query" } });
+    expect(mockOnQueryChange).toHaveBeenCalledTimes(1);
+    expect(mockOnQueryChange).toHaveBeenCalledWith("new query");
+  });
+
+  it("フォームのonChangeイベント（入力時）にonSubmitが呼び出される", () => {
+    renderComponent();
+    const inputElement = screen.getByPlaceholderText("Search");
+    // Form's onChange is triggered by input's onChange
+    fireEvent.change(inputElement, { target: { value: "another query" } });
+    expect(mockOnSubmit).toHaveBeenCalledTimes(1);
+  });
+});
