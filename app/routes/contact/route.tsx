@@ -1,5 +1,6 @@
-import { Form, useFetcher, useLoaderData } from "react-router";
+import { Form, useLoaderData } from "react-router";
 import type { ContactRecord } from "../../data";
+import { Favorite } from "./components/Favorite";
 
 export default function Contact() {
 
@@ -62,28 +63,5 @@ export default function Contact() {
         </div>
       </div>
     </div>
-  );
-}
-
-function Favorite({ contact }: { contact: Pick<ContactRecord, "favorite"> }) {
-  const fetcher = useFetcher();
-    const favorite = fetcher.formData
-    ? fetcher.formData.get("favorite") === "true"
-    : contact.favorite;
-
-  return (
-    <fetcher.Form method="post">
-      <button
-        aria-label={
-          favorite
-            ? "Remove from favorites"
-            : "Add to favorites"
-        }
-        name="favorite"
-        value={favorite ? "false" : "true"}
-      >
-        {favorite ? "★" : "☆"}
-      </button>
-    </fetcher.Form>
   );
 }
