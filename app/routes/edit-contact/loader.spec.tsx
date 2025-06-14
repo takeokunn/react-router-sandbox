@@ -2,9 +2,8 @@ import { describe, it, expect, vi } from "vitest";
 import { loader } from "./loader";
 import { getContact } from "../../data";
 import type { ContactRecord } from "../../data";
-import type { Route } from "./+types"; // Assuming +types.ts defines Route.LoaderArgs
+import type { Route } from "./+types";
 
-// Mock the getContact function
 vi.mock("../../data", () => ({
   getContact: vi.fn(),
 }));
@@ -26,10 +25,8 @@ describe("EditContact Loader", () => {
     mockGetContact.mockResolvedValue(mockContactData);
 
     const mockParams = { contactId: "123" };
-    // Cast to any for simplicity, or define a more complete mock LoaderArgs
-    const request = new Request("http://localhost/contacts/123/edit") as any; 
+    const request = new Request("http://localhost/contacts/123/edit") as any;
     const context = {} as any;
-
 
     const result = await loader({ params: mockParams, request, context } as Route.LoaderArgs);
 
@@ -47,7 +44,7 @@ describe("EditContact Loader", () => {
     try {
       await loader({ params: mockParams, request, context } as Route.LoaderArgs);
       // Should not reach here
-      expect(true).toBe(false); 
+      expect(true).toBe(false);
     } catch (error) {
       expect(error).toBeInstanceOf(Response);
       const response = error as Response;
