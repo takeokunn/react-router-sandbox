@@ -4,13 +4,23 @@ import Home from "./route";
 import { MemoryRouter } from "react-router";
 
 describe("Home component", () => {
-  it("render", () => {
+  beforeEach(() => {
     render(
       <MemoryRouter>
         <Home />
       </MemoryRouter>
     );
+  });
 
-    expect(screen.getByText("the docs at reactrouter.com")).toBeInTheDocument();
+  it("renders the introductory text", () => {
+    expect(screen.getByText(/This is a demo for React Router/i)).toBeInTheDocument();
+  });
+
+  it("renders a link to the React Router documentation", () => {
+    const linkElement = screen.getByRole("link", {
+      name: /the docs at reactrouter.com/i,
+    });
+    expect(linkElement).toBeInTheDocument();
+    expect(linkElement).toHaveAttribute("href", "https://reactrouter.com");
   });
 });
