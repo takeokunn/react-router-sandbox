@@ -1,7 +1,13 @@
 import { isRouteErrorResponse } from "react-router";
 import type { Route } from "../../+types/root";
 
-export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+type ErrorDisplayInfo = {
+  message: string;
+  details: string;
+  stack?: string;
+};
+
+function getErrorDisplayInfo(error: Route.ErrorBoundaryProps['error']): ErrorDisplayInfo {
   let message = "Oops!";
   let details = "An unexpected error occurred.";
   let stack: string | undefined;
@@ -16,6 +22,12 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
     details = error.message;
     stack = error.stack;
   }
+
+  return { message, details, stack };
+}
+
+export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+  const { message, details, stack } = getErrorDisplayInfo(error);
 
   return (
     <main id="error-page">
