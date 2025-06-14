@@ -3,7 +3,7 @@ import { describe, it, expect } from "vitest";
 import { MemoryRouter } from "react-router";
 import { ContactNavList } from "./ContactNavList";
 import type { ContactMutation } from "app/data";
-import type { Navigation } from "react-router"; // For Navigation['state'] type
+import type { Navigation } from "react-router";
 
 const renderContactNavList = (
   contacts: ContactMutation[],

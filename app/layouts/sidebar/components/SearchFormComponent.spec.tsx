@@ -76,7 +76,6 @@ describe("SearchFormComponent コンポーネント", () => {
   it("フォームのonChangeイベント（入力時）にonSubmitが呼び出される", () => {
     renderComponent();
     const inputElement = screen.getByPlaceholderText("Search");
-    // Form's onChange is triggered by input's onChange
     fireEvent.change(inputElement, { target: { value: "another query" } });
     expect(mockOnSubmit).toHaveBeenCalledTimes(1);
   });

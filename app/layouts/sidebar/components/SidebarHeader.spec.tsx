@@ -25,9 +25,7 @@ describe("SidebarHeader コンポーネント", () => {
   });
 
   it("リンクが正しい宛先（'about'）を指している", () => {
-    const linkElement = screen.getByRole("link", {
-      name: /React Router Contacts/i,
-    });
-    expect(linkElement).toHaveAttribute("href", "/about"); // MemoryRouter prepends '/'
+    const linkElement = screen.getByRole("link", {name: /React Router Contacts/i});
+    expect(linkElement).toHaveAttribute("href", "/about");
   });
 });
