@@ -3,7 +3,7 @@ import { describe, it, expect } from "vitest";
 import Home from "./route";
 import { MemoryRouter } from "react-router";
 
-describe("Home component", () => {
+describe("Home コンポーネント", () => {
   beforeEach(() => {
     render(
       <MemoryRouter>
@@ -12,11 +12,11 @@ describe("Home component", () => {
     );
   });
 
-  it("renders the introductory text", () => {
+  it("紹介テキストを表示する", () => {
     expect(screen.getByText(/This is a demo for React Router/i)).toBeInTheDocument();
   });
 
-  it("renders a link to the React Router documentation", () => {
+  it("React Router のドキュメントへのリンクを表示する", () => {
     const linkElement = screen.getByRole("link", {
       name: /the docs at reactrouter.com/i,
     });
