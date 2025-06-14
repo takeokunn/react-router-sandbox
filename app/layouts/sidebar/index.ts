@@ -1,4 +1,2 @@
-import Layout from './layout';
-
-export default Layout;
+export { default } from "./layout";
 export { loader } from './loader';

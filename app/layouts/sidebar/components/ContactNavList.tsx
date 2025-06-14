@@ -1,12 +1,12 @@
 import { NavLink, useNavigation } from "react-router";
 import type { ContactMutation } from "app/data";
 
-export type ContactNavListProps = {
+type Props = {
   contacts: ContactMutation[];
   navigationState: ReturnType<typeof useNavigation>['state'];
 };
 
-export function ContactNavList({ contacts, navigationState }: ContactNavListProps) {
+export function ContactNavList({ contacts, navigationState }: Props) {
   return (
     <nav>
       {contacts.length ? (
