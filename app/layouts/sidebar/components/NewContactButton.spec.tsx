@@ -3,7 +3,7 @@ import { describe, it, expect } from "vitest";
 import { MemoryRouter } from "react-router-dom";
 import { NewContactButton } from "./NewContactButton";
 
-describe("NewContactButton Component", () => {
+describe("NewContactButton コンポーネント", () => {
   beforeEach(() => {
     render(
       <MemoryRouter>
@@ -12,13 +12,13 @@ describe("NewContactButton Component", () => {
     );
   });
 
-  it("renders the 'New' button", () => {
+  it("「新規」ボタンを表示する", () => {
     const buttonElement = screen.getByRole("button", { name: /New/i });
     expect(buttonElement).toBeInTheDocument();
     expect(buttonElement).toHaveAttribute("type", "submit");
   });
 
-  it("renders a form with method 'post'", () => {
+  it("methodが'post'のフォームを表示する", () => {
     const buttonElement = screen.getByRole("button", { name: /New/i });
     const formElement = buttonElement.closest("form");
     expect(formElement).toBeInTheDocument();
