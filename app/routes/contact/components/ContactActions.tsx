@@ -1,6 +1,11 @@
 import { Form } from "react-router";
+import type React from "react";
 
-export function ContactActions() {
+type Props = {
+  onDeleteSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+};
+
+export function ContactActions({ onDeleteSubmit }: Props) {
   return (
     <>
       <Form action="edit">
@@ -9,14 +14,7 @@ export function ContactActions() {
       <Form
         action="destroy"
         method="post"
-        onSubmit={(event) => {
-          const response = confirm(
-            "Please confirm you want to delete this record."
-          );
-          if (!response) {
-            event.preventDefault();
-          }
-        }}
+        onSubmit={onDeleteSubmit}
       >
         <button type="submit">Delete</button>
       </Form>

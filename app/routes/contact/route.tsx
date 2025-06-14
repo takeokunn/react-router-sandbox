@@ -12,6 +12,15 @@ export default function Contact() {
     throw new Response("Not Found", { status: 404 });
   }
 
+  const handleDeleteSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const response = confirm(
+      "Please confirm you want to delete this record."
+    );
+    if (!response) {
+      event.preventDefault();
+    }
+  };
+
   return (
     <div id="contact">
       <div>
@@ -23,7 +32,7 @@ export default function Contact() {
         <ContactTwitter contact={contact} />
         <ContactNotes contact={contact} />
         <div>
-          <ContactActions />
+          <ContactActions onDeleteSubmit={handleDeleteSubmit} />
         </div>
       </div>
     </div>
