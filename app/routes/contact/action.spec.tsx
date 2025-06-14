@@ -1,10 +1,9 @@
 import { describe, it, expect, vi, beforeEach, type MockInstance } from "vitest";
-import { action } from "./action"; // 対象のaction関数
-import * as dataFunctions from "../../data"; // updateContactをモックするため
-import type { Route } from "./+types"; // Route.ActionArgsのため
+import { action } from "./action";
+import * as dataFunctions from "../../data";
+import type { Route } from "./+types";
 import type { ContactRecord } from "../../data";
 
-// ../../dataモジュールのupdateContactをモック
 vi.mock("../../data", async () => {
   const actual = await vi.importActual("../../data");
   return {
@@ -14,7 +13,7 @@ vi.mock("../../data", async () => {
 });
 
 describe("コンタクトアクション (app/routes/contact/action.tsx)", () => {
-  let updateContactSpy: MockInstance<[string, Partial<ContactRecord>], Promise<ContactRecord | undefined>>;
+  let updateContactSpy: MockInstance
 
   beforeEach(() => {
     vi.resetAllMocks();
@@ -66,7 +65,7 @@ describe("コンタクトアクション (app/routes/contact/action.tsx)", () =>
   });
 
   it("フォームデータにfavoriteが存在しない場合、updateContactをfavorite: falseで呼び出すこと", async () => {
-    const request = createMockRequest(null); // favoriteキーなし
+    const request = createMockRequest(null);
     const params = { contactId: mockContactId };
     const updatedContactNoFavorite = { ...mockUpdatedContact, favorite: false };
     updateContactSpy.mockResolvedValue(updatedContactNoFavorite);
@@ -79,19 +78,16 @@ describe("コンタクトアクション (app/routes/contact/action.tsx)", () =>
   });
 
   it("params.contactIdが存在しない場合でも、updateContactがundefinedのIDで呼び出されること", async () => {
-    // このケースは実際にはRouteの型やinvariantで防がれるべきだが、action単体のテストとして確認
+
     const request = createMockRequest("true");
-    const params = {}; // contactIdなし
+    const params = {};
     updateContactSpy.mockResolvedValue(mockUpdatedContact);
 
-
-    // params.contactIdがundefinedになるため、updateContactの第一引数もundefinedになる
     await action({ params, request } as Route.ActionArgs);
 
     expect(updateContactSpy).toHaveBeenCalledTimes(1);
     expect(updateContactSpy).toHaveBeenCalledWith(undefined, { favorite: true });
   });
-
 
   it("updateContactがエラーをスローした場合、エラーが伝播すること", async () => {
     const request = createMockRequest("true");

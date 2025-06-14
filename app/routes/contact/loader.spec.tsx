@@ -16,7 +16,6 @@ describe("コンタクトローダー (app/routes/contact/loader.tsx)", () => {
   let getContactSpy: MockInstance;
 
   beforeEach(() => {
-
     vi.resetAllMocks();
     getContactSpy = vi.spyOn(dataFunctions, "getContact");
   });
