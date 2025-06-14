@@ -1,10 +1,9 @@
 import { Form, useLoaderData } from "react-router";
-import type { ContactRecord } from "../../data";
 import { Favorite } from "./components/Favorite";
+import type { TLoader } from "./loader";
 
 export default function Contact() {
-
-  const { contact } = useLoaderData() as { contact: ContactRecord | null };
+  const { contact } = useLoaderData<TLoader>();
   if (!contact) {
     throw new Response("Not Found", { status: 404 });
   }
@@ -15,31 +14,25 @@ export default function Contact() {
         <img
           alt={`${contact.first} ${contact.last} avatar`}
           key={contact.avatar}
-          src={contact.avatar ?? undefined} // Handle null avatar
+          src={contact.avatar ?? undefined}
         />
       </div>
 
       <div>
         <h1>
-          {contact.first || contact.last ? (
-            <>
-              {contact.first} {contact.last}
-            </>
-          ) : (
-            <i>No Name</i>
-          )}
+          {contact.first || contact.last
+            ? (<>{contact.first} {contact.last}</>)
+            : (<i>No Name</i>)}
           <Favorite contact={contact} />
         </h1>
 
-        {contact.twitter ? (
-          <p>
-            <a
-              href={`https://twitter.com/${contact.twitter}`}
-            >
-              {contact.twitter}
-            </a>
-          </p>
-        ) : null}
+        {contact.twitter
+          ? (
+            <p>
+              <a href={`https://twitter.com/${contact.twitter}`}>{contact.twitter}</a>
+            </p>
+          )
+          : null}
 
         {contact.notes ? <p>{contact.notes}</p> : null}
 
