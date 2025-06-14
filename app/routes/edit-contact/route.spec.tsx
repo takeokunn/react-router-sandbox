@@ -26,7 +26,7 @@ vi.mock("react-router", async () => {
   };
 });
 
-describe("EditContact Component", () => {
+describe("EditContact コンポーネント", () => {
   beforeEach(() => {
     vi.clearAllMocks(); // Clear mocks before each test
     render(
@@ -37,7 +37,7 @@ describe("EditContact Component", () => {
     );
   });
 
-  it("renders the form with pre-filled contact data", () => {
+  it("フォームに連絡先のデータが事前入力されて表示される", () => {
     expect(screen.getByPlaceholderText("First")).toHaveValue(mockContact.first);
     expect(screen.getByPlaceholderText("Last")).toHaveValue(mockContact.last);
     expect(screen.getByPlaceholderText("@jack")).toHaveValue(mockContact.twitter);
@@ -45,18 +45,18 @@ describe("EditContact Component", () => {
     expect(screen.getByRole("textbox", { name: "Notes" })).toHaveValue(mockContact.notes);
   });
 
-  it("renders 'Save' and 'Cancel' buttons", () => {
+  it("「保存」ボタンと「キャンセル」ボタンが表示される", () => {
     expect(screen.getByRole("button", { name: "Save" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Cancel" })).toBeInTheDocument();
   });
 
-  it("calls navigate(-1) when 'Cancel' button is clicked", () => {
+  it("「キャンセル」ボタンがクリックされたときに navigate(-1) が呼び出される", () => {
     const cancelButton = screen.getByRole("button", { name: "Cancel" });
     fireEvent.click(cancelButton);
     expect(mockNavigate).toHaveBeenCalledWith(-1);
   });
 
-  it("form has the correct method and id", () => {
+  it("フォームが正しいメソッドとIDを持っている", () => {
     const formElement = screen.getByRole("form");
     expect(formElement).toHaveAttribute("method", "post");
     expect(formElement).toHaveAttribute("id", "contact-form");
