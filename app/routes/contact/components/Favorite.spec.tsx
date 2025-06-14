@@ -1,20 +1,30 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { createMemoryRouter, RouterProvider, type RouteObject } from "react-router";
+import { beforeEach, describe, expect, it } from "vitest";
 import { Favorite } from "./Favorite";
 
 describe("Favorite コンポーネント", () => {
-  const renderFavorite = (isFavorite: boolean) => {
-    render(<Favorite isFavorite={isFavorite} />);
+  const setupRouter = (isFavorite: boolean) => {
+    const routes: RouteObject[] = [
+      {
+        path: "/",
+        element: <Favorite isFavorite={isFavorite} />,
+        action: () => null, // Dummy action for the form
+      },
+    ];
+    return createMemoryRouter(routes, { initialEntries: ["/"] });
   };
 
   it("ボタンのname属性が「favorite」である", () => {
-    renderFavorite(false);
+    const router = setupRouter(false);
+    render(<RouterProvider router={router} />);
     const button = screen.getByRole("button");
     expect(button).toHaveAttribute("name", "favorite");
   });
 
   it("フォームのmethod属性が「post」である", () => {
-    renderFavorite(false);
+    const router = setupRouter(false);
+    render(<RouterProvider router={router} />);
     const button = screen.getByRole("button");
     const formElement = button.closest("form");
     expect(formElement).toBeInTheDocument();
@@ -23,7 +33,8 @@ describe("Favorite コンポーネント", () => {
 
   describe("isFavoriteがtrueの場合", () => {
     beforeEach(() => {
-      renderFavorite(true);
+      const router = setupRouter(true);
+      render(<RouterProvider router={router} />);
     });
 
     it("「★」ボタンを表示する", () => {
@@ -46,7 +57,8 @@ describe("Favorite コンポーネント", () => {
 
   describe("isFavoriteがfalseの場合", () => {
     beforeEach(() => {
-      renderFavorite(false);
+      const router = setupRouter(false);
+      render(<RouterProvider router={router} />);
     });
 
     it("「☆」ボタンを表示する", () => {
