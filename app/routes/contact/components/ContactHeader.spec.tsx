@@ -1,9 +1,10 @@
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { MemoryRouter } from "react-router";
 import { ContactHeader } from "./ContactHeader";
 import type { ContactRecord } from "../../../data";
 
+// Favoriteコンポーネントをモックする
 vi.mock("./Favorite", () => ({
   Favorite: ({ isFavorite }: { isFavorite: boolean }) => (
     <button data-testid="favorite-button" data-isfavorite={String(isFavorite)}>
@@ -18,7 +19,7 @@ describe("ContactHeader コンポーネント", () => {
     last: "Yamada",
   };
 
-  const renderComponent = (
+  const renderInRouter = (
     contact: Pick<ContactRecord, "first" | "last">,
     isFavorite: boolean,
   ) => {
@@ -29,43 +30,58 @@ describe("ContactHeader コンポーネント", () => {
     );
   };
 
-  it("名と姓が提供された場合、正しく表示されること", () => {
-    renderComponent(mockContactBase, false);
-    expect(screen.getByRole("heading", { name: /Taro Yamada/ })).toBeInTheDocument();
-    expect(screen.getByText("Taro Yamada")).toBeInTheDocument();
+  describe("連絡先名の表示", () => {
+    it("名と姓が提供された場合、正しく表示されること", () => {
+      renderInRouter(mockContactBase, false);
+      expect(screen.getByRole("heading", { name: /Taro Yamada/ })).toBeInTheDocument();
+      expect(screen.getByText("Taro Yamada")).toBeInTheDocument();
+    });
+
+    it("名のみが提供された場合、名のみが表示されること", () => {
+      renderInRouter({ ...mockContactBase, last: undefined }, false);
+      expect(screen.getByRole("heading", { name: /Taro/ })).toBeInTheDocument();
+      expect(screen.getByText("Taro")).toBeInTheDocument();
+    });
+
+    it("姓のみが提供された場合、姓のみが表示されること", () => {
+      renderInRouter({ ...mockContactBase, first: undefined }, false);
+      expect(screen.getByRole("heading", { name: /Yamada/ })).toBeInTheDocument();
+      expect(screen.getByText("Yamada")).toBeInTheDocument();
+    });
+
+    it("名と姓が提供されない場合、「No Name」が表示されること", () => {
+      renderInRouter({ first: undefined, last: undefined }, false);
+      expect(screen.getByRole("heading", { name: /No Name/ })).toBeInTheDocument();
+      // `<i>No Name</i>` なので、getByText("No Name") で取得できる
+      expect(screen.getByText("No Name")).toBeInTheDocument();
+    });
   });
 
-  it("名のみが提供された場合、名のみが表示されること", () => {
-    renderComponent({ ...mockContactBase, last: undefined }, false);
-    expect(screen.getByRole("heading", { name: /Taro/ })).toBeInTheDocument();
-    expect(screen.getByText("Taro")).toBeInTheDocument();
-  });
+  describe("Favoriteコンポーネントの表示", () => {
+    describe("isFavoriteがtrueの場合", () => {
+      beforeEach(() => {
+        renderInRouter(mockContactBase, true);
+      });
 
-  it("姓のみが提供された場合、姓のみが表示されること", () => {
-    renderComponent({ ...mockContactBase, first: undefined }, false);
-    expect(screen.getByRole("heading", { name: /Yamada/ })).toBeInTheDocument();
-    expect(screen.getByText("Yamada")).toBeInTheDocument();
-  });
+      it("Favoriteコンポーネントにtrueが渡され、「★」が表示されること", () => {
+        const favoriteButton = screen.getByTestId("favorite-button");
+        expect(favoriteButton).toBeInTheDocument();
+        expect(favoriteButton).toHaveAttribute("data-isfavorite", "true");
+        expect(favoriteButton.textContent).toBe("★");
+      });
+    });
 
-  it("名と姓が提供されない場合、「No Name」が表示されること", () => {
-    renderComponent({ first: undefined, last: undefined }, false);
-    expect(screen.getByRole("heading", { name: /No Name/ })).toBeInTheDocument();
-    expect(screen.getByText("No Name")).toBeInTheDocument();
-  });
+    describe("isFavoriteがfalseの場合", () => {
+      beforeEach(() => {
+        renderInRouter(mockContactBase, false);
+      });
 
-  it("isFavoriteがtrueの場合、Favoriteコンポーネントにtrueが渡されること", () => {
-    renderComponent(mockContactBase, true);
-    const favoriteButton = screen.getByTestId("favorite-button");
-    expect(favoriteButton).toBeInTheDocument();
-    expect(favoriteButton).toHaveAttribute("data-isfavorite", "true");
-    expect(favoriteButton.textContent).toBe("★");
-  });
-
-  it("isFavoriteがfalseの場合、Favoriteコンポーネントにfalseが渡されること", () => {
-    renderComponent(mockContactBase, false);
-    const favoriteButton = screen.getByTestId("favorite-button");
-    expect(favoriteButton).toBeInTheDocument();
-    expect(favoriteButton).toHaveAttribute("data-isfavorite", "false");
-    expect(favoriteButton.textContent).toBe("☆");
+      it("Favoriteコンポーネントにfalseが渡され、「☆」が表示されること", () => {
+        const favoriteButton = screen.getByTestId("favorite-button");
+        expect(favoriteButton).toBeInTheDocument();
+        expect(favoriteButton).toHaveAttribute("data-isfavorite", "false");
+        expect(favoriteButton.textContent).toBe("☆");
+      });
+    });
   });
 });
