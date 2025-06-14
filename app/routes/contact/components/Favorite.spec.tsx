@@ -52,7 +52,7 @@ describe("Favorite コンポーネント", () => {
   });
 
   it("フォームのmethod属性が「post」である", () => {
-    renderFavorite(false); // isFavorite value doesn't matter for this test
+    renderFavorite(false);
     const button = screen.getByRole("button");
     const formElement = button.closest("form");
     expect(formElement).toBeInTheDocument();
