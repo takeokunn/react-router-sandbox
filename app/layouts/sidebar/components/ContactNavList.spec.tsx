@@ -1,8 +1,20 @@
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import { MemoryRouter } from "react-router";
 import { ContactNavList } from "./ContactNavList";
 import type { ContactMutation } from "app/data";
+import type { Navigation } from "react-router"; // For Navigation['state'] type
+
+const renderContactNavList = (
+  contacts: ContactMutation[],
+  navigationState: Navigation['state'] = "idle"
+) => {
+  return render(
+    <MemoryRouter>
+      <ContactNavList contacts={contacts} navigationState={navigationState} />
+    </MemoryRouter>
+  );
+};
 
 const mockContacts: ContactMutation[] = [
   { id: "1", first: "John", last: "Doe", favorite: true },
@@ -12,20 +24,12 @@ const mockContacts: ContactMutation[] = [
 
 describe("ContactNavList コンポーネント", () => {
   it("連絡先リストが空の場合に「No contacts」と表示する", () => {
-    render(
-      <MemoryRouter>
-        <ContactNavList contacts={[]} navigationState="idle" />
-      </MemoryRouter>
-    );
+    renderContactNavList([], "idle");
     expect(screen.getByText(/No contacts/i)).toBeInTheDocument();
   });
 
   it("連絡先リストに名前とお気に入りインジケータを表示する", () => {
-    render(
-      <MemoryRouter>
-        <ContactNavList contacts={mockContacts} navigationState="idle" />
-      </MemoryRouter>
-    );
+    renderContactNavList(mockContacts, "idle");
 
     const listItems = screen.getAllByRole("listitem");
     expect(listItems).toHaveLength(mockContacts.length);
@@ -40,7 +44,6 @@ describe("ContactNavList コンポーネント", () => {
     expect(contact2Link).toBeInTheDocument();
     expect(contact2Link).toHaveAttribute("href", "/contacts/2");
     expect(contact2Link.textContent).not.toContain("★");
-
 
     // Check third contact (No Name)
     const contact3Link = screen.getByRole("link", { name: /No Name/i });
