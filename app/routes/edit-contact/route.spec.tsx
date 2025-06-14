@@ -63,7 +63,9 @@ describe("EditContact コンポーネント", () => {
   });
 
   it("フォームが正しいメソッドとIDを持っている", () => {
-    const formElement = screen.getByRole("form");
+    const formElement = screen.getByRole("form", { name: "Edit contact" });
+    expect(formElement).toBeInTheDocument();
     expect(formElement).toHaveAttribute("method", "post");
+    expect(formElement).toHaveAttribute("id", "contact-form");
   });
 });
