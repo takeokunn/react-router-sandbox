@@ -1,5 +1,5 @@
 import { updateContact } from "../../data";
-import type { Route } from "../../+types/contact"; // Assuming +types is relative to app/
+import type { Route } from "./+types";
 
 export async function action({ params, request }: Route.ActionArgs) {
   const formData = await request.formData();

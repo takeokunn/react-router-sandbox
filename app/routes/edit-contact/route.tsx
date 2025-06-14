@@ -1,9 +1,8 @@
 import { Form, useLoaderData, useNavigate } from "react-router";
+
 import type { ContactRecord } from "../../data";
-// Assuming useLoaderData will infer correctly from the loader.
 
 export default function EditContact() {
-  // Assuming the loader's return type is { contact: ContactRecord }
   const { contact } = useLoaderData() as { contact: ContactRecord };
   const navigate = useNavigate();
 

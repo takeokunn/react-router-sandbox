@@ -1,17 +1,10 @@
 import { Form, useFetcher, useLoaderData } from "react-router";
 import type { ContactRecord } from "../../data";
-// Note: The original Route type import might need adjustment if it was specific to the old file structure.
-// For now, assuming useLoaderData will infer correctly from the loader.
-// If Route.LoaderArgs or Route.ActionArgs were used directly in the component,
-// they would need to be imported from the new loader/action files or a shared type.
 
 export default function Contact() {
-  // Assuming the loader's return type is { contact: ContactRecord | null }
+
   const { contact } = useLoaderData() as { contact: ContactRecord | null };
   if (!contact) {
-    // It's conventional for loaders to throw responses, not components.
-    // This check might be redundant if the loader handles it.
-    // However, keeping it for safety as per original code.
     throw new Response("Not Found", { status: 404 });
   }
 

@@ -1,7 +1,8 @@
 import { redirect } from "react-router";
-import { updateContact } from "../../data";
 import invariant from "tiny-invariant";
-import type { Route } from "../../+types/edit-contact"; // Assuming +types is relative to app/
+
+import { updateContact } from "../../data";
+import type { Route } from "./+types";
 
 export async function action({ params, request }: Route.ActionArgs) {
   invariant(params.contactId, "Missing contactId param");
