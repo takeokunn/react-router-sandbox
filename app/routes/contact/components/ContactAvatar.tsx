@@ -5,9 +5,9 @@ type Props = {
 };
 
 export function ContactAvatar({ contact }: Props) {
-  const altText = contact.first || contact.last
-    ? `${contact.first ?? ""} ${contact.last ?? ""} avatar`.trim()
-    : "Avatar";
+  const altText = (contact.first === undefined || contact.last === undefined)
+    ? "Avatar"
+    : `${contact.first} ${contact.last} avatar`.trim();
 
   return (
     <img

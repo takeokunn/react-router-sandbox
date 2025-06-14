@@ -5,7 +5,7 @@ import { ContactActions } from "./ContactActions";
 
 describe("ContactActions Component", () => {
   const mockOnDeleteSubmit = vi.fn((event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); // Prevent actual form submission for testing
+    event.preventDefault();
   });
 
   beforeEach(() => {
@@ -24,7 +24,6 @@ describe("ContactActions Component", () => {
 
   it("Edit form has correct action attribute", () => {
     const editButton = screen.getByRole("button", { name: "Edit" });
-    // The button is inside the form, so we find the form via the button
     const form = editButton.closest("form");
     expect(form).toHaveAttribute("action", "edit");
   });

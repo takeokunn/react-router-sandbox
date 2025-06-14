@@ -12,8 +12,7 @@ describe("HydrateFallback コンポーネント", () => {
   });
 
   it("ローディングスピナー要素を表示する", () => {
-    // The component uses an element with id="loading-splash-spinner"
-    const spinnerElement = screen.getByTestId("loading-splash-spinner"); // Or document.getElementById if not using data-testid
+    const spinnerElement = screen.getByTestId("loading-splash-spinner");
     expect(spinnerElement).toBeInTheDocument();
   });
 

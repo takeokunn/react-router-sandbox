@@ -15,16 +15,16 @@ importers:
         specifier: ^7.6.2
         version: 7.6.2(react-router@7.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.8.3)
       isbot:
-        specifier: ^5.1.17
+        specifier: ^5.1.28
         version: 5.1.28
       match-sorter:
-        specifier: ^8.0.0
+        specifier: ^8.0.3
         version: 8.0.3
       react:
-        specifier: ^19.0.0
+        specifier: ^19.1.0
         version: 19.1.0
       react-dom:
-        specifier: ^19.0.0
+        specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
       react-router:
         specifier: ^7.6.2
@@ -49,13 +49,13 @@ importers:
         specifier: ^14.6.1
         version: 14.6.1(@testing-library/dom@10.4.0)
       '@types/node':
-        specifier: ^20
+        specifier: ^20.19.0
         version: 20.19.0
       '@types/react':
-        specifier: ^19.0.1
+        specifier: ^19.1.8
         version: 19.1.8
       '@types/react-dom':
-        specifier: ^19.0.1
+        specifier: ^19.1.6
         version: 19.1.6(@types/react@19.1.8)
       '@vitejs/plugin-react':
         specifier: ^4.5.2
@@ -73,10 +73,10 @@ importers:
         specifier: ^26.1.0
         version: 26.1.0
       typescript:
-        specifier: ^5.7.2
+        specifier: ^5.8.3
         version: 5.8.3
       vite:
-        specifier: ^5.4.11
+        specifier: ^5.4.19
         version: 5.4.19(@types/node@20.19.0)
       vitest:
         specifier: ^3.2.3
