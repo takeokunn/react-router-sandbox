@@ -8,22 +8,28 @@ type ErrorDisplayInfo = {
 };
 
 function getErrorDisplayInfo(error: Route.ErrorBoundaryProps['error']): ErrorDisplayInfo {
-  let message = "Oops!";
-  let details = "An unexpected error occurred.";
-  let stack: string | undefined;
-
   if (isRouteErrorResponse(error)) {
-    message = error.status === 404 ? "404" : "Error";
-    details =
+    const message = error.status === 404 ? "404" : "Error";
+    const details =
       error.status === 404
         ? "The requested page could not be found."
-        : error.statusText || details;
-  } else if (import.meta.env.DEV && error && error instanceof Error) {
-    details = error.message;
-    stack = error.stack;
+        : error.statusText || "An unexpected error occurred.";
+    return { message, details, stack: undefined };
   }
 
-  return { message, details, stack };
+  if (import.meta.env.DEV && error && error instanceof Error) {
+    const message = "Oops!"; // Or derive from error.name if desired
+    const details = error.message;
+    const stack = error.stack;
+    return { message, details, stack };
+  }
+
+  // Default case
+  return {
+    message: "Oops!",
+    details: "An unexpected error occurred.",
+    stack: undefined,
+  };
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
