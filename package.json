@@ -23,18 +23,19 @@
     "@react-router/dev": "^7.6.2",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
     "@types/node": "^20",
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.1",
+    "@vitejs/plugin-react": "^4.5.2",
+    "@vitest/coverage-v8": "^3.2.3",
+    "@vitest/ui": "^3.2.3",
     "cross-env": "^7.0.3",
     "jsdom": "^26.1.0",
     "react-router-dom": "^7.6.2",
     "typescript": "^5.7.2",
     "vite": "^5.4.11",
-    "vitest": "^3.2.3",
-    "@vitejs/plugin-react": "^4.5.2",
-    "@vitest/coverage-v8": "^3.2.3",
-    "@vitest/ui": "^3.2.3"
+    "vitest": "^3.2.3"
   },
   "engines": {
     "node": ">=20.0.0"
