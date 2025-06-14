@@ -93,128 +93,128 @@ describe("SidebarLayout コンポーネント (app/layouts/sidebar/layout.tsx)",
       expect(screen.getByTestId("outlet-mock")).toBeInTheDocument();
     });
 
-    // it("SearchFormComponentに初期クエリとcontactsが渡されること", () => {
-    //   renderLayout();
-    //   expect(componentMocks.mockSearchFormComponent).toHaveBeenCalledWith(
-    //     expect.objectContaining({
-    //       initialQuery: initialQuery,
-    //       currentQuery: initialQuery,
-    //     }),
-    //     expect.anything(),
-    //   );
-    //   expect(componentMocks.mockContactNavList).toHaveBeenCalledWith(
-    //     expect.objectContaining({
-    //       contacts: initialContacts,
-    //       navigationState: "idle",
-    //     }),
-    //     expect.anything(),
-    //   );
-    // });
+    it("SearchFormComponentに初期クエリとcontactsが渡されること", () => {
+      renderLayout();
+      expect(componentMocks.mockSearchFormComponent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          initialQuery: initialQuery, // q from loaderData
+          currentQuery: initialQuery, // query state, set by useEffect from q
+        }),
+        expect.anything(),
+      );
+      expect(componentMocks.mockContactNavList).toHaveBeenCalledWith(
+        expect.objectContaining({
+          contacts: initialContacts,
+          navigationState: "idle",
+        }),
+        expect.anything(),
+      );
+    });
   });
 
-  // describe("検索機能", () => {
-  //   it("検索入力が変更されると、SearchFormComponentのcurrentQueryが更新されること", async () => {
+  describe("検索機能", () => {
+    it("検索入力が変更されると、SearchFormComponentのcurrentQueryが更新されること", async () => {
   //     renderLayout();
-  //     const searchInput = screen.getByTestId("search-input-mock");
-  //     await act(async () => {
-  //       fireEvent.change(searchInput, { target: { value: "new query" } });
-  //     });
-  //     expect(mockSearchFormComponent).toHaveBeenLastCalledWith(
-  //       expect.objectContaining({ currentQuery: "new query" }),
-  //       expect.anything(),
-  //     );
-  //   });
+      renderLayout();
+      const searchInput = screen.getByTestId("search-input-mock");
+      await act(async () => {
+        fireEvent.change(searchInput, { target: { value: "new query" } });
+      });
+      expect(componentMocks.mockSearchFormComponent).toHaveBeenLastCalledWith(
+        expect.objectContaining({ currentQuery: "new query" }),
+        expect.anything(),
+      );
+    });
 
-  //   it("検索フォームを送信すると、useSubmitが正しい引数で呼び出されること (初回検索)", async () => {
-  //     const submitFn = vi.fn();
-  //     mockUseSubmit.mockReturnValue(submitFn);
-  //     mockUseLoaderData.mockReturnValue({ contacts: initialContacts, q: null });
-  //     renderLayout();
+    it("検索フォームを送信すると、useSubmitが正しい引数で呼び出されること (初回検索)", async () => {
+      const submitFn = vi.fn();
+      mockUseSubmit.mockReturnValue(submitFn);
+      mockUseLoaderData.mockReturnValue({ contacts: initialContacts, q: null }); // q is null for first search
+      renderLayout();
 
-  //     const searchForm = screen.getByTestId("search-form-mock");
-  //     await act(async () => {
-  //       fireEvent.submit(searchForm);
-  //     });
+      const searchForm = screen.getByTestId("search-form-mock");
+      await act(async () => {
+        fireEvent.submit(searchForm);
+      });
 
-  //     expect(submitFn).toHaveBeenCalledTimes(1);
-  //     expect(submitFn).toHaveBeenCalledWith(searchForm, { replace: false });
-  //   });
+      expect(submitFn).toHaveBeenCalledTimes(1);
+      expect(submitFn).toHaveBeenCalledWith(searchForm, { replace: false });
+    });
 
-  //   it("検索フォームを送信すると、useSubmitが正しい引数で呼び出されること (後続検索)", async () => {
-  //     const submitFn = vi.fn();
-  //     mockUseSubmit.mockReturnValue(submitFn);
+    it("検索フォームを送信すると、useSubmitが正しい引数で呼び出されること (後続検索)", async () => {
+      const submitFn = vi.fn();
+      mockUseSubmit.mockReturnValue(submitFn);
+      // q is not null for subsequent search
+      mockUseLoaderData.mockReturnValue({ contacts: initialContacts, q: "previousQuery" });
+      renderLayout();
 
-  //     mockUseLoaderData.mockReturnValue({ contacts: initialContacts, q: "previousQuery" });
-  //     renderLayout();
+      const searchForm = screen.getByTestId("search-form-mock");
+      await act(async () => {
+        fireEvent.submit(searchForm);
+      });
+      expect(submitFn).toHaveBeenCalledTimes(1);
+      expect(submitFn).toHaveBeenCalledWith(searchForm, { replace: true });
+    });
 
-  //     const searchForm = screen.getByTestId("search-form-mock");
-  //     await act(async () => {
-  //       fireEvent.submit(searchForm);
-  //     });
-  //     expect(submitFn).toHaveBeenCalledTimes(1);
-  //     expect(submitFn).toHaveBeenCalledWith(searchForm, { replace: true });
-  //   });
+    it("ナビゲーション中にisSearchingがSearchFormComponentに正しく渡されること (検索中)", () => {
+      mockUseNavigation.mockReturnValue({
+        state: "loading",
+        location: { search: "?q=searching", pathname: "/", hash: "", state: null },
+      });
+      renderLayout();
+      expect(componentMocks.mockSearchFormComponent).toHaveBeenCalledWith(
+        expect.objectContaining({ isSearching: true }),
+        expect.anything(),
+      );
+    });
 
-  //   it("ナビゲーション中にisSearchingがSearchFormComponentに正しく渡されること (検索中)", () => {
-  //     mockUseNavigation.mockReturnValue({
-  //       state: "loading",
-  //       location: { search: "?q=searching", pathname: "/", hash: "", state: null },
-  //     });
-  //     renderLayout();
-  //     expect(mockSearchFormComponent).toHaveBeenCalledWith(
-  //       expect.objectContaining({ isSearching: true }),
-  //       expect.anything(),
-  //     );
-  //   });
+    it("ナビゲーション中でない場合、isSearchingはfalseであること", () => {
+      mockUseNavigation.mockReturnValue({ state: "idle", location: undefined });
+      renderLayout();
+      expect(componentMocks.mockSearchFormComponent).toHaveBeenCalledWith(
+        expect.objectContaining({ isSearching: false }),
+        expect.anything(),
+      );
+    });
+  });
 
-  //   it("ナビゲーション中でない場合、isSearchingはfalseであること", () => {
-  //     mockUseNavigation.mockReturnValue({ state: "idle", location: undefined });
-  //     renderLayout();
-  //     expect(mockSearchFormComponent).toHaveBeenCalledWith(
-  //       expect.objectContaining({ isSearching: false }),
-  //       expect.anything(),
-  //     );
-  //   });
-  // });
+  describe("ローダーデータのqの変更 (useEffect)", () => {
+    it("useLoaderDataから渡されるqが変更されると、SearchFormComponentのcurrentQueryが更新されること", () => {
+      const { rerender } = renderLayout(); // Initial render with q = "test"
+      expect(componentMocks.mockSearchFormComponent).toHaveBeenLastCalledWith(
+        expect.objectContaining({ currentQuery: "test" }),
+        expect.anything(),
+      );
 
-  // describe("ローダーデータのqの変更 (useEffect)", () => {
-  //   it("useLoaderDataから渡されるqが変更されると、SearchFormComponentのcurrentQueryが更新されること", () => {
-  //     const { rerender } = renderLayout();
-  //     expect(mockSearchFormComponent).toHaveBeenLastCalledWith(
-  //       expect.objectContaining({ currentQuery: "test" }),
-  //       expect.anything(),
-  //     );
+      // Simulate q changing in loader data
+      mockUseLoaderData.mockReturnValue({ contacts: initialContacts, q: "updatedQuery" });
 
+      // Rerender with new loader data.
+      rerender(
+        <MemoryRouter>
+          <Layout />
+        </MemoryRouter>,
+      );
 
-  //     mockUseLoaderData.mockReturnValue({ contacts: initialContacts, q: "updatedQuery" });
+      expect(componentMocks.mockSearchFormComponent).toHaveBeenLastCalledWith(
+        expect.objectContaining({ currentQuery: "updatedQuery" }),
+        expect.anything(),
+      );
+    });
 
+    it("useLoaderDataから渡されるqがnullの場合、SearchFormComponentのcurrentQueryが空文字列になること", () => {
+      const { rerender } = renderLayout(); // Initial render with q = "test"
 
-
-  //     rerender(
-  //       <MemoryRouter>
-  //         <Layout />
-  //       </MemoryRouter>,
-  //     );
-
-  //     expect(mockSearchFormComponent).toHaveBeenLastCalledWith(
-  //       expect.objectContaining({ currentQuery: "updatedQuery" }),
-  //       expect.anything(),
-  //     );
-  //   });
-
-  //   it("useLoaderDataから渡されるqがnullの場合、SearchFormComponentのcurrentQueryが空文字列になること", () => {
-  //     const { rerender } = renderLayout();
-
-  //     mockUseLoaderData.mockReturnValue({ contacts: initialContacts, q: null });
-  //     rerender(
-  //       <MemoryRouter>
-  //         <Layout />
-  //       </MemoryRouter>,
-  //     );
-  //     expect(mockSearchFormComponent).toHaveBeenLastCalledWith(
-  //       expect.objectContaining({ currentQuery: "" }),
-  //       expect.anything(),
-  //     );
-  //   });
-  // });
+      mockUseLoaderData.mockReturnValue({ contacts: initialContacts, q: null });
+      rerender(
+        <MemoryRouter>
+          <Layout />
+        </MemoryRouter>,
+      );
+      expect(componentMocks.mockSearchFormComponent).toHaveBeenLastCalledWith(
+        expect.objectContaining({ currentQuery: "" }), // q is null, so query becomes ""
+        expect.anything(),
+      );
+    });
+  });
 });
