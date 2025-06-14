@@ -1,9 +1,8 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { loader } from "./loader"; // 対象のloader関数
-import * as dataFunctions from "../../data"; // getContactsをモックするため
-import type { ContactRecord } from "../../data"; // 型定義のインポート
+import { describe, it, expect, vi, beforeEach, type MockInstance } from "vitest";
+import { loader } from "./loader";
+import * as dataFunctions from "../../data";
+import type { ContactRecord } from "../../data";
 
-// ../../dataモジュールのgetContactsをモック
 vi.mock("../../data", async () => {
   const actual = await vi.importActual("../../data");
   return {
@@ -13,10 +12,9 @@ vi.mock("../../data", async () => {
 });
 
 describe("サイドバーローダー (app/layouts/sidebar/loader.tsx)", () => {
-  let getContactsSpy: vi.SpyInstance;
+  let getContactsSpy: MockInstance;
 
   beforeEach(() => {
-    // 各テストの前にモックをリセット
     vi.resetAllMocks();
     getContactsSpy = vi.spyOn(dataFunctions, "getContacts");
   });
@@ -49,7 +47,7 @@ describe("サイドバーローダー (app/layouts/sidebar/loader.tsx)", () => {
     const result = await loader({ request, params: {} });
 
     expect(getContactsSpy).toHaveBeenCalledTimes(1);
-    expect(getContactsSpy).toHaveBeenCalledWith(null); // URLSearchParams.get returns null if param not found
+    expect(getContactsSpy).toHaveBeenCalledWith(null);
     expect(result).toEqual({ contacts: mockContacts, q: null });
   });
 
