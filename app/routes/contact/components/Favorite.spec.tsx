@@ -50,4 +50,12 @@ describe("Favorite コンポーネント", () => {
     const button = screen.getByRole("button");
     expect(button).toHaveAttribute("name", "favorite");
   });
+
+  it("フォームのmethod属性が「post」である", () => {
+    renderFavorite(false); // isFavorite value doesn't matter for this test
+    const button = screen.getByRole("button");
+    const formElement = button.closest("form");
+    expect(formElement).toBeInTheDocument();
+    expect(formElement).toHaveAttribute("method", "post");
+  });
 });
