@@ -95,14 +95,14 @@ describe("SidebarLayout コンポーネント (app/layouts/sidebar/layout.tsx)",
 
     // it("SearchFormComponentに初期クエリとcontactsが渡されること", () => {
     //   renderLayout();
-    //   expect(mockSearchFormComponent).toHaveBeenCalledWith(
+    //   expect(componentMocks.mockSearchFormComponent).toHaveBeenCalledWith(
     //     expect.objectContaining({
     //       initialQuery: initialQuery,
     //       currentQuery: initialQuery,
     //     }),
     //     expect.anything(),
     //   );
-    //   expect(mockContactNavList).toHaveBeenCalledWith(
+    //   expect(componentMocks.mockContactNavList).toHaveBeenCalledWith(
     //     expect.objectContaining({
     //       contacts: initialContacts,
     //       navigationState: "idle",
