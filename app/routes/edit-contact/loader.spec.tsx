@@ -29,8 +29,8 @@ describe("EditContact ローダー", () => {
     getContactSpy.mockResolvedValue(mockContactData);
 
     const mockParams = { contactId: "123" };
-    const request = new Request("http://localhost/contacts/123/edit") as any;
-    const context = {} as any;
+    const request = new Request("http://localhost/contacts/123/edit");
+    const context = undefined;
 
     const result = await loader({
       params: mockParams,
@@ -46,8 +46,8 @@ describe("EditContact ローダー", () => {
     getContactSpy.mockResolvedValue(null);
 
     const mockParams = { contactId: "404" };
-    const request = new Request("http://localhost/contacts/404/edit") as any;
-    const context = {} as any;
+    const request = new Request("http://localhost/contacts/404/edit");
+    const context = undefined;
 
     try {
       await loader({

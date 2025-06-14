@@ -6,7 +6,7 @@ import { ContactHeader } from "./ContactHeader";
 
 vi.mock("./Favorite", () => ({
   Favorite: ({ isFavorite }: { isFavorite: boolean }) => (
-    <button data-testid="favorite-button" data-isfavorite={String(isFavorite)}>
+    <button type="button" data-testid="favorite-button" data-isfavorite={String(isFavorite)}>
       {isFavorite ? "★" : "☆"}
     </button>
   ),

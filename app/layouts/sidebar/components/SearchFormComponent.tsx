@@ -8,7 +8,7 @@ export type SearchFormComponentProps = {
 
 export function SearchFormComponent({ isSearching, currentQuery, onQueryChange, onSubmit }: SearchFormComponentProps) {
   return (
-    <form id="search-form" role="search" onChange={onSubmit}>
+    <form id="search-form" onChange={onSubmit}>
       <input
         aria-label="Search contacts"
         className={isSearching ? "loading" : ""}

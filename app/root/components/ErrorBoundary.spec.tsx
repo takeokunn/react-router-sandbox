@@ -10,10 +10,11 @@ vi.mock("react-router", () => ({
 describe("ErrorBoundary", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    (isRouteErrorResponse as vi.MockedFunction<typeof isRouteErrorResponse>).mockReset();
   });
 
   it("handles route error response: 404", () => {
-    (isRouteErrorResponse as any).mockReturnValue(true);
+    (isRouteErrorResponse as vi.MockedFunction<typeof isRouteErrorResponse>).mockReturnValue(true);
 
     const error = { status: 404, statusText: "Not Found" };
     render(<ErrorBoundary error={error} />);
@@ -23,7 +24,7 @@ describe("ErrorBoundary", () => {
   });
 
   it("handles route error response: 500", () => {
-    (isRouteErrorResponse as any).mockReturnValue(true);
+    (isRouteErrorResponse as vi.MockedFunction<typeof isRouteErrorResponse>).mockReturnValue(true);
 
     const error = { status: 500, statusText: "Internal Server Error" };
     render(<ErrorBoundary error={error} />);
@@ -33,7 +34,7 @@ describe("ErrorBoundary", () => {
   });
 
   it("handles dev Error instance", () => {
-    (isRouteErrorResponse as any).mockReturnValue(false);
+    (isRouteErrorResponse as vi.MockedFunction<typeof isRouteErrorResponse>).mockReturnValue(false);
 
     const error = new Error("Something went wrong");
     render(<ErrorBoundary error={error} />);
@@ -43,7 +44,7 @@ describe("ErrorBoundary", () => {
   });
 
   it("handles fallback case (prod or unknown error)", () => {
-    (isRouteErrorResponse as any).mockReturnValue(false);
+    (isRouteErrorResponse as vi.MockedFunction<typeof isRouteErrorResponse>).mockReturnValue(false);
 
     const error = "unknown error string";
     render(<ErrorBoundary error={error} />);
