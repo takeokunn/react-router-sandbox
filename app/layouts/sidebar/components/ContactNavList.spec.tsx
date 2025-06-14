@@ -10,8 +10,8 @@ const mockContacts: ContactMutation[] = [
   { id: "3" /* No name */, favorite: false },
 ];
 
-describe("ContactNavList Component", () => {
-  it("renders 'No contacts' when the contacts list is empty", () => {
+describe("ContactNavList コンポーネント", () => {
+  it("連絡先リストが空の場合に「No contacts」と表示する", () => {
     render(
       <MemoryRouter>
         <ContactNavList contacts={[]} navigationState="idle" />
@@ -20,7 +20,7 @@ describe("ContactNavList Component", () => {
     expect(screen.getByText(/No contacts/i)).toBeInTheDocument();
   });
 
-  it("renders a list of contacts with names and favorite indicators", () => {
+  it("連絡先リストに名前とお気に入りインジケータを表示する", () => {
     render(
       <MemoryRouter>
         <ContactNavList contacts={mockContacts} navigationState="idle" />
@@ -49,7 +49,7 @@ describe("ContactNavList Component", () => {
     expect(contact3Link.textContent).not.toContain("★");
   });
 
-  it("renders 'No Name' for contacts without first or last names", () => {
+  it("名または姓がない連絡先には「No Name」と表示する", () => {
     const noNameContact: ContactMutation[] = [{ id: "4", favorite: false }];
     render(
       <MemoryRouter>
@@ -59,7 +59,7 @@ describe("ContactNavList Component", () => {
     expect(screen.getByText(/No Name/i)).toBeInTheDocument();
   });
 
-  it("displays a star (★) for favorite contacts", () => {
+  it("お気に入りの連絡先には星（★）を表示する", () => {
     const favoriteContact: ContactMutation[] = [
       { id: "5", first: "Fav", last: "User", favorite: true },
     ];
@@ -72,7 +72,7 @@ describe("ContactNavList Component", () => {
     expect(link.textContent).toContain("★");
   });
 
-  it("does not display a star for non-favorite contacts", () => {
+  it("お気に入りでない連絡先には星を表示しない", () => {
     const nonFavoriteContact: ContactMutation[] = [
       { id: "6", first: "NonFav", last: "User", favorite: false },
     ];
@@ -85,7 +85,7 @@ describe("ContactNavList Component", () => {
     expect(link.textContent).not.toContain("★");
   });
 
-  it("applies 'loading' class to NavLink when navigationState is 'loading'", () => {
+  it("navigationStateが'loading'の場合にNavLinkに'loading'クラスを適用する", () => {
     render(
       <MemoryRouter>
         <ContactNavList contacts={[mockContacts[0]]} navigationState="loading" />
@@ -95,7 +95,7 @@ describe("ContactNavList Component", () => {
     expect(link).toHaveClass("loading");
   });
 
-  it("does not apply 'loading' class to NavLink when navigationState is 'idle'", () => {
+  it("navigationStateが'idle'の場合にNavLinkに'loading'クラスを適用しない", () => {
     render(
       <MemoryRouter>
         <ContactNavList contacts={[mockContacts[0]]} navigationState="idle" />
