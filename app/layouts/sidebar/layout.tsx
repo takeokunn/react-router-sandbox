@@ -2,7 +2,7 @@ import { AppShell, ScrollArea, Stack } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 import { Outlet, useLoaderData, useNavigation, useSubmit } from "react-router";
-import type { SubmitOptions } from "react-router-dom";
+import type { SubmitOptions } from "react-router";
 import { ContactNavList } from "./components/ContactNavList";
 import { NewContactButton } from "./components/NewContactButton";
 import { SearchFormComponent } from "./components/SearchFormComponent";
