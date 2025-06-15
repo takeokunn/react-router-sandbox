@@ -29,7 +29,7 @@ describe("ContactHeader コンポーネント", () => {
   describe("連絡先名の表示", () => {
     it("名と姓が提供された場合、正しく表示されること", () => {
       renderInRouter(mockContactBase, false);
-      expect(screen.getByRole("heading", { name: /Taro Yamada/ })).toBeInTheDocument();
+      expect(screen.getByRole("heading", { name: /Taro Yamada/, level: 2 })).toBeInTheDocument();
       expect(screen.getByText("Taro Yamada")).toBeInTheDocument();
     });
 
