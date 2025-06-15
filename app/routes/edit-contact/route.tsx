@@ -1,20 +1,19 @@
 import { Box, Button, Group, Stack, TextInput, Textarea } from "@mantine/core";
 import { useLoaderData, useNavigate } from "react-router";
 
-import type { ContactRecord } from "../../data";
+import type { Tloader as TLoader } from "./loader";
 
 export default function EditContact() {
-  const { contact } = useLoaderData() as { contact: ContactRecord };
+  const { contact } = useLoaderData<TLoader>();
   const navigate = useNavigate();
 
   return (
     <Box
       component="form"
       key={contact.id}
-      id="contact-form" // Keep ID if it's used by CSS not yet migrated or for other purposes
+      id="contact-form"
       method="post"
       aria-label="Edit contact"
-      // maw={rem(640)} // max-width: 40rem (640px), can be set via sx or style
     >
       <Stack gap="md">
         <Group grow>
@@ -44,7 +43,6 @@ export default function EditContact() {
         <Textarea label="Notes" defaultValue={contact.notes ?? ""} name="notes" rows={6} />
         <Group justify="flex-start" mt="md">
           {" "}
-          {/* mt="md" for margin-top, adjust as needed */}
           <Button type="submit">Save</Button>
           <Button variant="default" onClick={() => navigate(-1)} type="button">
             Cancel

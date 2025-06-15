@@ -29,7 +29,6 @@ describe("ルートアクション (app/root/action.ts)", () => {
     const mockContact: dataFunctions.ContactRecord = {
       id: mockContactId,
       createdAt: new Date().toISOString(),
-      // Add other optional fields from ContactMutation as needed, or leave them undefined
       first: undefined,
       last: undefined,
       avatar: undefined,

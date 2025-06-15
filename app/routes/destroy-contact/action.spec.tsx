@@ -30,15 +30,12 @@ describe("DestroyContact アクション", () => {
 
     const result = await action({ params: mockParams } as Route.ActionArgs);
 
-    // Verify deleteContact was called
     expect(deleteContactSpy).toHaveBeenCalledTimes(1);
     expect(deleteContactSpy).toHaveBeenCalledWith(mockContactId);
 
-    // Verify redirect was called
     expect(router.redirect).toHaveBeenCalledTimes(1);
     expect(router.redirect).toHaveBeenCalledWith("/");
 
-    // Verify the action returns the result of the redirect
     expect(result).toEqual({ type: "redirect", to: "/" });
   });
 });
