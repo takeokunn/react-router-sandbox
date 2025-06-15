@@ -1,5 +1,5 @@
 import { NavLink as MantineNavLink, Stack, Text } from "@mantine/core";
-import type { ContactMutation } from "app/data";
+import type { ContactMutation } from "@app/data";
 import { NavLink as RouterNavLink } from "react-router";
 import type { Navigation } from "react-router";
 

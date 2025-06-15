@@ -1,4 +1,4 @@
-import type { ContactMutation } from "app/data";
+import type { ContactMutation } from "@app/data";
 import { MemoryRouter } from "react-router";
 import type { Navigation } from "react-router";
 import { describe, expect, it } from "vitest";

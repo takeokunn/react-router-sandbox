@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-utils";
 import { MemoryRouter } from "react-router";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import type { ContactMutation } from "../../data";
+import type { ContactMutation } from "@app/data";
 import Layout from "./layout";
 
 const componentMocks = vi.hoisted(() => {

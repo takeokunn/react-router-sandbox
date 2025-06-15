@@ -1,5 +1,5 @@
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
-import "@mantine/core/styles.css"; // Import Mantine core styles
+import "@mantine/core/styles.css";
 import { Scripts, ScrollRestoration } from "react-router";
 import appStylesHref from "../../app.css?url";
 
@@ -13,7 +13,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <link rel="stylesheet" href={appStylesHref} />
       </head>
       <body>
-        <MantineProvider withGlobalStyles withNormalizeCSS>
+        <MantineProvider>
           {children}
         </MantineProvider>
         <ScrollRestoration />
