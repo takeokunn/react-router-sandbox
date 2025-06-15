@@ -30,7 +30,7 @@ describe("EditContact ローダー", () => {
 
     const mockParams = { contactId: "123" };
     const request = new Request("http://localhost/contacts/123/edit");
-    const context = undefined;
+    const context = {};
 
     const result = await loader({
       params: mockParams,
@@ -47,7 +47,7 @@ describe("EditContact ローダー", () => {
 
     const mockParams = { contactId: "404" };
     const request = new Request("http://localhost/contacts/404/edit");
-    const context = undefined;
+    const context = {};
 
     try {
       await loader({
