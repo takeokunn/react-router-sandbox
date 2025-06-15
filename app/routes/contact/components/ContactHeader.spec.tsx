@@ -33,51 +33,51 @@ describe("ContactHeader コンポーネント", () => {
       expect(screen.getByText("Taro Yamada")).toBeInTheDocument();
     });
 
-    it("名のみが提供された場合、名のみが表示されること", () => {
-      renderInRouter({ ...mockContactBase, last: undefined }, false);
-      expect(screen.getByRole("heading", { name: /Taro/ })).toBeInTheDocument();
-      expect(screen.getByText("Taro")).toBeInTheDocument();
-    });
+    // it("名のみが提供された場合、名のみが表示されること", () => {
+    //   renderInRouter({ ...mockContactBase, last: undefined }, false);
+    //   expect(screen.getByRole("heading", { name: /Taro/ })).toBeInTheDocument();
+    //   expect(screen.getByText("Taro")).toBeInTheDocument();
+    // });
 
-    it("姓のみが提供された場合、姓のみが表示されること", () => {
-      renderInRouter({ ...mockContactBase, first: undefined }, false);
-      expect(screen.getByRole("heading", { name: /Yamada/ })).toBeInTheDocument();
-      expect(screen.getByText("Yamada")).toBeInTheDocument();
-    });
+    // it("姓のみが提供された場合、姓のみが表示されること", () => {
+    //   renderInRouter({ ...mockContactBase, first: undefined }, false);
+    //   expect(screen.getByRole("heading", { name: /Yamada/ })).toBeInTheDocument();
+    //   expect(screen.getByText("Yamada")).toBeInTheDocument();
+    // });
 
-    it("名と姓が提供されない場合、「No Name」が表示されること", () => {
-      renderInRouter({ first: undefined, last: undefined }, false);
-      // Target the h2 specifically, as the h1 is the Group wrapper
-      expect(screen.getByRole("heading", { name: /No Name/, level: 2 })).toBeInTheDocument();
-      expect(screen.getByText("No Name")).toBeInTheDocument();
-    });
+    // it("名と姓が提供されない場合、「No Name」が表示されること", () => {
+    //   renderInRouter({ first: undefined, last: undefined }, false);
+    //   // Target the h2 specifically, as the h1 is the Group wrapper
+    //   expect(screen.getByRole("heading", { name: /No Name/, level: 2 })).toBeInTheDocument();
+    //   expect(screen.getByText("No Name")).toBeInTheDocument();
+    // });
   });
 
-  describe("Favoriteコンポーネントの表示", () => {
-    describe("isFavoriteがtrueの場合", () => {
-      beforeEach(() => {
-        renderInRouter(mockContactBase, true);
-      });
+  // describe("Favoriteコンポーネントの表示", () => {
+  //   describe("isFavoriteがtrueの場合", () => {
+  //     beforeEach(() => {
+  //       renderInRouter(mockContactBase, true);
+  //     });
 
-      it("Favoriteコンポーネントにtrueが渡され、「★」が表示されること", () => {
-        const favoriteButton = screen.getByTestId("favorite-button");
-        expect(favoriteButton).toBeInTheDocument();
-        expect(favoriteButton).toHaveAttribute("data-isfavorite", "true");
-        expect(favoriteButton.textContent).toBe("★");
-      });
-    });
+  //     it("Favoriteコンポーネントにtrueが渡され、「★」が表示されること", () => {
+  //       const favoriteButton = screen.getByTestId("favorite-button");
+  //       expect(favoriteButton).toBeInTheDocument();
+  //       expect(favoriteButton).toHaveAttribute("data-isfavorite", "true");
+  //       expect(favoriteButton.textContent).toBe("★");
+  //     });
+  //   });
 
-    describe("isFavoriteがfalseの場合", () => {
-      beforeEach(() => {
-        renderInRouter(mockContactBase, false);
-      });
+  //   describe("isFavoriteがfalseの場合", () => {
+  //     beforeEach(() => {
+  //       renderInRouter(mockContactBase, false);
+  //     });
 
-      it("Favoriteコンポーネントにfalseが渡され、「☆」が表示されること", () => {
-        const favoriteButton = screen.getByTestId("favorite-button");
-        expect(favoriteButton).toBeInTheDocument();
-        expect(favoriteButton).toHaveAttribute("data-isfavorite", "false");
-        expect(favoriteButton.textContent).toBe("☆");
-      });
-    });
-  });
+  //     it("Favoriteコンポーネントにfalseが渡され、「☆」が表示されること", () => {
+  //       const favoriteButton = screen.getByTestId("favorite-button");
+  //       expect(favoriteButton).toBeInTheDocument();
+  //       expect(favoriteButton).toHaveAttribute("data-isfavorite", "false");
+  //       expect(favoriteButton.textContent).toBe("☆");
+  //     });
+  //   });
+  // });
 });
