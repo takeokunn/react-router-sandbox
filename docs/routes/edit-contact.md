@@ -36,10 +36,9 @@ app/routes/edit-contact/
         4.  `updateContact(params.contactId, updates)` (from `../../data`) を呼び出し、連絡先データを更新します。
         5.  `redirect(\`/contacts/\${params.contactId}\`)` (from `react-router`) を呼び出し、更新された連絡先の詳細ページへリダイレクトします。
     -   **関連モジュール**:
-        -   `react-router`: `redirect` 関数をインポートします。
+        -   `react-router`: `redirect` 関数および `Route.ActionArgs` 型をインポートします。
         -   `tiny-invariant`: `invariant` 関数をインポートします。
         -   `../../data`: `updateContact` 関数をインポートします。
-        -   `./+types`: `Route.ActionArgs` 型をインポートします (推測)。
 
 ### `app/routes/edit-contact/index.ts`
 
@@ -59,8 +58,8 @@ app/routes/edit-contact/
         2.  連絡先データが存在しない場合、`Response("Not Found", { status: 404 })` をスローします。
         3.  取得した連絡先データを `{ contact }` オブジェクトとして返します。
     -   **関連モジュール**:
+        -   `react-router`: `Route.LoaderArgs` 型をインポートします。
         -   `../../data`: `getContact` 関数をインポートします。
-        -   `./+types`: `Route.LoaderArgs` 型をインポートします (推測)。
 
 ### `app/routes/edit-contact/route.tsx` (EditContactコンポーネント)
 
@@ -135,12 +134,12 @@ graph TD
     AppRoutes -- "imports & defines route for 'edit-contact'" --> EditContactIndex
 
     EditContactLoader -- "imports & calls" --> DataGetContact
-    EditContactLoader -- "imports type (推測)" --> EditContactTypes["./+types (Route.LoaderArgs)"]
+    EditContactLoader -- "imports type from" --> react_router
 
     EditContactAction -- "imports & calls" --> DataUpdateContact
     EditContactAction -- "imports & calls" --> RRredirect
     EditContactAction -- "imports" --> Invariant
-    EditContactAction -- "imports type (推測)" --> EditContactTypes
+    EditContactAction -- "imports type from" --> react_router
 
     EditContactRoute -- "imports & uses" --> RRuseLoaderData
     EditContactRoute -- "imports & uses" --> RRuseNavigate

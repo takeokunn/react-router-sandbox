@@ -13,7 +13,7 @@
 -   **フォルダ名・ファイル名の方針：**
     -   機能ごと、または関連性の高いモジュール群をまとめるために、`kebab-case` のフォルダ名が使用されています (例: `edit-contact`, `contact`, `sidebar`, `root`)。
     -   コンポーネントのファイル名は `PascalCase.tsx` (例: `ContactNavList.tsx`)。
-    -   TypeScriptの型定義やロジックのみのファイルは `camelCase.ts` または `PascalCase.ts` (例: `data.ts`, `loader.ts`)。
+    -   データファイルは `camelCase.ts` (例: `data.ts`)、ルートのローダーやアクションファイルは `loader.ts`/`action.ts` (lowercase) または `loader.tsx`/`action.tsx` となります。
     -   テストファイルは `*.spec.tsx` または `*.spec.ts` というsuffixで命名されています (例: `ContactNavList.spec.tsx`, `action.spec.ts`)。
 -   **ルーティング関連のファイル名規則（`app/routes/`など）：**
     -   ルート定義は `app/routes/` ディレクトリ以下に配置されます。
@@ -34,7 +34,7 @@
     -   `app/routes/**/route.tsx` に定義されるコンポーネントがページレベルのコンポーネントとして機能し、データの取得（`useLoaderData`経由）、アクションのトリガー、およびUIコンポーネントのレイアウトと調整を担当します。
     -   `components/` サブディレクトリ内のコンポーネント（例: `app/layouts/sidebar/components/ContactAvatar.tsx`, `app/routes/contact/components/Favorite.tsx`）は、より小さく再利用可能なUIパーツとしての責務を持ち、主にpropsを通じてデータを受け取り、表示やユーザーインタラクションの一部を担当します。
 -   **Presentational vs Container の分離有無と基準：**
-    -   明確な Presentational / Container パターンの採用は見られます。特に `Favorite` コンポーネントのリファクタリングでは、`useFetcher` を親コンポーネントに移動し、`Favorite` を純粋なPresentational Componentとする変更が行われました。
+    -   Presentational / Container パターンの採用が見られます。例えば、状態や副作用を持つロジック（例: `useFetcher` を利用したデータ送信）をルートコンポーネントや上位のコンポーネントに配置し、子コンポーネントを純粋な表示ロジックに集中させる傾向があります。
     -   ルートコンポーネント (`route.tsx`) が Container Component の役割を担い、`components/` 以下のコンポーネントが Presentational Component として機能する傾向があります。
 -   **useEffect / useLoaderDataなど副作用の責任範囲：**
     -   `loader` 関数 (React Router): ルートがレンダリングされる前のデータフェッチという副作用を担当します。結果は `useLoaderData` フックを通じてコンポーネントに提供されます。
@@ -44,7 +44,7 @@
 -   **Form処理・バリデーションの責任分離（例：useForm系カスタムフック）：**
     -   React Router の `<Form>` コンポーネントがフォームの宣言と送信に使用されます。
     -   フォームデータの処理とバリデーションは、主にサーバーサイド（または `action` 関数内）で行われると推測されます。`action` 関数が `request.formData()` を使用してデータを取得し、`Object.fromEntries` でオブジェクトに変換後、`updateContact` などのデータ更新関数に渡しています。
-    -   `invariant` が `action` 内で使用されており、特定の前提条件（例: `params.contactId` の存在）を検証しています。
+    -   `tiny-invariant` の `invariant` 関数が `action` 内で使用されており、特定の前提条件（例: `params.contactId` の存在）を検証しています。
     -   複雑なクライアントサイドバリデーションライブラリ（例: `react-hook-form`, `Formik`）の使用は現時点では確認されていません。
 
 ### 3 ルーティング設計（React Router v7）
@@ -58,7 +58,7 @@
     -   `errorElement`: `app/root/components/ErrorBoundary.tsx` が存在し、これがルートレベルまたは特定のルートで `errorElement` として設定されていると推測されます。Reactのレンダリングエラーや、`loader`/`action` からスローされた `Response` オブジェクトを処理し、ユーザーフレンドリーなエラーUIを表示します。
 -   **レイアウトルート / ネストルートの利用傾向：**
     -   `app/root/components/Layout.tsx` が全体的なHTML構造（`<html>`, `<head>`, `<body>`）を提供し、`app/root/components/App.tsx` が `<Outlet />` を使用して子ルートをレンダリングすることから、基本的なレイアウト構造が存在します。
-    -   `app/layouts/sidebar/layout.tsx` (現在は `route.tsx`) は、サイドバーを持つ特定のセクションのレイアウトを提供し、`<Outlet />` を介してネストされたコンタクト関連のルートを表示します。これはレイアウトルートの典型的な使用例です。
+    -   `app/layouts/sidebar/layout.tsx` は、サイドバーを持つ特定のセクションのレイアウトを提供し、`<Outlet />` を介してネストされたコンタクト関連のルートを表示します。これはレイアウトルートの典型的な使用例です。
     -   ファイル構造 (`app/routes/contact/:contactId/edit` など) もネストルートの活用を示唆しています。
 -   **認可・ガード（例：RequireAuth）のパターンと共通化：**
     -   現時点のファイル情報からは、明示的な `RequireAuth` コンポーネントやルートガードのパターンは確認されていません。
@@ -80,7 +80,7 @@
     -   `app/data.ts` がデータ層として機能し、実際のデータソース（現在はモックデータ）とのやり取りを抽象化しています。
 -   **外部依存の抽象化とDIパターン（例：APIクライアント、設定値）：**
     -   `app/data.ts` がデータソース（APIクライアントに相当）を抽象化しています。これにより、将来的に実際のバックエンドAPIに切り替える際に、変更箇所を `app/data.ts` に限定しやすくなります。これは一種の依存性の注入 (DI) と言えます。
-    -   設定値などの外部依存については、`import.meta.env` を介して環境変数として注入される可能性があります (テストコードで `import.meta.env.DEV` のモックが見られるため)。
+    -   設定値などの外部依存については、`import.meta.env` を介して環境変数として注入される可能性があります (例: `import.meta.env.DEV` がコードやテストで使用される場合)。
 
 ### 5 ディレクトリ構成と意味づけ
 
@@ -106,7 +106,7 @@
     -   Nullableな値の扱いとして、オプショナルプロパティ (`avatar?: string`) や、`null` または `undefined` を許容する型 (`string | null`, `string | undefined`) が使用されています。
 -   **null / undefined の防御方針（例：Optional Chaining / null assertion）：**
     -   Optional Chaining (`?.`) や Nullish Coalescing (`??`) が使用されていると推測されます (例: `contact.avatar ?? undefined`, `contact.first || contact.last ? ...`)。
-    -   `invariant` 関数 (例: `tiny-invariant`) が、特定の変数が期待される値を持つこと（null/undefinedでないこと）を表明するために使用されています。
+    -   `tiny-invariant` の `invariant` 関数が、特定の変数が期待される値を持つこと（null/undefinedでないこと）を表明するために使用されています。
     -   `if (!contact)` のような明示的なnullチェックも行われています。
     -   Null assertion (`!`) の使用頻度は不明ですが、型安全性を重視する観点からは限定的であると望ましいです。
 -   **エラーハンドリングの共通化傾向（boundary / toast など）：**
@@ -120,7 +120,7 @@
 -   **Atomic DesignなどのUI設計思想の適用有無：**
     -   厳密な Atomic Design の採用は明言されていませんが、UIコンポーネントを `components/` ディレクトリに細かく分割し、それらを組み合わせてページやレイアウトを構築するアプローチは、Atomic Design の「アトム」「モレキュール」「オーガニズム」といった要素の合成によるUI構築の思想と親和性があります。特に `ContactAvatar`, `Favorite`, `NewContactButton` などはアトムやモレキュールに相当すると考えられます。
 -   **Fat Componentの回避方法（分割・責務移譲）：**
-    -   プロジェクトの進化の過程（過去の対話履歴）で、大きなコンポーネント（例: `Sidebar`, `Root`)をより小さな、責務の明確なコンポーネントや関数（`loader`, `action`）に分割するリファクタリングが積極的に行われています。これは Fat Component を避け、関心の分離 (SoC) を高める明確な傾向を示しています。
+    -   大きなコンポーネントをより小さな、責務の明確なコンポーネントや関数（`loader`, `action`）に分割するリファクタリングが推奨されます。これは Fat Component を避け、関心の分離 (SoC) を高めるアプローチです。
     -   Presentational Component と Container Component の分離も、この回避策の一環です。
 -   **コンポーネント間通信の最小化戦略（props drilling 回避・context利用など）：**
     -   Propsによるデータ伝達が基本です。
@@ -138,7 +138,7 @@
     -   状態管理に外部ライブラリを導入せず、React Router と React の標準機能で構築しようとする姿勢は、依存関係を最小限に抑え、バンドルサイズを小さく保つ意図があるかもしれません。また、React Router のデータ管理能力を最大限に活用する設計と言えます。
 -   **複数のスタイルが混在している場合はその旨を明記し、チームでの統一の必要性を記載してください。**
     -   現時点では、大きなスタイルの混在は見受けられません。ファイル構成や命名規則は一貫しているように見えます。
-    -   テストコンポーネントのラップ方法として、初期には `MemoryRouter` が直接使われ、後に `createMemoryRouter` と `RouterProvider` を使用する形に移行した箇所がありました。後者のアプローチが React Router のより新しいテストパターンに整合するため、統一することが推奨されます。
+    -   テストコンポーネントのレンダリング時のルーターラッパーとして、`<MemoryRouter>` と `createMemoryRouter` + `<RouterProvider>` の両方が使用可能です。後者がReact Router v6.4+ の推奨パターンであり、プロジェクト内で統一することが望ましい場合があります。
 -   **可能な限り **再現可能なパターン・明文化できる規約** として表現してください。**
     -   上記の各項目は、コードベースから観察されるパターンを基に、可能な限り再現可能な規約として記述するよう努めました。特にルーティング関連のファイル構成や `loader`/`action` の利用方法は、明確なパターンとして確立されています。
 

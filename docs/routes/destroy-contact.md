@@ -29,9 +29,8 @@ app/routes/destroy-contact/
         2.  `deleteContact(params.contactId)` (from `../../data`) を呼び出し、連絡先データを非同期に削除します。
         3.  `redirect("/")` (from `react-router`) を呼び出し、ユーザーをホームページへリダイレクトします。
     -   **関連モジュール**:
-        -   `react-router`: `redirect` 関数をインポートします。
+        -   `react-router`: `redirect` 関数および `Route.ActionArgs` 型をインポートします。
         -   `../../data`: `deleteContact` 関数をインポートします。
-        -   `./+types`: `Route.ActionArgs` 型をインポートします (推測)。
 
 ### `app/routes/destroy-contact/index.ts`
 
@@ -78,7 +77,7 @@ graph TD
 
     DestroyContactAction -- "imports & calls" --> DataDeleteContact
     DestroyContactAction -- "imports & calls" --> RRredirect
-    DestroyContactAction -- "imports type (推測)" --> DestroyContactTypes["./+types (Route.ActionArgs)"]
+    DestroyContactAction -- "imports type from" --> react_router
 
 ```
 

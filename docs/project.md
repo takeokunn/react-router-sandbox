@@ -28,13 +28,13 @@
 - **ルーティングと画面の物理配置の関係:**
     - ルーティングパスとファイルシステムのパスは密接に対応しています。
         - 例: `/contacts/:contactId` のルートは `app/routes/contact/index.ts` (および関連ファイル) に対応します。
-    - 各ルートディレクトリ内には、`route.tsx` (メインコンポーネント)、`loader.ts(x)`、`action.ts(x)`、`components/` (ルート固有コンポーネント)、`*.spec.ts(x)` (テスト)、そして `@react-router/dev` が生成する型定義のための `+types` ディレクトリ (またはその参照) が配置される構造です。
+    - 各ルートディレクトリ内には、`route.tsx` (メインコンポーネント)、`loader.ts(x)`、`action.ts(x)`、`components/` (ルート固有コンポーネント)、`*.spec.ts(x)` (テスト) が配置される構造です。型定義は主に `react-router` から直接インポートされるか、`@react-router/dev-tools` によって生成された型が利用されます。
     - `index.ts` ファイルがバレルファイルとして機能し、ルートモジュールのエントリポイントを簡潔にしています (例: `app/routes/home/index.ts` は `app/routes/home/route.tsx` をデフォルトエクスポート)。
 - **Lazy Load や Code Splitting の導入状況:**
     - Vite はデフォルトで効率的なコード分割（Code Splitting）をサポートします。
     - `app/routes.ts` でルート定義にファイルパス文字列 (例: `"routes/home/index.ts"`) を使用する方式は、`@react-router/dev` ツールチェインがルートごとのコード分割を自動的に行うことを強く示唆しています。これにより、初期ロード時のバンドルサイズが削減され、各ルートのコードは実際にそのルートが要求されたときに遅延読み込み (Lazy Load) されます。
-    - `app/root/components/HydrateFallback.tsx` は、SSR時のハイドレーション中や、遅延読み込みコンポーネントのロード中に表示されるフォールバックUIとして機能している可能性があります。
-    - `react-router.config.ts` ファイルは `@react-router/dev` の設定ファイルであり、`ssr: true` や `prerender` といったオプションが含まれていますが、これはクライアントサイドの遅延読み込み設定とは直接関連しません。
+    - `app/root/components/HydrateFallback.tsx` は、遅延読み込みコンポーネントのロード中に表示されるフォールバックUIとして機能している可能性があります。
+    - `react-router.config.ts` ファイルは `@react-router/dev` の設定ファイルです。
 
 ---
 
@@ -49,19 +49,18 @@ graph TD
         BiomeJSON["biome.json"]
         EditorConfig[".editorconfig"]
         ReactRouterConfig["react-router.config.ts"]
-        PackageJSON["package.json (推測)"]
+        PackageJSON["package.json"]
         GitHubCI[".github/workflows/ci.yml"]
     end
 
     subgraph AppDir ["app/"]
         direction LR
-        AppCSS["app.css"]
         DataTS["data.ts (データ層)"]
         RoutesTS["routes.ts (ルート定義)"]
 
         subgraph RootModule ["root/ (アプリケーションルート)"]
             direction TB
-            RootTSX["root.tsx (エントリーポイント: loader, action, App, Layout, ErrorBoundary, HydrateFallback をエクスポート)"]
+            RootTSX["root.tsx (アプリケーションエントリーポイント、主要コンポーネント・ロジックをエクスポート)"]
             RootAction["root/action.ts"]
             RootLoader["root/loader.ts"]
             subgraph RootComponents ["root/components/"]

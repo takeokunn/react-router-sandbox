@@ -9,7 +9,7 @@
     -   ファイル名は `[対象ファイル名].spec.ts` または `[対象ファイル名].spec.tsx` の形式が採用されています (例: `ErrorBoundary.spec.tsx`, `ContactNavList.spec.tsx`)。
 -   **テストスイート名 / テストケース名の命名方針：**
     -   **テストスイート (`describe` ブロック）：**
-        -   日本語で記述され、テスト対象のコンポーネント名やモジュール名を含みます (例: `describe("ErrorBoundary", () => { ... });`、過去の例では `describe("ContactNavList コンポーネント", () => { ... });`)。
+        -   日本語で記述され、テスト対象のコンポーネント名やモジュール名を含みます (例: `describe("ErrorBoundary", () => { ... });`)。
         -   対象の機能や役割を明確に示す名称が付けられています。
     -   **テストケース (`it` ブロック）：**
         -   日本語で記述され、テストする具体的な振る舞いや期待される結果を明確に示します (例: `it("handles route error response: 404", () => { ... });`)。
@@ -30,17 +30,17 @@
 ## 3. モック戦略と依存切り離し方針
 
 -   **`vi.mock` / `vi.fn` / MSW などの使い分け方針：**
-    -   `vi.mock(modulePath, factory?)`: モジュール全体をモックするために使用されます。`ErrorBoundary.spec.tsx` では `react-router` モジュールの `isRouteErrorResponse` 関数をモックするために使用されています。ファクトリ関数内で具体的なモック実装 (`vi.fn()`) を提供しています。
-    -   `vi.fn()`: 個別の関数やメソッドのスタブを作成し、呼び出し回数、引数、戻り値などをスパイするために使用されます。`vi.mock` のファクトリ関数内で返されるモック関数として利用されています。
-    -   `vi.spyOn(object, methodName)`: 過去の対話で、データ層の関数 (`app/data.ts`) をモックする際に言及されました。既存オブジェクトのメソッドの動作を監視したり、実装を上書きしたりするために使用されます。
+    -   `vi.mock(modulePath, factory?)`: モジュール全体をモックするために使用されます。例: `ErrorBoundary.spec.tsx` では `react-router` モジュールの `isRouteErrorResponse` 関数をモック。ファクトリ関数内で具体的なモック実装 (`vi.fn()`) を提供します。
+    -   `vi.fn()`: 個別の関数やメソッドのスタブを作成し、呼び出し回数、引数、戻り値などをスパイするために使用されます。`vi.mock` のファクトリ関数内で返されるモック関数として利用されます。
+    -   `vi.spyOn(object, methodName)`: 既存オブジェクトのメソッドの動作を監視したり、実装を上書きしたりするために使用されます。例えば、データ層の関数 (`app/data.ts`) をモックする際に活用できます。
     -   MSW (Mock Service Worker): 現時点のファイル情報からは使用は確認されていません。APIリクエストのモックは、データ層の関数を直接モックすることで対応していると推測されます。
 -   **外部API / ライブラリ依存のスタブ化方法：**
-    -   **データ層 (`app/data.ts`):** `loader` や `action` のテストでは、データ層の関数 (例: `getContacts`) が `vi.mock` や `vi.spyOn` を用いてモックされ、テストシナリオに応じた固定値を返すように制御されます（過去の対話より）。
+    -   **データ層 (`app/data.ts`):** `loader` や `action` のテストでは、データ層の関数 (例: `getContacts`) が `vi.mock` や `vi.spyOn` を用いてモックされ、テストシナリオに応じた固定値を返すように制御されることがあります。
     -   **React Router:**
-        -   コンポーネントテストでは、`<MemoryRouter>` や `createMemoryRouter` + `<RouterProvider>` を使用してルーティングコンテキストを提供します（過去の対話より）。
-        -   `isRouteErrorResponse` のようなユーティリティ関数は `vi.mock` でモックされます (`ErrorBoundary.spec.tsx`)。
-        -   `useLoaderData`, `useNavigate`, `useFetcher` などのフックも、必要に応じて `vi.mock` でモックされることがあります（過去の対話より）。
-    -   **環境変数:** `app/root/components/ErrorBoundary.tsx` が `import.meta.env.DEV` を使用しています。このような環境変数は、テスト中に `vi.mock('import.meta', ...)` のようにして `import.meta` オブジェクトごとモックすることで制御されると推測されます（過去の `ErrorBoundary` テストの議論より）。
+        -   コンポーネントテストでは、`<MemoryRouter>` や `createMemoryRouter` + `<RouterProvider>` を使用してルーティングコンテキストを提供します。
+        -   `isRouteErrorResponse` のようなユーティリティ関数は `vi.mock` でモックされることがあります (例: `ErrorBoundary.spec.tsx`)。
+        -   `useLoaderData`, `useNavigate`, `useFetcher` などのフックも、必要に応じて `vi.mock` でモックされることがあります。
+    -   **環境変数:** `app/root/components/ErrorBoundary.tsx` が `import.meta.env.DEV` を使用しています。このような環境変数は、テスト中に `vi.mock('import.meta', ...)` のようにして `import.meta` オブジェクトごとモックすることで制御されることがあります。
 
 ## 4. DOMとの統合テスト（必要な場合）
 
@@ -72,7 +72,7 @@
 -   **Jestからの移行があればその痕跡と互換設定を示してください。**
     -   現時点では、Jestからの移行を示す明確な痕跡（例: `jest.config.js` の残骸、Jest特有のAPIの使用）は見当たりません。VitestネイティブのAPI (`vi.*` など) が使用されています。
 -   **曖昧な慣習や粒度のブレがある場合は、その混在状況も明示してください。**
-    -   テストコンポーネントのレンダリング時のルーターラッパーとして、過去の対話で `<MemoryRouter>` と `createMemoryRouter` + `<RouterProvider>` の両方が議論されました。後者がReact Router v6.4+ の推奨パターンであり、統一が望ましいとされました。
+    -   テストコンポーネントのレンダリング時のルーターラッパーとして、`<MemoryRouter>` と `createMemoryRouter` + `<RouterProvider>` の両方が使用可能です。後者がReact Router v6.4+ の推奨パターンであり、プロジェクト内で統一することが望ましい場合があります。
     -   それ以外には、テストの記述スタイルやモック戦略に関して、大きなブレや曖昧な慣習は現時点では観察されていません。
 -   **一貫したテスト観点・方針がない場合はその旨も率直に記述してください。**
     -   全体として、コンポーネントの振る舞いとユーザーインタラクションに焦点を当てたテスト (`@testing-library/react` の哲学に沿ったもの)、および `loader`/`action` のようなロジック部分のユニットテストという、明確で一貫した方針が見られます。
