@@ -27,11 +27,6 @@ export function ContactNavList({ contacts, navigationState }: Props) {
               component={RouterNavLink}
               to={`contacts/${contact.id}`}
               disabled={isLoading}
-              // Mantine NavLink uses `data-active` for its own active state,
-              // react-router's NavLink will handle its active class separately.
-              // If a visual cue for loading specifically on the link is needed,
-              // custom styling or a different approach might be required.
-              // For now, `disabled` will provide some feedback.
             />
           );
         })

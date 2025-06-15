@@ -1,18 +1,16 @@
-import { MantineProvider } from "@mantine/core";
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import type { ContactMutation } from "app/data";
 import { MemoryRouter } from "react-router";
 import type { Navigation } from "react-router";
 import { describe, expect, it } from "vitest";
 import { ContactNavList } from "./ContactNavList";
+import { render } from "testing-utils";
 
 const renderContactNavList = (contacts: ContactMutation[], navigationState: Navigation["state"] = "idle") => {
   return render(
-    <MantineProvider>
-      <MemoryRouter>
-        <ContactNavList contacts={contacts} navigationState={navigationState} />
-      </MemoryRouter>
-    </MantineProvider>,
+    <MemoryRouter>
+      <ContactNavList contacts={contacts} navigationState={navigationState} />
+    </MemoryRouter>
   );
 };
 
