@@ -1,3 +1,4 @@
+import { MantineProvider } from "@mantine/core";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -11,9 +12,11 @@ describe("SearchFormComponent コンポーネント", () => {
   const renderComponent = (props: Partial<SearchFormComponentProps> = {}) => {
     const finalProps = { ...defaultProps, ...props };
     return render(
-      <MemoryRouter>
-        <SearchFormComponent {...finalProps} />
-      </MemoryRouter>,
+      <MantineProvider>
+        <MemoryRouter>
+          <SearchFormComponent {...finalProps} />
+        </MemoryRouter>
+      </MantineProvider>,
     );
   };
 

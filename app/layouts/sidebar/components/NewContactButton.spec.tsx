@@ -1,3 +1,4 @@
+import { MantineProvider } from "@mantine/core";
 import { render, screen } from "@testing-library/react";
 import { type RouteObject, RouterProvider, createMemoryRouter } from "react-router";
 import { beforeEach, describe, expect, it } from "vitest";
@@ -14,7 +15,11 @@ describe("NewContactButton コンポーネント", () => {
   const router = createMemoryRouter(routes, { initialEntries: ["/"] });
 
   beforeEach(() => {
-    render(<RouterProvider router={router} />);
+    render(
+      <MantineProvider>
+        <RouterProvider router={router} />
+      </MantineProvider>,
+    );
   });
 
   it("「新規」ボタンを表示する", () => {
