@@ -42,6 +42,9 @@
       },
     },
   },
+  "trustedDependencies": [
+    "@biomejs/biome",
+  ],
   "overrides": {
     "vite": "npm:rolldown-vite@latest",
   },
