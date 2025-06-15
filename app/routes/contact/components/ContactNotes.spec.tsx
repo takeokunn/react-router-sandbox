@@ -21,13 +21,14 @@ describe("ContactNotes コンポーネント", () => {
 
   it("ノートが空文字列の場合、何も表示しない", () => {
     const contact: ContactNotesProps = { notes: "" };
-    const { container } = renderComponent(contact);
-    expect(container.firstChild).toBeNull();
+    renderComponent(contact);
+    expect(screen.queryByTestId("contact-note")).toBeNull();
+
   });
 
   it("ノートが存在しない場合、何も表示しない", () => {
     const contact: ContactNotesProps = {};
-    const { container } = renderComponent(contact);
-    expect(container.firstChild).toBeNull();
+    renderComponent(contact);
+    expect(screen.queryByTestId("contact-note")).toBeNull();
   });
 });

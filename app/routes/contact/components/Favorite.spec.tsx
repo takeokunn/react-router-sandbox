@@ -9,7 +9,7 @@ describe("Favorite コンポーネント", () => {
       {
         path: "/",
         element: <Favorite isFavorite={isFavorite} />,
-        action: () => null, // Dummy action for the form
+        action: () => null
       },
     ];
     return createMemoryRouter(routes, { initialEntries: ["/"] });

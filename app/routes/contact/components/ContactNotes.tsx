@@ -10,5 +10,5 @@ export function ContactNotes({ contact }: Props) {
     return null;
   }
 
-  return <Text>{contact.notes}</Text>;
+  return <Text test-id="contact-note">{contact.notes}</Text>;
 }

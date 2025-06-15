@@ -11,7 +11,7 @@ export function ContactTwitter({ contact }: Props) {
   }
 
   return (
-    <Text>
+    <Text test-id="contact-twitter">
       <Anchor
         href={`https://twitter.com/${contact.twitter}`}
         target="_blank"

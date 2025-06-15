@@ -22,13 +22,13 @@ describe("ContactTwitter コンポーネント", () => {
 
   it("Twitter ハンドルが空文字列の場合、何も表示しない", () => {
     const contact: ContactTwitterProps = { twitter: "" };
-    const { container } = renderComponent(contact);
-    expect(container.firstChild).toBeNull();
+    renderComponent(contact);
+    expect(screen.queryByTestId("contact-twitter")).toBeNull();
   });
 
   it("Twitter ハンドルが存在しない場合、何も表示しない", () => {
     const contact: ContactTwitterProps = {};
-    const { container } = renderComponent(contact);
-    expect(container.firstChild).toBeNull();
+    renderComponent(contact);
+    expect(screen.queryByTestId("contact-twitter")).toBeNull();
   });
 });

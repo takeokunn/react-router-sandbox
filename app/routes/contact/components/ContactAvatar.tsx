@@ -11,8 +11,6 @@ export function ContactAvatar({ contact }: Props) {
       ? "Avatar"
       : `${contact.first} ${contact.last} avatar`.trim();
 
-  // Mantine Avatar uses children for fallback if src is invalid or not provided
-  // It can also take initials from `alt` or explicitly via `children`
   const initials = `${contact.first?.[0] || ""}${contact.last?.[0] || ""}`.toUpperCase() || "??";
 
   return (
