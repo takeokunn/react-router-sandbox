@@ -8,7 +8,7 @@ describe("NewContactButton コンポーネント", () => {
     {
       path: "/",
       element: <NewContactButton />,
-      action: () => null
+      action: () => null,
     },
   ];
   const router = createMemoryRouter(routes, { initialEntries: ["/"] });
