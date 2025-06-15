@@ -1,15 +1,15 @@
 import type { ContactMutation } from "@app/data";
+import { render, screen } from "@testing-utils";
 import { MemoryRouter } from "react-router";
 import type { Navigation } from "react-router";
 import { describe, expect, it } from "vitest";
 import { ContactNavList } from "./ContactNavList";
-import { render, screen } from "@testing-utils";
 
 const renderContactNavList = (contacts: ContactMutation[], navigationState: Navigation["state"] = "idle") => {
   return render(
     <MemoryRouter>
       <ContactNavList contacts={contacts} navigationState={navigationState} />
-    </MemoryRouter>
+    </MemoryRouter>,
   );
 };
 

@@ -1,4 +1,4 @@
-import { Box, Button, Group, Stack, Textarea, TextInput } from "@mantine/core";
+import { Box, Button, Group, Stack, TextInput, Textarea } from "@mantine/core";
 import { useLoaderData, useNavigate } from "react-router";
 
 import type { ContactRecord } from "../../data";
@@ -33,12 +33,7 @@ export default function EditContact() {
             placeholder="Last"
           />
         </Group>
-        <TextInput
-          label="Twitter"
-          defaultValue={contact.twitter ?? ""}
-          name="twitter"
-          placeholder="@jack"
-        />
+        <TextInput label="Twitter" defaultValue={contact.twitter ?? ""} name="twitter" placeholder="@jack" />
         <TextInput
           label="Avatar URL"
           aria-label="Avatar URL"
@@ -46,12 +41,7 @@ export default function EditContact() {
           name="avatar"
           placeholder="https://example.com/avatar.jpg"
         />
-        <Textarea
-          label="Notes"
-          defaultValue={contact.notes ?? ""}
-          name="notes"
-          rows={6}
-        />
+        <Textarea label="Notes" defaultValue={contact.notes ?? ""} name="notes" rows={6} />
         <Group justify="flex-start" mt="md">
           {" "}
           {/* mt="md" for margin-top, adjust as needed */}

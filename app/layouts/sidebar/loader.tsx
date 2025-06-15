@@ -1,5 +1,5 @@
-import type { Route } from "../../+types/root";
 import { getContacts } from "@app/data";
+import type { Route } from "../../+types/root";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const url = new URL(request.url);

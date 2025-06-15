@@ -1,5 +1,5 @@
-import type { ContactRecord } from "../../../data";
 import { Text } from "@mantine/core";
+import type { ContactRecord } from "../../../data";
 
 type Props = {
   contact: Pick<ContactRecord, "notes">;

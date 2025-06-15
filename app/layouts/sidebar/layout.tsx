@@ -1,3 +1,5 @@
+import { AppShell } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 import { Outlet, useLoaderData, useNavigation, useSubmit } from "react-router";
 import type { FormProps, NavigateOptions } from "react-router";
@@ -11,6 +13,7 @@ export default function Layout() {
   const { contacts, q } = useLoaderData<Awaited<ReturnType<TLoader>>>();
   const navigation = useNavigation();
   const submit = useSubmit();
+  const [opened] = useDisclosure();
 
   const [query, setQuery] = useState<string>(q || "");
   const isSearching: boolean =
@@ -30,8 +33,15 @@ export default function Layout() {
   };
 
   return (
-    <>
-      <div id="sidebar">
+    <AppShell
+      navbar={{
+        width: 300,
+        breakpoint: "sm",
+        collapsed: { mobile: !opened },
+      }}
+      padding="md"
+    >
+      <AppShell.Navbar p="md">
         <SidebarHeader />
         <div>
           <SearchFormComponent
@@ -44,10 +54,11 @@ export default function Layout() {
           <NewContactButton />
         </div>
         <ContactNavList contacts={contacts} navigationState={navigation.state} />
-      </div>
-      <div id="detail">
+      </AppShell.Navbar>
+
+      <AppShell.Main>
         <Outlet />
-      </div>
-    </>
+      </AppShell.Main>
+    </AppShell>
   );
 }
