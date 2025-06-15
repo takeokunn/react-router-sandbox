@@ -1,3 +1,4 @@
+import { Button, Group } from "@mantine/core";
 import type React from "react";
 import { Form } from "react-router";
 
@@ -7,13 +8,15 @@ type Props = {
 
 export function ContactActions({ onDeleteSubmit }: Props) {
   return (
-    <>
+    <Group>
       <Form action="edit">
-        <button type="submit">Edit</button>
+        <Button type="submit">Edit</Button>
       </Form>
       <Form action="destroy" method="post" onSubmit={onDeleteSubmit}>
-        <button type="submit">Delete</button>
+        <Button type="submit" color="red">
+          Delete
+        </Button>
       </Form>
-    </>
+    </Group>
   );
 }

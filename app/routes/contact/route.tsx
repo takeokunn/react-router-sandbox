@@ -1,3 +1,4 @@
+import { Group, Paper, Stack } from "@mantine/core";
 import { useLoaderData } from "react-router";
 import { ContactActions } from "./components/ContactActions";
 import { ContactAvatar } from "./components/ContactAvatar";
@@ -22,19 +23,21 @@ export default function Contact() {
   };
 
   return (
-    <div id="contact">
-      <div>
-        <ContactAvatar contact={contact} />
-      </div>
+    <Paper p="md" shadow="xs" id="contact">
+      <Group align="flex-start">
+        <Stack>
+          <ContactAvatar contact={contact} />
+        </Stack>
 
-      <div>
-        <ContactHeader contact={contact} isFavorite={currentFavorite} />
-        <ContactTwitter contact={contact} />
-        <ContactNotes contact={contact} />
-        <div>
-          <ContactActions onDeleteSubmit={handleDeleteSubmit} />
-        </div>
-      </div>
-    </div>
+        <Stack gap="sm" style={{ flexGrow: 1 }}>
+          <ContactHeader contact={contact} isFavorite={currentFavorite} />
+          <ContactTwitter contact={contact} />
+          <ContactNotes contact={contact} />
+          <Group mt="md">
+            <ContactActions onDeleteSubmit={handleDeleteSubmit} />
+          </Group>
+        </Stack>
+      </Group>
+    </Paper>
   );
 }
