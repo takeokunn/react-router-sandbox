@@ -1,4 +1,4 @@
-import { AppShell, Stack, ScrollArea } from "@mantine/core";
+import { AppShell, ScrollArea, Stack } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 import { Outlet, useLoaderData, useNavigation, useSubmit } from "react-router";
@@ -39,7 +39,7 @@ export default function Layout() {
       }}
       padding="md"
     >
-      <AppShell.Navbar p="md" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      <AppShell.Navbar p="md" style={{ display: "flex", flexDirection: "column", height: "100%" }}>
         <SidebarHeader />
         <Stack gap="sm" my="md">
           <SearchFormComponent
