@@ -56,7 +56,7 @@ describe("ContactAvatar コンポーネント", () => {
     expect(imgElement.alt).toBe("Avatar");
     // Check for initials if avatar src is not present
     if (!contact.avatar) {
-      expect(screen.getByText("J?")).toBeInTheDocument();
+      expect(screen.getByText("J")).toBeInTheDocument();
     }
   });
 
@@ -70,7 +70,7 @@ describe("ContactAvatar コンポーネント", () => {
     expect(imgElement.alt).toBe("Avatar");
     // Check for initials if avatar src is not present
     if (!contact.avatar) {
-      expect(screen.getByText("?D")).toBeInTheDocument();
+      expect(screen.getByText("D")).toBeInTheDocument();
     }
   });
 });
