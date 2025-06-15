@@ -14,10 +14,17 @@
     "test:coverage:ui": "vitest --coverage --ui"
   },
   "dependencies": {
+    "@mantine/core": "^8.1.0",
+    "@mantine/form": "^8.1.0",
+    "@mantine/hooks": "^8.1.0",
+    "@mantine/notifications": "^8.1.0",
     "@react-router/node": "^7.6.2",
     "@react-router/serve": "^7.6.2",
     "isbot": "^5.1.28",
     "match-sorter": "^8.0.3",
+    "postcss": "^8.5.5",
+    "postcss-preset-mantine": "^1.17.0",
+    "postcss-simple-vars": "^7.0.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router": "^7.6.2",
