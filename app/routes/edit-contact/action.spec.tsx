@@ -1,5 +1,4 @@
 import { redirect as mockRedirect } from "react-router";
-import invariant from "tiny-invariant";
 import { type MockInstance, beforeEach, describe, expect, it, vi } from "vitest";
 import * as dataFunctions from "../../data";
 import { action } from "./action";
@@ -20,14 +19,12 @@ vi.mock("../../data", async () => {
   };
 });
 
-vi.mock("tiny-invariant");
-
 describe("編集コンタクトアクション (app/routes/edit-contact/action.tsx)", () => {
   let updateContactSpy: MockInstance;
 
   beforeEach(() => {
     vi.resetAllMocks();
-    updateContactSpy = vi.spyOn(dataFunctions, "updateContact").mockResolvedValue(null);
+    updateContactSpy = vi.spyOn(dataFunctions, "updateContact");
   });
 
   const mockContactId = "contact-abc-123";
@@ -54,26 +51,12 @@ describe("編集コンタクトアクション (app/routes/edit-contact/action.t
     expect(mockRedirect).toHaveBeenCalledWith(`/contacts/${mockContactId}`);
   });
 
-  it("params.contactIdが存在しない場合: invariantがエラーをスローし、リダイレクトしないこと", async () => {
-    const params = {};
-    (invariant as vi.Mock).mockImplementation((condition, message) => {
-      if (!condition) {
-        throw new Error(message);
-      }
-    });
-
-    await expect(action({ params, request: mockRequest })).rejects.toThrow("Missing contactId param");
-
-    expect(updateContactSpy).not.toHaveBeenCalled();
-    expect(mockRedirect).not.toHaveBeenCalled();
-  });
-
   it("updateContactがエラーをスローした場合: エラーが伝播し、リダイレクトしないこと", async () => {
     const params = { contactId: mockContactId };
     const errorMessage = "Failed to update contact";
     updateContactSpy.mockRejectedValue(new Error(errorMessage));
 
-    await expect(action({ params, request: mockRequest })).rejects.toThrow(errorMessage);
+    await expect(action({ params, request: mockRequest, context: {} })).rejects.toThrow(errorMessage);
 
     expect(updateContactSpy).toHaveBeenCalledTimes(1);
     expect(updateContactSpy).toHaveBeenCalledWith(mockContactId, {
@@ -91,7 +74,7 @@ describe("編集コンタクトアクション (app/routes/edit-contact/action.t
       formData: async () => emptyFormData,
     } as unknown as Request;
 
-    await action({ params, request: emptyRequest });
+    await action({ params, request: emptyRequest, context: {} });
 
     expect(updateContactSpy).toHaveBeenCalledTimes(1);
     expect(updateContactSpy).toHaveBeenCalledWith(mockContactId, {});

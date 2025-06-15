@@ -43,7 +43,7 @@ describe("サイドバーローダー (app/layouts/sidebar/loader.tsx)", () => {
     const request = createMockRequest(`http://localhost/?q=${searchQuery}`);
     getContactsSpy.mockResolvedValue(mockContacts);
 
-    const result = await loader({ request, params: {} });
+    const result = await loader({ request, params: {}, context: {} });
 
     expect(getContactsSpy).toHaveBeenCalledTimes(1);
     expect(getContactsSpy).toHaveBeenCalledWith(searchQuery);
@@ -54,7 +54,7 @@ describe("サイドバーローダー (app/layouts/sidebar/loader.tsx)", () => {
     const request = createMockRequest("http://localhost/");
     getContactsSpy.mockResolvedValue(mockContacts);
 
-    const result = await loader({ request, params: {} });
+    const result = await loader({ request, params: {}, context: {} });
 
     expect(getContactsSpy).toHaveBeenCalledTimes(1);
     expect(getContactsSpy).toHaveBeenCalledWith(null);
@@ -67,7 +67,7 @@ describe("サイドバーローダー (app/layouts/sidebar/loader.tsx)", () => {
     const emptyContacts: ContactRecord[] = [];
     getContactsSpy.mockResolvedValue(emptyContacts);
 
-    const result = await loader({ request, params: {} });
+    const result = await loader({ request, params: {}, context: {} });
 
     expect(getContactsSpy).toHaveBeenCalledTimes(1);
     expect(getContactsSpy).toHaveBeenCalledWith(searchQuery);
@@ -79,7 +79,7 @@ describe("サイドバーローダー (app/layouts/sidebar/loader.tsx)", () => {
     const errorMessage = "Failed to fetch contacts";
     getContactsSpy.mockRejectedValue(new Error(errorMessage));
 
-    await expect(loader({ request, params: {} })).rejects.toThrow(errorMessage);
+    await expect(loader({ request, params: {}, context: {} })).rejects.toThrow(errorMessage);
     expect(getContactsSpy).toHaveBeenCalledTimes(1);
   });
 });
