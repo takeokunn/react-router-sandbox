@@ -1,3 +1,4 @@
+import { Code, Stack, Text, Title } from "@mantine/core";
 import { isRouteErrorResponse } from "react-router";
 import type { Route } from "../../+types/root";
 
@@ -51,14 +52,10 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   const { message, details, stack } = getErrorDisplayInfo(error);
 
   return (
-    <main id="error-page">
-      <h1>{message}</h1>
-      <p>{details}</p>
-      {stack && (
-        <pre>
-          <code>{stack}</code>
-        </pre>
-      )}
-    </main>
+    <Stack id="error-page" align="center" justify="center" style={{ minHeight: "100vh", padding: "md" }}>
+      <Title order={1}>{message}</Title>
+      <Text>{details}</Text>
+      {stack && <Code block>{stack}</Code>}
+    </Stack>
   );
 }
