@@ -7,8 +7,8 @@
     "dev": "react-router dev",
     "start": "cross-env NODE_ENV=production react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",
-    "lint": "pnpm biome check app/",
-    "lint:fix": "pnpm biome check --fix --unsafe app/",
+    "lint": "biome check app/",
+    "lint:fix": "biome check --fix --unsafe app/",
     "test": "vitest",
     "test:coverage": "vitest --coverage",
     "test:coverage:ui": "vitest --coverage --ui"
@@ -53,13 +53,10 @@
   "engines": {
     "node": ">=22.0.0"
   },
-  "pnpm": {
-    "overrides": {
-      "vite": "npm:rolldown-vite@latest"
-    },
-    "onlyBuiltDependencies": [
-      "@biomejs/biome",
-      "esbuild"
-    ]
-  }
+  "overrides": {
+    "vite": "npm:rolldown-vite@latest"
+  },
+  "trustedDependencies": [
+    "@biomejs/biome"
+  ]
 }

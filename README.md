@@ -13,8 +13,8 @@ This is a demo application built with React Router.
 From your terminal:
 
 ```console
-$ pnpm install
-$ pnpm dev
+$ bun install
+$ bun run dev
 ```
 
 This installs dependencies and starts the app in development mode, rebuilding assets on file changes.
@@ -24,14 +24,14 @@ This installs dependencies and starts the app in development mode, rebuilding as
 To run the test suite:
 
 ```console
-$ pnpm test
+$ bun run test # you need to use `run test` instead of `test` to run `vitest`
 ```
 
 This will execute tests using Vitest. You can also run tests with coverage:
 
 ```console
-$ pnpm test:coverage
-$ pnpm test:coverage:ui
+$ bun run test:coverage
+$ bun run test:coverage:ui
 ```
 
 ## Deployment
@@ -39,7 +39,7 @@ $ pnpm test:coverage:ui
 First, build your app for production:
 
 ```console
-$ pnpm build
+$ bun run build # you need to use `run build` instead of `build`
 ```
 
 This command uses `react-router build` and outputs the production-ready app to the `build/server` and `build/client` directories.
@@ -47,6 +47,6 @@ This command uses `react-router build` and outputs the production-ready app to t
 Then, to run the app in production mode:
 
 ```console
-$ pnpm start
+$ bun run start
 ```
 This command uses `react-router-serve` to serve the application from `./build/server/index.js`.
