@@ -16,61 +16,63 @@ describe("ContactAvatar コンポーネント", () => {
       avatar: "https://example.com/avatar.jpg",
     };
     renderComponent(contact);
-    const imgElement = screen.getByRole("img") as HTMLImageElement;
+    const imgElement = screen.getByRole("img", { name: "John Doe avatar" }) as HTMLImageElement;
     expect(imgElement).toBeInTheDocument();
+    expect(imgElement.tagName).toBe("IMG");
     expect(imgElement.src).toBe(contact.avatar);
-    expect(imgElement.alt).toBe("John Doe avatar");
+    // Initials should not be present if avatar src is provided
+    expect(screen.queryByText("JD")).not.toBeInTheDocument();
   });
 
-  it("アバターURLが指定されていない場合、src属性なしで画像を表示し、altテキストは「Avatar」になる", () => {
-    const contact: ContactAvatarProps = { first: "John", last: "Doe" };
+  it("アバターURLが指定されていない場合、フォールバックとしてイニシャル「JD」を表示し、altテキストは「John Doe avatar」になる", () => {
+    const contact: ContactAvatarProps = { first: "John", last: "Doe" }; // No avatar URL
     renderComponent(contact);
-    const imgElement = screen.getByRole("img") as HTMLImageElement;
-    expect(imgElement).toBeInTheDocument();
-    // Mantine Avatar might not render src attribute if it's undefined/null
-    // It will render a fallback (initials or placeholder)
-    expect(imgElement.alt).toBe("John Doe avatar");
-    // Check for initials if avatar src is not present
-    if (!contact.avatar) {
-      expect(screen.getByText("JD")).toBeInTheDocument();
-    }
+    const avatarElement = screen.getByRole("img", { name: "John Doe avatar" });
+    expect(avatarElement).toBeInTheDocument();
+    // Should be a fallback (e.g., div), not an img tag with a src
+    expect(avatarElement.tagName).not.toBe("IMG");
+    expect(avatarElement.getAttribute("src")).toBeNull();
+    // Check for initials because avatar src is not present
+    expect(screen.getByText("JD")).toBeInTheDocument();
   });
 
-  it("アバターURLがなく、名前もない場合、altテキストは「Avatar」になり、フォールバック「??」が表示される", () => {
-    const contact: ContactAvatarProps = {};
+  it("アバターURLがなく、名前もない場合、フォールバック「??」が表示され、altテキストは「Avatar」になる", () => {
+    const contact: ContactAvatarProps = {}; // No avatar URL, no names
     renderComponent(contact);
-    // When no src, Mantine Avatar renders a div with role="img" or a placeholder
-    const avatarFallback = screen.getByRole("img"); // Mantine Avatar might use role="img" on the root or an inner img
-    expect(avatarFallback).toBeInTheDocument();
-    expect(avatarFallback).toHaveAttribute("alt", "Avatar");
+    const avatarElement = screen.getByRole("img", { name: "Avatar" });
+    expect(avatarElement).toBeInTheDocument();
+    expect(avatarElement.tagName).not.toBe("IMG");
+    expect(avatarElement.getAttribute("src")).toBeNull();
     expect(screen.getByText("??")).toBeInTheDocument();
   });
 
-  it("名のみが指定されている場合、altテキストは「Avatar」になり、フォールバック「J?」が表示される", () => {
+  it("アバターURLが指定され、名のみの場合、画像を表示し、altテキストは「Avatar」になる（フォールバックなし）", () => {
     const contact: ContactAvatarProps = {
       first: "John",
-      avatar: "https://example.com/avatar.jpg",
+      avatar: "https://example.com/avatar.jpg", // Avatar URL is present
     };
     renderComponent(contact);
-    const imgElement = screen.getByRole("img") as HTMLImageElement;
-    expect(imgElement.alt).toBe("Avatar");
-    // Check for initials if avatar src is not present
-    if (!contact.avatar) {
-      expect(screen.getByText("J")).toBeInTheDocument();
-    }
+    // altText is "Avatar" because last name is missing
+    const imgElement = screen.getByRole("img", { name: "Avatar" }) as HTMLImageElement;
+    expect(imgElement).toBeInTheDocument();
+    expect(imgElement.tagName).toBe("IMG");
+    expect(imgElement.src).toBe(contact.avatar);
+    // Initials "J" should not be present because avatar src is provided
+    expect(screen.queryByText("J")).not.toBeInTheDocument();
   });
 
-  it("姓のみが指定されている場合、altテキストは「Avatar」になり、フォールバック「?D」が表示される", () => {
+  it("アバターURLが指定され、姓のみの場合、画像を表示し、altテキストは「Avatar」になる（フォールバックなし）", () => {
     const contact: ContactAvatarProps = {
       last: "Doe",
-      avatar: "https://example.com/avatar.jpg",
+      avatar: "https://example.com/avatar.jpg", // Avatar URL is present
     };
     renderComponent(contact);
-    const imgElement = screen.getByRole("img") as HTMLImageElement;
-    expect(imgElement.alt).toBe("Avatar");
-    // Check for initials if avatar src is not present
-    if (!contact.avatar) {
-      expect(screen.getByText("D")).toBeInTheDocument();
-    }
+    // altText is "Avatar" because first name is missing
+    const imgElement = screen.getByRole("img", { name: "Avatar" }) as HTMLImageElement;
+    expect(imgElement).toBeInTheDocument();
+    expect(imgElement.tagName).toBe("IMG");
+    expect(imgElement.src).toBe(contact.avatar);
+    // Initials "D" should not be present because avatar src is provided
+    expect(screen.queryByText("D")).not.toBeInTheDocument();
   });
 });
