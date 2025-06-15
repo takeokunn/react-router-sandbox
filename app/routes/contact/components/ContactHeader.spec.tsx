@@ -47,7 +47,8 @@ describe("ContactHeader コンポーネント", () => {
 
     it("名と姓が提供されない場合、「No Name」が表示されること", () => {
       renderInRouter({ first: undefined, last: undefined }, false);
-      expect(screen.getByRole("heading", { name: /No Name/ })).toBeInTheDocument();
+      // Target the h2 specifically, as the h1 is the Group wrapper
+      expect(screen.getByRole("heading", { name: /No Name/, level: 2 })).toBeInTheDocument();
       expect(screen.getByText("No Name")).toBeInTheDocument();
     });
   });
