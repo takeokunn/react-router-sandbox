@@ -1,4 +1,6 @@
-# Welcome to React Router!
+# React Router Contacts Demo
+
+This is a demo application built with React Router.
 
 - [React Router Docs](https://reactrouter.com/home)
 
@@ -6,33 +8,41 @@
 
 From your terminal:
 
-```sh
-npm run dev
+```console
+$ pnpm install
+$ pnpm dev
 ```
 
-This starts your app in development mode, rebuilding assets on file changes.
+This installs dependencies and starts the app in development mode, rebuilding assets on file changes.
+
+## Testing
+
+To run the test suite:
+
+```console
+$ pnpm test
+```
+
+This will execute tests using Vitest. You can also run tests with coverage:
+
+```console
+$ pnpm test:coverage
+$ pnpm test:coverage:ui
+```
 
 ## Deployment
 
 First, build your app for production:
 
-```sh
-npm run build
+```console
+$ pnpm build
 ```
 
-Then run the app in production mode:
+This command uses `react-router build` and outputs the production-ready app to the `build/server` and `build/client` directories.
 
-```sh
-npm start
+Then, to run the app in production mode:
+
+```console
+$ pnpm start
 ```
-
-Now you'll need to pick a host to deploy it to.
-
-### DIY
-
-If you're familiar with deploying node applications, the built-in React Router app server is production-ready.
-
-Make sure to deploy the output of `react-router build`
-
-- `build/server`
-- `build/client`
+This command uses `react-router-serve` to serve the application from `./build/server/index.js`.
