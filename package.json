@@ -47,6 +47,7 @@
     "jsdom": "^26.1.0",
     "typescript": "^5.8.3",
     "vite": "npm:rolldown-vite@^6.3.19",
+    "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.2.3"
   },
   "engines": {

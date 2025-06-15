@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-utils";
 import { type RouteObject, RouterProvider, createMemoryRouter } from "react-router";
 import { describe, expect, it, vi } from "vitest";
 import { ContactActions } from "./ContactActions";

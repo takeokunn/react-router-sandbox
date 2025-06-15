@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "testing-utils";
+import { fireEvent, render, screen } from "@testing-utils";
 import { MemoryRouter } from "react-router";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { SearchFormComponent, type SearchFormComponentProps } from "./SearchFormComponent";

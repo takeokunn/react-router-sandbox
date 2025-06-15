@@ -19,6 +19,10 @@
     "noEmit": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "strict": true
+    "strict": true,
+    "paths": {
+      "@app/*": ["app/*"],
+      "@testing-utils": ["testing-utils/index"]
+    }
   }
 }

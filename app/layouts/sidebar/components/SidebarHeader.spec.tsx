@@ -1,4 +1,4 @@
-import { render, screen } from "testing-utils";
+import { render, screen } from "@testing-utils";
 import { MemoryRouter } from "react-router";
 import { describe, expect, it, beforeEach } from "vitest";
 import { SidebarHeader } from "./SidebarHeader";
