@@ -57,34 +57,15 @@
 ## 5. グローバル設定・初期化戦略
 
 -   **`setupFiles` / `globalSetup` の設計意図と内容：**
-    -   `vite.config.mts` の `test.setupFiles` オプションで `["./setupTests.ts"]` が指定されています。
     -   `setupTests.ts` ファイルでは `import "@testing-library/jest-dom";` が実行され、`expect` に `toBeInTheDocument` などのカスタムDOMマッチャーをグローバルに追加しています。
 -   **テスト前の環境初期化（e.g. localStorage / env）方針：**
     -   `ErrorBoundary.spec.tsx` の `beforeEach` フックでは、`vi.clearAllMocks()` と `(isRouteErrorResponse as unknown as MockedFunction<typeof isRouteErrorResponse>).mockReset()` が実行され、テストケース間でモックの状態がリセットされています。
-    -   `jsdom` 環境 (`vite.config.mts` の `test.environment: 'jsdom'`) が使用されているため、`localStorage` や `sessionStorage` などのブラウザAPIはテスト実行時に利用可能です。
-
-## 6. 実行環境とビルド互換性
-
--   **ESM / TS / JSX の対応状況と制約：**
-    -   プロジェクトは TypeScript (`.ts`, `.tsx`) と JSX を全面的に使用しており、Vitest (Vite経由) はこれらをネイティブにサポートしています。
-    -   ES Modules (`import`/`export`) が標準的に使用されています。
-    -   `tsconfig.json` の設定 (`target: "ES2022"`, `module: "ES2022"`, `moduleResolution: "bundler"`, `jsx: "react-jsx"`) に基づいてトランスパイルおよび解決が行われます。
--   **Vite特有の制約や最適化対象：**
-    -   Vitest は Vite の設定とビルドパイプラインを共有するため、Vite の設定 (`vite.config.mts`) がテスト環境にも影響します。
-    -   `vite.config.mts` では、`mode !== "test" && reactRouter()` という条件で `@react-router/dev/vite` プラグインが適用されており、テストモード (`mode === "test"`) ではこのプラグインが無効化されます。これは、テスト実行時にReact RouterのViteプラグインによる特殊な処理を避けるための一般的な設定です。
-    -   `vite/client` の型定義が `tsconfig.json` の `compilerOptions.types` に含まれており、Vite固有の機能 (例: `import.meta.env`) を型安全に使用できます。
+    -   `jsdom` 環境が使用されているため、`localStorage` や `sessionStorage` などのブラウザAPIはテスト実行時に利用可能です。
 
 ## 7. その他の観察された実装方針
 
--   **カバレッジ収集ツール（c8, istanbul 等）の使用有無と設定：**
-    -   `package.json` に `test:coverage": "vitest --coverage"` スクリプトが存在します。
-    -   `vite.config.mts` の `test.coverage` オプションで、カバレッジプロバイダとして `{ provider: 'v8', ... }` が指定されています。これは `c8` (Node.js組み込みのV8エンジンカバレッジ機能のラッパー) を使用することを意味します。
-    -   カバレッジレポートから除外するファイルのリスト (`exclude`) も設定されています。
 -   **snapshotテストの使用有無と用途：**
     -   提供されたファイルや過去の対話からは、スナップショットテスト (`*.snap` ファイルや `toMatchSnapshot()`) の積極的な使用は確認されていません。UIコンポーネントの構造変動を検知するよりも、具体的な振る舞いや属性値を検証するアプローチが主体のようです。
--   **CI環境との統合（e.g. GitHub Actionsでのvitest run）：**
-    -   `.github/workflows/ci.yml` ファイルが存在し、GitHub Actions でのCIパイプラインが定義されています。
-    -   CIワークフロー内で `pnpm run test:coverage` コマンドが実行され、テストとカバレッジレポート生成が行われています。その他、リンティング (`pnpm run lint`)、型チェック (`pnpm run typecheck`)、ビルド (`pnpm run build`) もCIで実行されています。
 
 ## 注意点と補足
 
