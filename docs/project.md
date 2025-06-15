@@ -11,12 +11,12 @@
 - **LintルールやCIでのコード品質維持戦略:**
     - **Lintルール:** `biome.json` に Biome の Lint ルールが設定されています。
     - **CI (Continuous Integration):** `.github/workflows/ci.yml` (GitHub Actions) が定義されています。
-        - `pnpm/action-setup` を使用して pnpm をセットアップし、依存関係をインストール (`run_install: true`)。
+        - `oven-sh/setup-bun` を使用して pnpm をセットアップし、依存関係をインストール.
         - 実行されるスクリプト:
-            - `pnpm run test:coverage` (Vitestによるテストとカバレッジレポート)
-            - `pnpm run lint` (Biomeによるリンティング)
-            - `pnpm run typecheck` (TypeScriptによる型チェック)
-            - `pnpm run build` (Viteによるプロダクションビルド)
+            - `bun run test:coverage` (Vitestによるテストとカバレッジレポート)
+            - `bun run lint` (Biomeによるリンティング)
+            - `bun run typecheck` (TypeScriptによる型チェック)
+            - `bun run build` (Viteによるプロダクションビルド)
         - これにより、コード品質が自動的にチェックされます。
 
 ## 2. モジュール設計とディレクトリ構成
