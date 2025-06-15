@@ -56,6 +56,10 @@
   "pnpm": {
     "overrides": {
       "vite": "npm:rolldown-vite@latest"
-    }
+    },
+    "onlyBuiltDependencies": [
+      "@biomejs/biome",
+      "esbuild"
+    ]
   }
 }

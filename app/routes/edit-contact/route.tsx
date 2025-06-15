@@ -8,13 +8,7 @@ export default function EditContact() {
   const navigate = useNavigate();
 
   return (
-    <Box
-      component="form"
-      key={contact.id}
-      id="contact-form"
-      method="post"
-      aria-label="Edit contact"
-    >
+    <Box component="form" key={contact.id} id="contact-form" method="post" aria-label="Edit contact">
       <Stack gap="md">
         <Group grow>
           <TextInput
