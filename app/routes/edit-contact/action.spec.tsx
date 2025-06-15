@@ -42,7 +42,7 @@ describe("編集コンタクトアクション (app/routes/edit-contact/action.t
   it("正常な場合: updateContactを呼び出し、コンタクト詳細ページにリダイレクトすること", async () => {
     const params = { contactId: mockContactId };
 
-    await action({ params, request: mockRequest });
+    await action({ params, request: mockRequest, context: {} });
 
     expect(updateContactSpy).toHaveBeenCalledTimes(1);
     expect(updateContactSpy).toHaveBeenCalledWith(mockContactId, {
