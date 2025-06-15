@@ -1,4 +1,5 @@
 import type { ContactRecord } from "../../../data";
+import { Text } from "@mantine/core";
 
 type Props = {
   contact: Pick<ContactRecord, "notes">;
@@ -9,5 +10,5 @@ export function ContactNotes({ contact }: Props) {
     return null;
   }
 
-  return <p>{contact.notes}</p>;
+  return <Text>{contact.notes}</Text>;
 }
