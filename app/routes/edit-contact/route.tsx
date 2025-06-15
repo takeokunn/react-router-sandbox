@@ -1,7 +1,7 @@
 import { Box, Button, Group, Stack, TextInput, Textarea } from "@mantine/core";
 import { useLoaderData, useNavigate } from "react-router";
 
-import type { Tloader as TLoader } from "./loader";
+import type { TLoader } from "./loader";
 
 export default function EditContact() {
   const { contact } = useLoaderData<TLoader>();
