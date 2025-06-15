@@ -153,7 +153,6 @@ graph TD
 -   **`loader.tsx`**: `app/data.ts` の `getContact` を呼び出してデータを取得し、フォームの初期表示に使用します。データが見つからない場合は404エラーをスローします。
 -   **`action.tsx`**: `app/data.ts` の `updateContact` を呼び出してデータを更新し、`react-router` の `redirect` を使用して連絡先詳細ページに遷移します。`tiny-invariant` を使用して `contactId` の存在を検証します。
 -   **`route.tsx`**: `loader` からデータを取得 (`useLoaderData`) し、編集フォームを表示します。`useNavigate` を使用してキャンセル時のページ遷移を処理します。
--   型定義ファイル (`./+types`) が `loader.tsx` と `action.tsx` で使用されていると推測されますが、チャットには追加されていません。
 
 ---
 

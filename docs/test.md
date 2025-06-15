@@ -40,7 +40,7 @@
         -   コンポーネントテストでは、`<MemoryRouter>` や `createMemoryRouter` + `<RouterProvider>` を使用してルーティングコンテキストを提供します。
         -   `isRouteErrorResponse` のようなユーティリティ関数は `vi.mock` でモックされることがあります (例: `ErrorBoundary.spec.tsx`)。
         -   `useLoaderData`, `useNavigate`, `useFetcher` などのフックも、必要に応じて `vi.mock` でモックされることがあります。
-    -   **環境変数:** `app/root/components/ErrorBoundary.tsx` が `import.meta.env.DEV` を使用しています。このような環境変数は、テスト中に `vi.mock('import.meta', ...)` のようにして `import.meta` オブジェクトごとモックすることで制御されることがあります。
+    -   **環境変数:** `app/root/components/ErrorBoundary.tsx` が `import.meta.env.DEV` を使用しています。テストにおいて環境変数に依存するロジックを制御する必要がある場合、その変数が使われるモジュールや関数をモックするか、Vitestの環境変数設定機能（例: `vi.stubEnv`）を利用して値を設定することが考えられます。(`ErrorBoundary.spec.tsx` では、`isRouteErrorResponse` をモックすることで関連ロジックのテストパスを制御しています。)
 
 ## 4. DOMとの統合テスト（必要な場合）
 

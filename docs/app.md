@@ -26,7 +26,7 @@
     -   ルートコンポーネント内で使用される子コンポーネントは、そのルートディレクトリ内の `components/` サブディレクトリに配置される傾向があります (例: `app/routes/contact/components/`)。
 -   **カスタムフック・ユーティリティ関数の命名規約：**
     -   カスタムフックは `use` プレフィックスで `camelCase` (例: `useLoaderData`, `useNavigation`, `useSubmit`, `useFetcher`, `useNavigate`)。これはReactの標準規約に準拠しています。
-    -   ユーティリティ関数は `camelCase` で命名されていると推測されます (例: `getContacts`, `updateContact` in `app/data.ts`)。
+    -   ユーティリティ関数は `camelCase` で命名されています (例: `app/data.ts` の `getContacts`, `updateContact`)。
 
 ### 2 コンポーネント設計と責務分離
 
@@ -80,7 +80,7 @@
     -   `app/data.ts` がデータ層として機能し、実際のデータソース（現在はモックデータ）とのやり取りを抽象化しています。
 -   **外部依存の抽象化とDIパターン（例：APIクライアント、設定値）：**
     -   `app/data.ts` がデータソース（APIクライアントに相当）を抽象化しています。これにより、将来的に実際のバックエンドAPIに切り替える際に、変更箇所を `app/data.ts` に限定しやすくなります。これは一種の依存性の注入 (DI) と言えます。
-    -   設定値などの外部依存については、`import.meta.env` を介して環境変数として注入される可能性があります (例: `import.meta.env.DEV` がコードやテストで使用される場合)。
+    -   設定値などの外部依存については、`import.meta.env` を介して環境変数として注入されます (例: `app/root/components/ErrorBoundary.tsx` で `import.meta.env.DEV` が使用されています)。
 
 ### 5 ディレクトリ構成と意味づけ
 
@@ -105,7 +105,7 @@
     -   `TLoader` のような型エイリアス (`export type TLoader = typeof loader;`) を使用して、`loader` 関数の戻り値の型をコンポーネント側で安全に利用しています。
     -   Nullableな値の扱いとして、オプショナルプロパティ (`avatar?: string`) や、`null` または `undefined` を許容する型 (`string | null`, `string | undefined`) が使用されています。
 -   **null / undefined の防御方針（例：Optional Chaining / null assertion）：**
-    -   Optional Chaining (`?.`) や Nullish Coalescing (`??`) が使用されていると推測されます (例: `contact.avatar ?? undefined`, `contact.first || contact.last ? ...`)。
+    -   Optional Chaining (`?.`) や Nullish Coalescing (`??`) が使用されています (例: `app/routes/edit-contact/route.tsx` で `contact.first ?? ""` や `app/layouts/sidebar/components/ContactNavList.tsx` で `contact.first || contact.last ? ...` のようなパターンが見られます)。
     -   `tiny-invariant` の `invariant` 関数が、特定の変数が期待される値を持つこと（null/undefinedでないこと）を表明するために使用されています。
     -   `if (!contact)` のような明示的なnullチェックも行われています。
     -   Null assertion (`!`) の使用頻度は不明ですが、型安全性を重視する観点からは限定的であると望ましいです。

@@ -87,7 +87,6 @@ graph TD
 -   **`action.tsx`**:
     -   `app/data.ts` の `deleteContact` を呼び出してデータを削除します。
     -   `react-router` の `redirect` を呼び出してページ遷移を行います。
--   型定義ファイル (`./+types`) が `action.tsx` で使用されていると推測されますが、チャットには追加されていません。
 
 ---
 

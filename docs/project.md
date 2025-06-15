@@ -34,7 +34,7 @@
     - Vite はデフォルトで効率的なコード分割（Code Splitting）をサポートします。
     - `app/routes.ts` でルート定義にファイルパス文字列 (例: `"routes/home/index.ts"`) を使用する方式は、`@react-router/dev` ツールチェインがルートごとのコード分割を自動的に行うことを強く示唆しています。これにより、初期ロード時のバンドルサイズが削減され、各ルートのコードは実際にそのルートが要求されたときに遅延読み込み (Lazy Load) されます。
     - `app/root/components/HydrateFallback.tsx` は、遅延読み込みコンポーネントのロード中に表示されるフォールバックUIとして機能している可能性があります。
-    - `react-router.config.ts` ファイルは `@react-router/dev` の設定ファイルです。
+    - `react-router.config.ts` ファイルは `@react-router/dev` の設定ファイルで、このプロジェクトではサーバーサイドレンダリング (`ssr: true`) と `/about` ルートの事前レンダリング (`prerender: ["/about"]`) が有効化されています。
 
 ---
 
