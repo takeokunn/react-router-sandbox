@@ -6,7 +6,7 @@ type ContactAvatarProps = Parameters<typeof ContactAvatar>[0]["contact"];
 
 describe("ContactAvatar コンポーネント", () => {
   const renderComponent = (contactProps: ContactAvatarProps) => {
-    render(<ContactAvatar contact={contactProps} />);
+    return render(<ContactAvatar contact={contactProps} />);
   };
 
   it("アバターURLが指定されている場合、正しいsrcとalt属性で画像を表示する", () => {
