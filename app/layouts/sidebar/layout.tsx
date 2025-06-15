@@ -1,8 +1,8 @@
-import { AppShell } from "@mantine/core";
+import { AppShell, Stack, ScrollArea } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 import { Outlet, useLoaderData, useNavigation, useSubmit } from "react-router";
-import type { FormProps, NavigateOptions } from "react-router";
+import type { SubmitOptions } from "react-router-dom";
 import { ContactNavList } from "./components/ContactNavList";
 import { NewContactButton } from "./components/NewContactButton";
 import { SearchFormComponent } from "./components/SearchFormComponent";
@@ -27,9 +27,7 @@ export default function Layout() {
     const isFirstSearch = q === null;
     submit(event.currentTarget, {
       replace: !isFirstSearch,
-    } as NavigateOptions & {
-      formData: FormProps["encType"] extends "multipart/form-data" ? FormData : URLSearchParams;
-    });
+    } as SubmitOptions);
   };
 
   return (
@@ -41,9 +39,9 @@ export default function Layout() {
       }}
       padding="md"
     >
-      <AppShell.Navbar p="md">
+      <AppShell.Navbar p="md" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
         <SidebarHeader />
-        <div>
+        <Stack gap="sm" my="md">
           <SearchFormComponent
             initialQuery={q}
             isSearching={isSearching}
@@ -52,8 +50,10 @@ export default function Layout() {
             onSubmit={handleSearchSubmit}
           />
           <NewContactButton />
-        </div>
-        <ContactNavList contacts={contacts} navigationState={navigation.state} />
+        </Stack>
+        <ScrollArea style={{ flexGrow: 1 }}>
+          <ContactNavList contacts={contacts} navigationState={navigation.state} />
+        </ScrollArea>
       </AppShell.Navbar>
 
       <AppShell.Main>
