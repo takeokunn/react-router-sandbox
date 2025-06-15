@@ -39,11 +39,9 @@ describe("SearchFormComponent コンポーネント", () => {
     expect(inputElement).toBeInTheDocument();
     expect(inputElement).toHaveAttribute("aria-label", "Search contacts");
     expect(inputElement).toHaveValue("");
-    expect(inputElement).not.toHaveClass("loading");
 
-    const spinnerElement = screen.getByTestId("search-spinner");
-    expect(spinnerElement).toBeInTheDocument();
-    expect(spinnerElement).toHaveAttribute("hidden");
+    // Check that the loader is not present initially
+    expect(screen.queryByTestId("search-loader")).not.toBeInTheDocument();
   });
 
   it("currentQueryが指定された場合、入力フィールドにその値が設定される", () => {
@@ -55,11 +53,9 @@ describe("SearchFormComponent コンポーネント", () => {
   it("isSearchingがtrueの場合、入力フィールドにloadingクラスが適用され、スピナーが表示される", () => {
     renderComponent({ isSearching: true });
 
-    const inputElement = screen.getByPlaceholderText("Search");
-    expect(inputElement).toHaveClass("loading");
-
-    const spinnerElement = screen.getByTestId("search-spinner");
-    expect(spinnerElement).not.toHaveAttribute("hidden");
+    // Check that the loader is present when isSearching is true
+    const loaderElement = screen.getByTestId("search-loader");
+    expect(loaderElement).toBeInTheDocument();
   });
 
   it("入力フィールドへの入力時にonQueryChangeが呼び出される", () => {

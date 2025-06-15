@@ -1,3 +1,5 @@
+import { Loader, TextInput } from "@mantine/core";
+
 export type SearchFormComponentProps = {
   initialQuery: string | null;
   isSearching: boolean;
@@ -9,17 +11,16 @@ export type SearchFormComponentProps = {
 export function SearchFormComponent({ isSearching, currentQuery, onQueryChange, onSubmit }: SearchFormComponentProps) {
   return (
     <form id="search-form" onChange={onSubmit}>
-      <input
+      <TextInput
         aria-label="Search contacts"
-        className={isSearching ? "loading" : ""}
         id="q"
         name="q"
         placeholder="Search"
         type="search"
         onChange={(event) => onQueryChange(event.currentTarget.value)}
         value={currentQuery}
+        rightSection={isSearching ? <Loader size="xs" data-testid="search-loader" /> : null}
       />
-      <div aria-hidden hidden={!isSearching} id="search-spinner" data-testid="search-spinner" />
     </form>
   );
 }
