@@ -1,5 +1,4 @@
-import { MantineProvider } from "@mantine/core";
-import { render, screen } from "@testing-library/react";
+import { render, screen } from "testing-utils";
 import { MemoryRouter } from "react-router";
 import { describe, expect, it, beforeEach } from "vitest";
 import { SidebarHeader } from "./SidebarHeader";
@@ -7,11 +6,9 @@ import { SidebarHeader } from "./SidebarHeader";
 describe("SidebarHeader コンポーネント", () => {
   beforeEach(() => {
     render(
-      <MantineProvider>
-        <MemoryRouter>
-          <SidebarHeader />
-        </MemoryRouter>
-      </MantineProvider>,
+      <MemoryRouter>
+        <SidebarHeader />
+      </MemoryRouter>,
     );
   });
 
