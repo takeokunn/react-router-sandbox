@@ -1,32 +1,38 @@
+import { Anchor, List, Stack, Text, Title } from "@mantine/core";
 import { Link } from "react-router";
 
 export default function About() {
   return (
-    <div id="about">
-      <Link to="/">← Go to demo</Link>
-      <h1>About React Router Contacts</h1>
+    <Stack id="about" p="md">
+      <Anchor component={Link} to="/">
+        ← Go to demo
+      </Anchor>
+      <Title order={1}>About React Router Contacts</Title>
 
-      <div>
-        <p>
+      <Stack gap="md">
+        <Text>
           This is a demo application showing off some of the powerful features of React Router, including dynamic
           routing, nested routes, loaders, actions, and more.
-        </p>
+        </Text>
 
-        <h2>Features</h2>
-        <p>Explore the demo to see how React Router handles:</p>
-        <ul>
-          <li>Data loading and mutations with loaders and actions</li>
-          <li>Nested routing with parent/child relationships</li>
-          <li>URL-based routing with dynamic segments</li>
-          <li>Pending and optimistic UI</li>
-        </ul>
+        <Title order={2}>Features</Title>
+        <Text>Explore the demo to see how React Router handles:</Text>
+        <List>
+          <List.Item>Data loading and mutations with loaders and actions</List.Item>
+          <List.Item>Nested routing with parent/child relationships</List.Item>
+          <List.Item>URL-based routing with dynamic segments</List.Item>
+          <List.Item>Pending and optimistic UI</List.Item>
+        </List>
 
-        <h2>Learn More</h2>
-        <p>
-          Check out the official documentation at <a href="https://reactrouter.com">reactrouter.com</a> to learn more
-          about building great web applications with React Router.
-        </p>
-      </div>
-    </div>
+        <Title order={2}>Learn More</Title>
+        <Text>
+          Check out the official documentation at{" "}
+          <Anchor href="https://reactrouter.com" target="_blank" rel="noopener noreferrer">
+            reactrouter.com
+          </Anchor>{" "}
+          to learn more about building great web applications with React Router.
+        </Text>
+      </Stack>
+    </Stack>
   );
 }
